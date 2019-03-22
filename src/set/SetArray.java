@@ -17,6 +17,8 @@ public class SetArray implements SetInterface {
         this.elements = new Elem[DEFSIZE];
         this.positions = new Pos[DEFSIZE];
         this.size = 0;
+        positions[0] = new Pos(this);
+        positions[0].isValid = false;
     }
 
     /**
