@@ -17,7 +17,7 @@ public class SetArray implements SetInterface {
         this.elements = new Elem[DEFSIZE];
         this.positions = new Pos[DEFSIZE];
         this.size = 0;
-        positions[0] = new Pos(this);
+        positions[0] = new Pos(0, this);
         positions[0].isValid = false;
     }
 
@@ -43,10 +43,11 @@ public class SetArray implements SetInterface {
         }
 
         elements[size] = elem;
-        Pos<Integer> newPos = new Pos<>();
-        //TODO: pos
+        Pos<Integer> newPos = new Pos<>(size, this);
+        positions[size] = newPos;
+        size++;
 
-        return null; // TODO: return Pos
+        return newPos;
     }
 
     /**

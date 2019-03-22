@@ -7,8 +7,9 @@ public class Pos<T> {
 	protected T pointer;
 	protected SetInterface set;
 
-	public Pos(SetInterface set) {
+	public Pos(T pointer, SetInterface set) {
 		this.isValid = false;
+		this.pointer = pointer;
 		this.set = set;
 	}
 
