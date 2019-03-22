@@ -3,13 +3,19 @@ package set;
 import types.Elem;
 import types.Pos;
 
+/**
+ * A set that internally works with an array.
+ */
 public class SetArray implements SetInterface {
 
-    private Elem[] elements;
+    final private int DEFSIZE = 8;
+    private Elem<?>[] elements;
+    private Pos<Integer>[] positions;
     private int size;
 
     public SetArray() {
-        this.elements = new Elem[8];
+        this.elements = new Elem[DEFSIZE];
+        this.positions = new Pos[DEFSIZE];
         this.size = 0;
     }
 
@@ -21,10 +27,23 @@ public class SetArray implements SetInterface {
      */
     @Override
     public Pos add(Elem elem) {
-        if (this.size() >= this.getElements().length) {
-            // TODO: increase array size
+        // check if the array needs to be enlarged and do so if necessary
+        if (size == elements.length) {
+            Elem[] newElements = new Elem[size * 2]; // create a new array with twice the size of the old one
+            Pos[] newPositions = new Pos[size * 2];
+            // copy over the old elements
+            for(int i = 0; i < elements.length; i++) {
+                newElements[i] = elements[i];
+                newPositions[i] = positions[i];
+            }
+            elements = newElements;
+            positions = newPositions;
         }
-        return null;
+
+        elements[size] = elem;
+        //positions[size] = new Pos<Integer>(); TODO: create/set pos
+
+        return null; // TODO: return Pos
     }
 
     /**
@@ -98,6 +117,4 @@ public class SetArray implements SetInterface {
     public SetInterface unify(SetInterface s, SetInterface t) {
         return null;
     }
-
-    private Elem[] getElements() {return this.elements;}
 }
