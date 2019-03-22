@@ -13,4 +13,13 @@ public class Elem<T> {
 		this.data = data;
 		this.key = key;
 	}
+	
+	public Elem(int key) {
+		this.key = key;
+	}
+
+	public void print() {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -6,18 +6,20 @@ import types.Pos;
 /**
  * A set that internally works with an array.
  */
-public class SetArray implements SetInterface {
+@SuppressWarnings({"rawtypes", "unchecked"})
+public class SetArray<T> implements SetInterface {
 
     final private int DEFSIZE = 8;
     private Elem<?>[] elements;
     private Pos<Integer>[] positions;
-    private int size;
+    private int elemSize;
+    private int posSize;
 
-    public SetArray() {
+	public SetArray() {
         this.elements = new Elem[DEFSIZE];
-        this.positions = new Pos[DEFSIZE];
-        this.size = 0;
-        positions[0] = new Pos(0, this);
+        this.positions = (Pos<Integer>[]) new Pos[DEFSIZE];
+        this.elemSize = 0;
+        positions[0] = new Pos<Integer>(0, this);
         positions[0].isValid = false;
     }
 
@@ -28,11 +30,11 @@ public class SetArray implements SetInterface {
      * @return The Pos of the added element.
      */
     @Override
-    public Pos add(Elem elem) {
+    public Pos<Integer> add(Elem elem) {
         // check if the array needs to be enlarged and do so if necessary
-        if (size == elements.length) {
-            Elem[] newElements = new Elem[size * 2]; // create a new array with twice the size of the old one
-            Pos[] newPositions = new Pos[size * 2];
+        if (elemSize == elements.length-1) {
+            Elem[] newElements = new Elem[elemSize * 2]; // create a new array with twice the size of the old one
+            Pos[] newPositions = new Pos[elemSize * 2];
             // copy over the old elements
             for(int i = 0; i < elements.length; i++) {
                 newElements[i] = elements[i];
@@ -41,13 +43,18 @@ public class SetArray implements SetInterface {
             elements = newElements;
             positions = newPositions;
         }
+        
+        elements[elemSize + 1] = elem;
+        elemSize++;
+        // from here on elemSize=index of added element
+        
+        int i = 1;
+        while (positions[i].isValid == true) {
+            i++;
+        }
+        //TODO: add dynamic position creation in case of missing positions
 
-        elements[size] = elem;
-        Pos<Integer> newPos = new Pos<>(size, this);
-        positions[size] = newPos;
-        size++;
-
-        return newPos;
+        return positions[i];
     }
 
     /**
@@ -57,7 +64,19 @@ public class SetArray implements SetInterface {
      */
     @Override
     public void delete(Pos pos) {
-
+    	for (int i=1; i < positions.length; i++) {
+    		if (positions[i] == pos) {
+    			if (positions[i].isValid) {
+    				positions[i].isValid = false;
+    				positions[i].setPointer(null);
+    				Integer gap = positions[i].getPointer();
+    				for (int j = gap; j < elements.length-1; j++) {
+    					elements[j] = elements[j+1];
+    				}
+    				elemSize--;
+    			}
+    		}
+    	}
     }
 
     /**
@@ -74,10 +93,19 @@ public class SetArray implements SetInterface {
      * Find an element with its key and return its Pos.
      *
      * @param key The key of the element we want to find.
-     * @return The Pos of the found element.
+     * @return The Pos of the found element. Position of dummy Element if not found
      */
     @Override
-    public Pos find(int key) {
+    public Pos<T> find(int key) {
+    	Elem<T> dummy = new Elem<T>(key);
+    	elements[0] = dummy;
+    	positions[0].setPointer(0);
+    	
+    	for (int i=posSize; i >= 0; i--) {
+			if (elements[positions[i].getPointer()].key == key) {
+				return (Pos<T>) positions[i];
+			}
+    	}
         return null;
     }
 
@@ -87,9 +115,9 @@ public class SetArray implements SetInterface {
      * @param pos The Pos of the element we want to retrieve.
      * @return The element.
      */
-    @Override
-    public Elem retrieve(Pos pos) {
-        return null;
+	@Override
+    public Elem<T> retrieve(Pos pos) {
+        return (Elem<T>) elements[(int) pos.getPointer()];
     }
 
     /**
@@ -97,7 +125,11 @@ public class SetArray implements SetInterface {
      */
     @Override
     public void showall() {
-
+    	for (int i=1; i <= posSize; i++) {
+    		if (positions[i].isValid) {
+    			elements[positions[i].getPointer()].print();
+    		}
+    	}
     }
 
     /**
@@ -107,7 +139,7 @@ public class SetArray implements SetInterface {
      */
     @Override
     public int size() {
-        return this.size;
+        return this.elemSize;
     }
 
     /**
