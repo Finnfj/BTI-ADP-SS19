@@ -1,4 +1,4 @@
-import java.util.*;
+package types;
 
 public class Elem {
 	public int key;
