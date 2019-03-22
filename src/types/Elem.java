@@ -1,11 +1,16 @@
 package types;
 
-public class Elem {
+public class Elem<T> {
 	public int key;
-	public Object data;
+	public T data;
 	
-	public Elem(Object data) {
+	public Elem(T data) {
 		this.data = data;
 		this.key = this.hashCode();
+	}
+	
+	public Elem(int key, T data) {
+		this.data = data;
+		this.key = key;
 	}
 }
