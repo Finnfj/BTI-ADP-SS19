@@ -41,7 +41,8 @@ public class SetArray implements SetInterface {
         }
 
         elements[size] = elem;
-        //positions[size] = new Pos<Integer>(); TODO: create/set pos
+        Pos<Integer> newPos = new Pos<>();
+        //TODO: pos
 
         return null; // TODO: return Pos
     }
