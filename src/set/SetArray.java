@@ -73,7 +73,7 @@ public class SetArray implements SetInterface {
     /**
      * Find an element with its key and return its Pos.
      *
-     * @param key
+     * @param key The key of the element we want to find.
      * @return The Pos of the found element.
      */
     @Override
@@ -84,7 +84,7 @@ public class SetArray implements SetInterface {
     /**
      * Retrieve an Element by its Pos.
      *
-     * @param pos
+     * @param pos The Pos of the element we want to retrieve.
      * @return The element.
      */
     @Override
