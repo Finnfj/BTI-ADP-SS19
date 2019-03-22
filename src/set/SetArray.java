@@ -42,12 +42,18 @@ public class SetArray implements SetInterface {
             positions = newPositions;
         }
 
-        elements[size] = elem;
-        Pos<Integer> newPos = new Pos<>(size, this);
-        positions[size] = newPos;
+        int i = 0;
+        while (positions[i].isValid == false) {
+            i++;
+        }
+        elements[i] = elem;
+        //TODO: change/add pos and return it
+        //Pos<Integer> newPos = new Pos<>(i, this);
+        //positions[i] = newPos;
+
         size++;
 
-        return newPos;
+        return null;
     }
 
     /**
