@@ -46,7 +46,7 @@ public interface SetInterface {
     void showall();
 
     /**
-     * Prints the size of the set.
+     * Returns the size of the set.
      * @return The size of the set.
      */
     int size();

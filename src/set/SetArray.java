@@ -5,6 +5,14 @@ import types.Pos;
 
 public class SetArray implements SetInterface {
 
+    private Elem[] elements;
+    private int size;
+
+    public SetArray() {
+        this.elements = new Elem[8];
+        this.size = 0;
+    }
+
     /**
      * Add an element to the set.
      *
@@ -13,6 +21,9 @@ public class SetArray implements SetInterface {
      */
     @Override
     public Pos add(Elem elem) {
+        if (this.size() >= this.getElements().length) {
+            // TODO: increase array size
+        }
         return null;
     }
 
@@ -67,13 +78,13 @@ public class SetArray implements SetInterface {
     }
 
     /**
-     * Prints the size of the set.
+     * Returns the size of the set.
      *
      * @return The size of the set.
      */
     @Override
     public int size() {
-        return 0;
+        return this.size;
     }
 
     /**
@@ -87,4 +98,6 @@ public class SetArray implements SetInterface {
     public SetInterface unify(SetInterface s, SetInterface t) {
         return null;
     }
+
+    private Elem[] getElements() {return this.elements;}
 }
