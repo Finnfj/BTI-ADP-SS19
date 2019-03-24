@@ -59,6 +59,16 @@ public class SetContainer implements SetInterface {
     }
 
     /**
+     * Retrieve all Elements of set.
+     *
+     * @return The elements.
+     */
+    @Override
+    public Elem<?>[] retrieveAll() {
+        return new Elem[0];
+    }
+
+    /**
      * Prints every element of the set.
      */
     @Override
@@ -83,8 +93,7 @@ public class SetContainer implements SetInterface {
      * @param t The second set to be unified.
      * @return The unified set.
      */
-    @Override
-    public SetInterface unify(SetInterface s, SetInterface t) {
+    public static SetContainer unify(SetInterface s, SetInterface t) {
         return null;
     }
 }
