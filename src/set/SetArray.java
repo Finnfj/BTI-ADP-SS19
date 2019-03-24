@@ -67,18 +67,24 @@ public class SetArray<T> implements SetInterface {
             i++;
         }
         
-        // i is either posSize or a position with isValid=false here
-        if (positions[i].isValid == false) {
-        	// found empty position, insert
-        	positions[i].setPointer(elemSize);
+        if (positions[i] == null) {
+        	positions[i] = new Pos<Integer>(elemSize, this);
         	positions[i].isValid = true;
+        	posSize++;
         	return positions[i];
-        } else if (i == posSize) {
+        }
+        else if (i == posSize) {
         	// reached end of positions, create new one
         	positions[i+1] = new Pos<Integer>(elemSize, this);
         	positions[i+1].isValid = true;
         	posSize++;
         	return positions[i+1];
+        // i is either posSize or a position with isValid=false here
+        } else if (positions[i].isValid == false) {
+        	// found empty position, insert
+        	positions[i].setPointer(elemSize);
+        	positions[i].isValid = true;
+        	return positions[i];
         } else {
         	// Error
         	return null;
