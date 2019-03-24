@@ -135,7 +135,7 @@ public class SetArray<T> implements SetInterface {
      */
     @Override
     public Pos<T> find(int key) {
-    	Elem<T> dummy = new Elem<>(key);
+    	Elem<T> dummy = new Elem<>(key, null);
     	elements[0] = dummy;
     	positions[0].setPointer(0);
     	

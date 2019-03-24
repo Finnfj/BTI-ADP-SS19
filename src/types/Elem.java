@@ -13,10 +13,6 @@ public class Elem<T> {
 		this.data = data;
 		this.key = key;
 	}
-	
-	public Elem(int key) {
-		this.key = key;
-	}
 
 	@Override
 	public String toString() {
