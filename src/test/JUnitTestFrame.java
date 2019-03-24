@@ -29,4 +29,17 @@ public class JUnitTestFrame {
         sa.delete(testPos2);
         assertEquals(0, sa.size());
     }
+
+    @Test(timeout = timelimit)
+    public void testUnify() {
+        SetInterface sa1 = new SetArray();
+        SetInterface sa2 = new SetArray();
+
+        sa1.add(new Elem("a"));
+        sa2.add(new Elem("b"));
+
+        SetArray sa3 = SetArray.unify(sa1, sa2);
+
+        assertEquals(2, sa3.size());
+    }
 }
