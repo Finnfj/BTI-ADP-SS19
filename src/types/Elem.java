@@ -18,8 +18,8 @@ public class Elem<T> {
 		this.key = key;
 	}
 
-	public void print() {
-		// TODO Auto-generated method stub
-		
+	@Override
+	public String toString() {
+		return "Key: " + key + " Data: " + data;
 	}
 }

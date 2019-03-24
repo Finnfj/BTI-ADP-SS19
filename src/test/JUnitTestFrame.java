@@ -9,11 +9,24 @@ public class JUnitTestFrame {
     final private int timelimit = 5_000; // ms
 
     @Test(timeout = timelimit)
-    public void testAddSetArray() {
+    public void testSetArray() {
         SetInterface sa = new SetArray();
-        Elem<Integer> e = new Elem(new Integer(5));
-        Pos p = sa.add(e);
+        Elem<Integer> testElement = new Elem(new Integer(5));
+        Pos testPos = sa.add(testElement);
+        int testKey = testElement.key;
 
         assertEquals(1, sa.size());
+        sa.showall();
+        assertEquals(testPos, sa.find(testKey));
+        assertEquals(testElement, sa.retrieve(testPos));
+
+        sa.delete(testKey);
+        assertEquals(0, sa.size());
+
+        Pos testPos2 = sa.add(testElement);
+        assertEquals(1, sa.size());
+
+        sa.delete(testPos2);
+        assertEquals(0, sa.size());
     }
 }
