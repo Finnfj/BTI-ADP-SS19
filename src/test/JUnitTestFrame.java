@@ -9,14 +9,13 @@ public class JUnitTestFrame {
     final private int timelimit = 600_000; // ms
 
     @Test(timeout = timelimit)
-    public void testSetArray() {
+    public void testSetArrayAddFindRetrieveDeleteWKeyDeleteWPos() {
         SetInterface sa = new SetArray();
         Elem<Integer> testElement = new Elem(new Integer(5));
         Pos testPos = sa.add(testElement);
         int testKey = testElement.key;
 
         assertEquals(1, sa.size());
-        sa.showall();
         assertEquals(testPos, sa.find(testKey));
         assertEquals(testElement, sa.retrieve(testPos));
 
@@ -51,5 +50,16 @@ public class JUnitTestFrame {
         }
 
         assertEquals(10, sa.size());
+    }
+
+    @Test(timeout = timelimit)
+    public void testSetArrayDeleteTwice() {
+        SetInterface sa = new SetArray();
+        Elem<Integer> testElement = new Elem(new Integer(5));
+        Pos testPos = sa.add(testElement);
+        sa.delete(testPos);
+        assertEquals(0, sa.size());
+        sa.delete(testPos);
+        assertEquals(0, sa.size());
     }
 }
