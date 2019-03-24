@@ -30,7 +30,7 @@ public class SetArray<T> implements SetInterface {
         this.elements = new Elem[size];
         this.positions = (Pos<Integer>[]) new Pos[size];
         this.elemSize = 0;
-        positions[0] = new Pos<Integer>(0, this);
+        positions[0] = new Pos<>(0, this);
         positions[0].isValid = false;
     }
 
@@ -68,14 +68,14 @@ public class SetArray<T> implements SetInterface {
         }
         
         if (positions[i] == null) {
-        	positions[i] = new Pos<Integer>(elemSize, this);
+        	positions[i] = new Pos<>(elemSize, this);
         	positions[i].isValid = true;
         	posSize++;
         	return positions[i];
         }
         else if (i == posSize) {
         	// reached end of positions, create new one
-        	positions[i+1] = new Pos<Integer>(elemSize, this);
+        	positions[i+1] = new Pos<>(elemSize, this);
         	positions[i+1].isValid = true;
         	posSize++;
         	return positions[i+1];
@@ -140,12 +140,10 @@ public class SetArray<T> implements SetInterface {
     	positions[0].setPointer(0);
     	
     	for (int i=posSize; i >= 0; i--) {
-    		try {
-			if (elements[positions[i].getPointer()].key == key) {
-				return (Pos<T>) positions[i];
-			}
-    		} catch (Exception e) {
-    			
+    		if (positions[i].getPointer() != null) {
+			    if (elements[positions[i].getPointer()].key == key) {
+				    return (Pos<T>) positions[i];
+			    }
     		}
     	}
         return null;
@@ -202,13 +200,13 @@ public class SetArray<T> implements SetInterface {
     	SetArray temp = new SetArray(eSize);
     	
     	// Add elements of first set
-    	for (int i=0; i < sElements.length; i++) {
-    		temp.add(sElements[i]);
-    	}
+        for (Elem<?> sElement : sElements) {
+            temp.add(sElement);
+        }
     	// Add elements of second set
-    	for (int i=0; i < tElements.length; i++) {
-    		temp.add(tElements[i]);
-    	}
+        for (Elem<?> tElement : tElements) {
+            temp.add(tElement);
+        }
     	
         return temp;
     }
@@ -220,9 +218,7 @@ public class SetArray<T> implements SetInterface {
     @Override
     public Elem<?>[] retrieveAll() {
 		Elem<?>[] temp = new Elem<?>[elemSize];
-		for (int i=0; i<elemSize; i++) {
-			temp[i] = elements[i+1];
-		}
+        System.arraycopy(elements, 1, temp, 0, elemSize);
 		return temp;
     }
 }

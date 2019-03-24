@@ -42,4 +42,14 @@ public class JUnitTestFrame {
 
         assertEquals(2, sa3.size());
     }
+
+    @Test(timeout = timelimit)
+    public void testSetArrayArraySizeIncrease() {
+        SetInterface sa = new SetArray();
+        for (int i = 0; i < 10; i++) {
+            sa.add(new Elem((char) i));
+        }
+
+        assertEquals(10, sa.size());
+    }
 }
