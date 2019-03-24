@@ -49,10 +49,18 @@ public class SetArray<T> implements SetInterface {
         // from here on elemSize=index of added element
         
         int i = 1;
-        while (positions[i].isValid == true) {
-            i++;
+        boolean posFound = false;
+        while (!posFound) {
+            if (positions[i] != null) {
+                if (positions[i].isValid == false) {
+                    i++;
+                } else {
+                    posFound = true;
+                }
+            } else {
+                positions[i] = new Pos<>(i, this); //TODO: i as pointer here correct?
+            }
         }
-        //TODO: add dynamic position creation in case of missing positions
 
         return positions[i];
     }
@@ -127,7 +135,7 @@ public class SetArray<T> implements SetInterface {
     public void showall() {
     	for (int i=1; i <= posSize; i++) {
     		if (positions[i].isValid) {
-    			elements[positions[i].getPointer()].print();
+    			System.out.println(elements[positions[i].getPointer()]);
     		}
     	}
     }
