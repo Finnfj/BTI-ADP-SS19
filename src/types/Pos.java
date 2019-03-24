@@ -6,8 +6,8 @@ public class Pos<T> {
 	public Boolean isValid;
 	protected T pointer;
 	protected SetInterface set;
-	private int previousIndex;
-	private int nextIndex; 
+	private Integer previousIndex;
+	private Integer nextIndex; 
 
 	public Pos(T pointer, SetInterface set) {
 		this.isValid = false;
@@ -29,6 +29,14 @@ public class Pos<T> {
 
 	public int getPreviousIndex() {
 		return previousIndex;
+	}
+
+	public void setPreviousIndex(int previousIndex) {
+		this.previousIndex = previousIndex;
+	}
+
+	public void setNextIndex(int nextIndex) {
+		this.nextIndex = nextIndex;
 	}
 
 	public int getNextIndex() {
