@@ -1,10 +1,31 @@
 package set;
 
+import java.util.Arrays;
+
 import types.Elem;
 import types.Pos;
 
+@SuppressWarnings({"rawtypes", "unchecked"})
 public class SetContainer implements SetInterface {
 
+    final private int DEFSIZE = 8;
+    private Pos<?>[] positions;
+    private int posSize;
+    
+
+	public SetContainer() {
+        this.positions = (Pos<?>[]) new Pos[DEFSIZE];
+        this.posSize = 0;
+        positions[0] = new Pos<>(0, this);
+        positions[0].isValid = false;
+    }
+	
+	public SetContainer(int size) {
+        this.positions = (Pos<?>[]) new Pos[size];
+        positions[0] = new Pos<>(null, this, -1, 1);
+        positions[0].isValid = false;
+    }
+	
     /**
      * Add an element to the set.
      *
@@ -13,7 +34,48 @@ public class SetContainer implements SetInterface {
      */
     @Override
     public Pos add(Elem elem) {
-        return null;
+    	// Check if element already exists
+    	Pos temp = this.find(elem.key);
+    	if (temp.isValid) {
+    		return temp;
+    	}
+
+        // find a pos for the new element
+        int i = 1;
+        while (i <= posSize) {
+        	if (!positions[i].isValid) {
+        		// found empty position, stop searching
+        		break;
+        	}
+            i++;
+        }
+        
+        // check if the array needs to be enlarged and do so if necessary
+        if (i == posSize && positions[i].isValid) {
+            positions = Arrays.copyOf(positions, positions.length*2);
+        }
+        
+        // first position only
+        if (positions[i] == null) {
+        	positions[i] = new Pos<Elem>(elem, this, 0, 2);
+        	positions[i].isValid = true;
+        	posSize++;
+        	return positions[i];
+        }
+        // i is either posSize or a position with isValid=false here
+        else if (i == posSize) {        	// reached end of positions, create new one
+        	positions[i+1] = new Pos<Elem>(elem, this, posSize, posSize + 2);
+        	positions[i+1].isValid = true;
+        	posSize++;
+        	return positions[i+1];
+        } else if (!positions[i].isValid) {            // found empty position, insert
+        	positions[i].setPointer(elem);
+        	positions[i].isValid = true;
+        	return positions[i];
+        // Error
+        } else {
+        	return null;
+        }
     }
 
     /**
