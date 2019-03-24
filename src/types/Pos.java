@@ -20,4 +20,8 @@ public class Pos<T> {
 	public void setPointer(T pointer) {
 		this.pointer = pointer;
 	}
+
+	public SetInterface getSet() {
+		return set;
+	}
 }

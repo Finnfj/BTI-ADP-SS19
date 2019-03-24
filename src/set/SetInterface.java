@@ -41,6 +41,12 @@ public interface SetInterface {
     Elem retrieve(Pos pos);
 
     /**
+     * Retrieve all Elements of set.
+     * @return The elements.
+     */    
+    Elem<?>[] retrieveAll();
+
+    /**
      * Prints every element of the set.
      */
     void showall();
@@ -53,9 +59,19 @@ public interface SetInterface {
 
     /**
      * Unifies two sets and returns them.
-     * @param s The first set to be unified.
+     * @param s The first set to be unified. Defines type of Set to be created
      * @param t The second set to be unified.
      * @return The unified set.
      */
-    SetInterface unify(SetInterface s, SetInterface t);
+    static SetInterface unify(SetInterface s, SetInterface t) {
+    	SetInterface temp = null;
+    	if (s instanceof SetArray) {
+    		temp = SetArray.unify(s, t);
+    	} else if (s instanceof SetContainer) {
+    		temp = SetContainer.unify(s, t);
+    	} else if (s instanceof SetContainerArray) {
+    		temp = SetContainerArray.unify(s, t);
+    	}
+		return temp;
+	}
 }

@@ -22,6 +22,14 @@ public class SetArray<T> implements SetInterface {
         positions[0] = new Pos<Integer>(0, this);
         positions[0].isValid = false;
     }
+	
+	public SetArray(int size) {
+        this.elements = new Elem[size];
+        this.positions = (Pos<Integer>[]) new Pos[size];
+        this.elemSize = 0;
+        positions[0] = new Pos<Integer>(0, this);
+        positions[0].isValid = false;
+    }
 
     /**
      * Add an element to the set.
@@ -31,6 +39,12 @@ public class SetArray<T> implements SetInterface {
      */
     @Override
     public Pos<Integer> add(Elem elem) {
+    	// Check if element already exists
+    	Pos temp = this.find(elem.key);
+    	if (temp.isValid) {
+    		return temp;
+    	}
+    	
         // check if the array needs to be enlarged and do so if necessary
         if (elemSize == elements.length-1) {
             Elem[] newElements = new Elem[elemSize * 2]; // create a new array with twice the size of the old one
@@ -49,12 +63,29 @@ public class SetArray<T> implements SetInterface {
         // from here on elemSize=index of added element
         
         int i = 1;
-        while (positions[i].isValid == true) {
+        while (i <= posSize) {
+        	if (positions[i].isValid == false) {
+        		break;
+        	}
             i++;
         }
-        //TODO: add dynamic position creation in case of missing positions
-
-        return positions[i];
+        
+        // i is either posSize or a position with isValid=false here
+        if (positions[i].isValid == false) {
+        	// found empty position, insert
+        	positions[i].setPointer(elemSize);
+        	positions[i].isValid = true;
+        	return positions[i];
+        } else if (i == posSize) {
+        	// reached end of positions, create new one
+        	positions[i+1] = new Pos<Integer>(elemSize, this);
+        	positions[i+1].isValid = true;
+        	posSize++;
+        	return positions[i+1];
+        } else {
+        	// Error
+        	return null;
+        }
     }
 
     /**
@@ -64,6 +95,11 @@ public class SetArray<T> implements SetInterface {
      */
     @Override
     public void delete(Pos pos) {
+		// Check if set is this set
+		if (pos.getSet() != this) {
+			return;
+		}
+		
     	for (int i=1; i < positions.length; i++) {
     		if (positions[i] == pos) {
     			if (positions[i].isValid) {
@@ -75,6 +111,8 @@ public class SetArray<T> implements SetInterface {
     				}
     				elemSize--;
     			}
+    		} else {
+    			break;
     		}
     	}
     }
@@ -86,7 +124,7 @@ public class SetArray<T> implements SetInterface {
      */
     @Override
     public void delete(int key) {
-
+    	this.delete(this.find(key));
     }
 
     /**
@@ -117,6 +155,10 @@ public class SetArray<T> implements SetInterface {
      */
 	@Override
     public Elem<T> retrieve(Pos pos) {
+		// Check if set is this set
+		if (pos.getSet() != this) {
+			return null;
+		}
         return (Elem<T>) elements[(int) pos.getPointer()];
     }
 
@@ -149,8 +191,34 @@ public class SetArray<T> implements SetInterface {
      * @param t The second set to be unified.
      * @return The unified set.
      */
+    public static SetArray unify(SetInterface s, SetInterface t) {
+    	Elem<?>[] sElements = s.retrieveAll();
+    	Elem<?>[] tElements = t.retrieveAll();
+    	int eSize = sElements.length + tElements.length;
+    	SetArray temp = new SetArray(eSize);
+    	
+    	// Add elements of first set
+    	for (int i=0; i < sElements.length; i++) {
+    		temp.add(sElements[i]);
+    	}
+    	// Add elements of second set
+    	for (int i=0; i < tElements.length; i++) {
+    		temp.add(tElements[i]);
+    	}
+    	
+        return temp;
+    }
+
+    /**
+     * Retrieve all Elements of set.
+     * @return The elements.
+     */    
     @Override
-    public SetInterface unify(SetInterface s, SetInterface t) {
-        return null;
+    public Elem<?>[] retrieveAll() {
+		Elem<?>[] temp = new Elem<?>[elemSize];
+		for (int i=0; i<elemSize; i++) {
+			temp[i] = elements[i+1];
+		}
+		return temp;
     }
 }
