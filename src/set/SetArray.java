@@ -61,7 +61,8 @@ public class SetArray<T> implements SetInterface {
         // find a pos for the new element
         int i = 1;
         while (i <= posSize) {
-        	if (positions[i].isValid == false) {
+        	if (!positions[i].isValid) {
+        		// found empty position, stop searching
         		break;
         	}
             i++;
@@ -80,7 +81,7 @@ public class SetArray<T> implements SetInterface {
         	posSize++;
         	return positions[i+1];
         // i is either posSize or a position with isValid=false here
-        } else if (positions[i].isValid == false) {
+        } else if (!positions[i].isValid) {
         	// found empty position, insert
         	positions[i].setPointer(elemSize);
         	positions[i].isValid = true;
@@ -200,12 +201,18 @@ public class SetArray<T> implements SetInterface {
     	SetArray temp = new SetArray(eSize);
     	
     	// Add elements of first set
-        for (Elem<?> sElement : sElements) {
-            temp.add(sElement);
+        for (int i=1; i < sElements.length; i++) {
+        	if (sElements[i] == null) {	//stop adding when entry is null
+        		break;
+        	}
+            temp.add(sElements[i]);
         }
     	// Add elements of second set
-        for (Elem<?> tElement : tElements) {
-            temp.add(tElement);
+        for (int i=1; i < tElements.length; i++) {
+        	if (tElements[i] == null) {	//stop adding when entry is null
+        		break;
+        	}
+            temp.add(tElements[i]);
         }
     	
         return temp;
@@ -217,8 +224,9 @@ public class SetArray<T> implements SetInterface {
      */    
     @Override
     public Elem<?>[] retrieveAll() {
-		Elem<?>[] temp = new Elem<?>[elemSize];
-        System.arraycopy(elements, 1, temp, 0, elemSize);
-		return temp;
+//		Elem<?>[] temp = new Elem<?>[elemSize];
+//        System.arraycopy(elements, 1, temp, 0, elemSize);
+//		return temp;
+    	return elements;
     }
 }
