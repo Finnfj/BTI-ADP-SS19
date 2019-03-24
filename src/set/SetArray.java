@@ -107,8 +107,8 @@ public class SetArray<T> implements SetInterface {
     		if (positions[i] == pos) {
     			if (positions[i].isValid) {
     				positions[i].isValid = false;
-    				positions[i].setPointer(null);
     				Integer gap = positions[i].getPointer();
+    				positions[i].setPointer(null);
                     if (elements.length - 1 - gap >= 0)
                         System.arraycopy(elements, gap + 1, elements, gap, elements.length - 1 - gap);
     				elemSize--;
