@@ -35,11 +35,12 @@ public class Pos<T> {
 		return nextIndex;
 	}
 
-	public void setPointer(T pointer) {
-		this.pointer = pointer;
-	}
-
 	public SetInterface getSet() {
 		return set;
+	}
+
+	@SuppressWarnings("unchecked")
+	public void setPointer(Object pointer) {
+		this.pointer = (T) pointer;
 	}
 }
