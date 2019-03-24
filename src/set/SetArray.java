@@ -3,6 +3,8 @@ package set;
 import types.Elem;
 import types.Pos;
 
+import java.util.Arrays;
+
 /**
  * A set that internally works with an array.
  */
@@ -19,7 +21,8 @@ public class SetArray<T> implements SetInterface {
         this.elements = new Elem[DEFSIZE];
         this.positions = (Pos<Integer>[]) new Pos[DEFSIZE];
         this.elemSize = 0;
-        positions[0] = new Pos<Integer>(0, this);
+        this.posSize = 0;
+        positions[0] = new Pos<>(0, this);
         positions[0].isValid = false;
     }
 
@@ -33,32 +36,26 @@ public class SetArray<T> implements SetInterface {
     public Pos<Integer> add(Elem elem) {
         // check if the array needs to be enlarged and do so if necessary
         if (elemSize == elements.length-1) {
-            Elem[] newElements = new Elem[elemSize * 2]; // create a new array with twice the size of the old one
-            Pos[] newPositions = new Pos[elemSize * 2];
-            // copy over the old elements
-            for(int i = 0; i < elements.length; i++) {
-                newElements[i] = elements[i];
-                newPositions[i] = positions[i];
-            }
-            elements = newElements;
-            positions = newPositions;
+            elements = Arrays.copyOf(elements, elements.length*2);
+            positions = Arrays.copyOf(positions, elements.length*2);
         }
         
         elements[elemSize + 1] = elem;
         elemSize++;
         // from here on elemSize=index of added element
-        
+
+        // find a pos for the new element
         int i = 1;
         boolean posFound = false;
         while (!posFound) {
             if (positions[i] != null) {
-                if (positions[i].isValid == false) {
+                if (!positions[i].isValid) { // go to the next one if the current is not valid
                     i++;
-                } else {
+                } else { // if it is valid we can assign the element to it
                     posFound = true;
                 }
-            } else {
-                positions[i] = new Pos<>(i, this); //TODO: i as pointer here correct?
+            } else { // if there are no Pos left, create a new one
+                positions[i] = new Pos<>(elemSize + 1, this);
             }
         }
 
@@ -78,9 +75,8 @@ public class SetArray<T> implements SetInterface {
     				positions[i].isValid = false;
     				positions[i].setPointer(null);
     				Integer gap = positions[i].getPointer();
-    				for (int j = gap; j < elements.length-1; j++) {
-    					elements[j] = elements[j+1];
-    				}
+                    if (elements.length - 1 - gap >= 0)
+                        System.arraycopy(elements, gap + 1, elements, gap, elements.length - 1 - gap);
     				elemSize--;
     			}
     		}
@@ -105,7 +101,7 @@ public class SetArray<T> implements SetInterface {
      */
     @Override
     public Pos<T> find(int key) {
-    	Elem<T> dummy = new Elem<T>(key);
+    	Elem<T> dummy = new Elem<>(key);
     	elements[0] = dummy;
     	positions[0].setPointer(0);
     	
