@@ -51,7 +51,7 @@ public class SetArray<T> implements SetInterface {
         // check if the array needs to be enlarged and do so if necessary
         if (elemSize == elements.length-1) {
             elements = Arrays.copyOf(elements, elements.length*2);
-            positions = Arrays.copyOf(positions, elements.length*2);
+            positions = Arrays.copyOf(positions, positions.length*2);
         }
         
         elements[elemSize + 1] = elem;

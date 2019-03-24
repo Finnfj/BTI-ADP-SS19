@@ -1,6 +1,7 @@
 package test;
 
 import org.junit.Test;
+import set.SetContainer;
 import set.SetContainerArray;
 import set.SetInterface;
 import types.Elem;
@@ -64,5 +65,15 @@ public class JUnitTestFrameSetContainerArray {
         assertEquals(0, sa.size());
         sa.delete(testPos);
         assertEquals(0, sa.size());
+    }
+
+    @Test(timeout = timelimit)
+    public void testAddTwice() {
+        SetInterface sa = new SetContainerArray();
+        Elem<Integer> testElement = new Elem(new Integer(5));
+        sa.add(testElement);
+        assertEquals(1, sa.size());
+        sa.add(testElement);
+        assertEquals(1, sa.size());
     }
 }

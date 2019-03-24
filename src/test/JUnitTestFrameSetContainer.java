@@ -65,4 +65,14 @@ public class JUnitTestFrameSetContainer {
         sa.delete(testPos);
         assertEquals(0, sa.size());
     }
+
+    @Test(timeout = timelimit)
+    public void testAddTwice() {
+        SetInterface sa = new SetContainer();
+        Elem<Integer> testElement = new Elem(new Integer(5));
+        sa.add(testElement);
+        assertEquals(1, sa.size());
+        sa.add(testElement);
+        assertEquals(1, sa.size());
+    }
 }

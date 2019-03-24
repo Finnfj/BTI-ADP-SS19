@@ -63,4 +63,14 @@ public class JUnitTestFrameSetArray {
         sa.delete(testPos);
         assertEquals(0, sa.size());
     }
+
+    @Test(timeout = timelimit)
+    public void testAddTwice() {
+        SetInterface sa = new SetArray<>();
+        Elem<Integer> testElement = new Elem(new Integer(5));
+        sa.add(testElement);
+        assertEquals(1, sa.size());
+        sa.add(testElement);
+        assertEquals(1, sa.size());
+    }
 }
