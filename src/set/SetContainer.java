@@ -4,8 +4,15 @@ import types.*;
 
 import java.util.Arrays;
 
-/**
- * A set using Nodes and a Pos-Array
+/**<br>
+ * Kurs: BTI3-ADP <br>
+ * Aufgabe: 1c Set as List<br>
+ * SetContainer is a Set-representing Class. <br>
+ * It's working with a List organized using Nodes<br>
+ * @author Finn Jannsen
+ * @author Philipp Schwarz
+ * @version 1.0, 24.03.19
+ *
  */
 public class SetContainer implements SetInterface {
 

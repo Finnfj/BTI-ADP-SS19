@@ -5,8 +5,15 @@ import types.Pos;
 
 import java.util.Arrays;
 
-/**
- * A set that internally works with an array.
+/**<br>
+ * Kurs: BTI3-ADP <br>
+ * Aufgabe: 1a Set as Array<br>
+ * SetArray is a Set-representing Class. <br>
+ * It's working with an Array of Elements<br>
+ * @author Finn Jannsen
+ * @author Philipp Schwarz
+ * @version 1.0, 24.03.19
+ *
  */
 @SuppressWarnings({"rawtypes", "unchecked"})
 public class SetArray<T> implements SetInterface {

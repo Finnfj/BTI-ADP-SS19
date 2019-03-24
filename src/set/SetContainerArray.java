@@ -56,8 +56,10 @@ public class SetContainerArray implements SetInterface {
     public Pos add(Elem elem) {
         // Check if element already exists
         Pos temp = this.find(elem.key);
-        if (temp.isValid) {
-            return temp;
+        if (temp != null) {
+            if (temp.isValid) {
+                return temp;
+            }
         }
 
         // check if the array needs to be enlarged and do so if necessary
@@ -151,10 +153,19 @@ public class SetContainerArray implements SetInterface {
     	positions[0].setPointer(dummy);
     	
     	int i=0;
-    	while(((Elem)positions[positions[i].getPreviousIndex()].getPointer()).key != key) {
-    		i = positions[i].getPreviousIndex();
+    	while(true) {
+    		int pre = positions[i].getPreviousIndex();
+			Elem tmp = (Elem)positions[pre].getPointer();
+    		if (tmp != null) {
+	    		if (tmp.key == key) {
+	    			return positions[pre];
+	    		}
+    		} else {
+    			//error
+    			return null;
+    		}
+    		i = pre;
     	}
-    	return positions[positions[i].getPreviousIndex()];
     }
 
     /**
@@ -175,11 +186,12 @@ public class SetContainerArray implements SetInterface {
      */
     @Override
     public Elem<?>[] retrieveAll() {
-    	Elem<?>[] tmp = new Elem[posSize];
+    	Elem<?>[] tmp = new Elem[posSize+1];
     	int i=positions[0].getNextIndex();
     	int j=1;
     	while (positions[i].isValid) {
     		tmp[j] = (Elem) positions[i].getPointer();
+    		i = positions[i].getNextIndex();
     		j++;
     	}
         return tmp;
