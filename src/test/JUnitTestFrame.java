@@ -6,7 +6,7 @@ import set.*;
 import types.*;
 
 public class JUnitTestFrame {
-    final private int timelimit = 5_000; // ms
+    final private int timelimit = 600_000; // ms
 
     @Test(timeout = timelimit)
     public void testSetArray() {

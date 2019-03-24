@@ -113,8 +113,6 @@ public class SetArray<T> implements SetInterface {
                         System.arraycopy(elements, gap + 1, elements, gap, elements.length - 1 - gap);
     				elemSize--;
     			}
-    		} else {
-    			break;
     		}
     	}
     }
