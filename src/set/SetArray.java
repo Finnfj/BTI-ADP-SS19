@@ -142,9 +142,13 @@ public class SetArray<T> implements SetInterface {
     	positions[0].setPointer(0);
     	
     	for (int i=posSize; i >= 0; i--) {
+    		try {
 			if (elements[positions[i].getPointer()].key == key) {
 				return (Pos<T>) positions[i];
 			}
+    		} catch (Exception e) {
+    			
+    		}
     	}
         return null;
     }
