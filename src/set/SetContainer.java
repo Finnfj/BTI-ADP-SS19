@@ -29,7 +29,6 @@ public class SetContainer implements SetInterface {
         this.head = new Node();
         this.tail = new Node();
         this.head.setNext(this.tail);
-        this.tail.setPrevious(this.head);
         this.positions = (Pos<Node>[]) new Pos[DEFSIZE];
         this.positions[0] = new Pos<>(new Node(), this);
         this.positions[0].isValid = false;
@@ -44,7 +43,6 @@ public class SetContainer implements SetInterface {
         this.head = new Node();
         this.tail = new Node();
         this.head.setNext(this.tail);
-        this.tail.setPrevious(this.head);
         this.positions = (Pos<Node>[]) new Pos[size];
         this.positions[0] = new Pos<>(new Node(), this);
         this.positions[0].isValid = false;
@@ -60,16 +58,9 @@ public class SetContainer implements SetInterface {
     @Override
     public Pos add(Elem elem) {
         //look if we already have the element in the list
-        for(int i = 1; i < positions.length; i++) {
-            if (positions[i] != null) {
-                if (positions[i].getPointer().getElem() == elem) {
-                    for (Pos<Node> p : positions) {
-                        if (p.getPointer().getElem() == elem) {
-                            return p;
-                        }
-                    }
-                }
-            }
+        Pos foundElemPos = find(elem.key);
+        if (foundElemPos != null) {
+            return foundElemPos;
         }
 
         // create a new node and put it at the end of the list
