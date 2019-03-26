@@ -5,7 +5,6 @@ package types;
  */
 public class Node {
     private Node next;
-    private Node previous;
     private Elem elem;
 
     /**
@@ -14,7 +13,6 @@ public class Node {
     public Node() {
         this.elem = null;
         this.next = null;
-        this.previous = null;
     }
 
     /**
@@ -24,7 +22,6 @@ public class Node {
     public Node(Elem elem) {
         this.elem = elem;
         this.next = null;
-        this.previous = null;
     }
 
     /**
@@ -41,22 +38,6 @@ public class Node {
      */
     public void setNext(Node next) {
         this.next = next;
-    }
-
-    /**
-     * Returns the previous node
-     * @return The node
-     */
-    public Node getPrevious() {
-        return previous;
-    }
-
-    /**
-     * Sets the previous node
-     * @param previous The node
-     */
-    public void setPrevious(Node previous) {
-        this.previous = previous;
     }
 
     /**
