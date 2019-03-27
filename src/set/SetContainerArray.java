@@ -23,7 +23,7 @@ public class SetContainerArray implements SetInterface {
     private int posSize;
     private int elemSize;
 
-    public int counter;
+    public long counter;
 
     /**
      * Create a SetContainerArray with size=DEFSIZE

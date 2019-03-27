@@ -24,7 +24,7 @@ public class SetArray<T> implements SetInterface {
     private int elemSize;
     private int posSize;
 
-    public int counter;
+    public long counter;
 
 	public SetArray() {
         this.elements = new Elem[DEFSIZE];

@@ -22,7 +22,7 @@ public class SetContainer implements SetInterface {
     private Pos<Node>[] positions;
     private int posSize;
 
-    public int counter;
+    public long counter;
 
     /**
      * Constructor for a SetContainer with a default size.
@@ -119,11 +119,9 @@ public class SetContainer implements SetInterface {
 
                 positions[i] = null;
                 posSize--;
-                System.out.println("delete(pos) counter:" + counter);
                 return;
             }
         }
-        System.out.println("delete(pos) counter:" + counter);
     }
 
     /**
@@ -156,12 +154,10 @@ public class SetContainer implements SetInterface {
         for (Pos<Node> p : positions) {
             counter++;
             if (p != null && p.getPointer().getElem() != null && p.getPointer().getElem().key == worker.getElem().key) {
-                System.out.println("find(key) counter:" + counter);
                 return p;
             }
         }
         // TODO: add check if worker = tail?
-        System.out.println("find(key) counter:" + counter);
         return null;
     }
 
