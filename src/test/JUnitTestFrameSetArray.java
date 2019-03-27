@@ -53,6 +53,7 @@ public class JUnitTestFrameSetArray {
         assertEquals(10, sa.size());
     }
 
+    // 2
     @Test(timeout = timelimit)
     public void testDeleteTwice() {
         SetInterface sa = new SetArray();
@@ -62,6 +63,17 @@ public class JUnitTestFrameSetArray {
         assertEquals(0, sa.size());
         sa.delete(testPos);
         assertEquals(0, sa.size());
+    }
+
+    // 2
+    @Test(timeout = timelimit)
+    public void testDeleteElementNotInSet() {
+        SetInterface sa = new SetArray();
+        Elem<Integer> testElement = new Elem(new Integer(5));
+        Pos p = new Pos("test", sa);
+        Pos testPos = sa.add(testElement);
+        sa.delete(p);
+        assertEquals(1, sa.size());
     }
 
     @Test(timeout = timelimit)
@@ -74,7 +86,7 @@ public class JUnitTestFrameSetArray {
         assertEquals(1, sa.size());
     }
 
-    //1.(a) and 1.(b)
+    // 1.(a) and 1.(b)
     @Test(timeout = timelimit)
     public void testAdd10() {
         SetInterface sa = new SetArray<>();
@@ -100,7 +112,7 @@ public class JUnitTestFrameSetArray {
         assertEquals(9, sa.size());
     }
 
-    //1.(c)
+    // 1.(c)
     @Test(timeout = timelimit)
     public void testAdd1000() {
         SetInterface sa = new SetArray<>();
