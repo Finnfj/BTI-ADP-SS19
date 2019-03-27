@@ -73,4 +73,23 @@ public class JUnitTestFrameSetArray {
         sa.add(testElement);
         assertEquals(1, sa.size());
     }
+
+    @Test(timeout = timelimit)
+    public void testAdd10() {
+        SetInterface sa = new SetArray<>();
+        Elem<Integer>[] elems = new Elem[10];
+        for (int i=0; i<elems.length; i++) {
+            elems[i] = new Elem<>(i);
+        }
+
+        for (Elem e : elems) {
+            sa.add(e);
+        }
+
+        for (Elem e : elems) {
+            assertEquals(sa.retrieve(sa.find(e.key)), e);
+        }
+
+        assertEquals(10, sa.size());
+    }
 }
