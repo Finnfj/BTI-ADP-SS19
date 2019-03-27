@@ -23,6 +23,8 @@ public class SetContainerArray implements SetInterface {
     private int posSize;
     private int elemSize;
 
+    public int counter;
+
     /**
      * Create a SetContainerArray with size=DEFSIZE
      */
@@ -32,6 +34,7 @@ public class SetContainerArray implements SetInterface {
         this.elemSize = 0;
         positions[0] = new Pos<>(null, this, 0, 0);
         positions[0].isValid = false;
+        this.counter = 0;
     }
 
     /**
@@ -44,6 +47,7 @@ public class SetContainerArray implements SetInterface {
         this.elemSize = 0;
         positions[0] = new Pos<>(null, this, 0, 0);
         positions[0].isValid = false;
+        this.counter = 0;
     }
 
     /**

@@ -6,7 +6,6 @@ import types.*;
  * An interface that defines a set.
  */
 public interface SetInterface {
-
     /**
      * Add an element to the set.
      * @param elem The element that is going to be added.

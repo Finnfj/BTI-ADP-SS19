@@ -22,6 +22,8 @@ public class SetContainer implements SetInterface {
     private Pos<Node>[] positions;
     private int posSize;
 
+    public int counter;
+
     /**
      * Constructor for a SetContainer with a default size.
      */
@@ -31,6 +33,7 @@ public class SetContainer implements SetInterface {
         this.head.setNext(this.tail);
         this.positions = (Pos<Node>[]) new Pos[DEFSIZE];
         this.posSize = 0;
+        this.counter = 0;
     }
 
     /**
@@ -43,6 +46,7 @@ public class SetContainer implements SetInterface {
         this.head.setNext(this.tail);
         this.positions = (Pos<Node>[]) new Pos[size];
         this.posSize = 0;
+        this.counter = 0;
     }
 
     /**
@@ -101,7 +105,6 @@ public class SetContainer implements SetInterface {
      */
     @Override
     public void delete(Pos pos) {
-        int counter = 0;
         for (int i = 0; i < positions.length; i++) {
             counter++;
             Pos<Node> deletePos = positions[i];
@@ -141,7 +144,6 @@ public class SetContainer implements SetInterface {
      */
     @Override
     public Pos find(int key) {
-        int counter = 0;
         // find the Elem with its key and set it to worker
         tail.getElem().key = key;
         Node worker = head;

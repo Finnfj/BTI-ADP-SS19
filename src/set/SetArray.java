@@ -24,6 +24,8 @@ public class SetArray<T> implements SetInterface {
     private int elemSize;
     private int posSize;
 
+    public int counter;
+
 	public SetArray() {
         this.elements = new Elem[DEFSIZE];
         this.positions = (Pos<Integer>[]) new Pos[DEFSIZE];
@@ -31,6 +33,7 @@ public class SetArray<T> implements SetInterface {
         this.posSize = 0;
         positions[0] = new Pos<>(0, this);
         positions[0].isValid = false;
+        this.counter = 0;
     }
 	
 	public SetArray(int size) {
@@ -39,6 +42,7 @@ public class SetArray<T> implements SetInterface {
         this.elemSize = 0;
         positions[0] = new Pos<>(0, this);
         positions[0].isValid = false;
+        this.counter = 0;
     }
 
     /**

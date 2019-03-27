@@ -131,14 +131,15 @@ public class JUnitTestFrameSetArray {
 
         assertEquals(1000, sa.size());
     }
-
+    //--------------------------------------DeletePOS-------------------------------------------------------------------
+    //--------------------------------------BestCase--------------------------------------------------------------------
     // 2
     @Test(timeout = timelimit)
     public void testDeletePOS10BestCase() {
         int amount = 10;
         int watchIdx = amount-1;
         Pos watchPos = null;
-        SetInterface sa = new SetArray<>();
+        SetArray sa = new SetArray<>();
         Elem<Integer>[] elems = new Elem[amount];
         for (int i = 0; i < elems.length; i++) {
             elems[i] = new Elem<>(i);
@@ -153,6 +154,7 @@ public class JUnitTestFrameSetArray {
         }
 
         sa.delete(watchPos);
+        System.out.println("testDeletePOS10BestCase" + ": " + sa.counter);
         assertEquals(amount-1, sa.size());
     }
 
@@ -162,7 +164,7 @@ public class JUnitTestFrameSetArray {
         int amount = 100;
         int watchIdx = amount-1;
         Pos watchPos = null;
-        SetInterface sa = new SetArray<>();
+        SetArray sa = new SetArray<>();
         Elem<Integer>[] elems = new Elem[amount];
         for (int i = 0; i < elems.length; i++) {
             elems[i] = new Elem<>(i);
@@ -177,6 +179,7 @@ public class JUnitTestFrameSetArray {
         }
 
         sa.delete(watchPos);
+        System.out.println("testDeletePOS100BestCase" + ": " + sa.counter);
         assertEquals(amount-1, sa.size());
     }
 
@@ -186,7 +189,7 @@ public class JUnitTestFrameSetArray {
         int amount = 1000;
         int watchIdx = amount-1;
         Pos watchPos = null;
-        SetInterface sa = new SetArray<>();
+        SetArray sa = new SetArray<>();
         Elem<Integer>[] elems = new Elem[amount];
         for (int i = 0; i < elems.length; i++) {
             elems[i] = new Elem<>(i);
@@ -201,6 +204,7 @@ public class JUnitTestFrameSetArray {
         }
 
         sa.delete(watchPos);
+        System.out.println("testDeletePOS1000BestCase" + ": " + sa.counter);
         assertEquals(amount-1, sa.size());
     }
 
@@ -210,7 +214,7 @@ public class JUnitTestFrameSetArray {
         int amount = 10000;
         int watchIdx = amount-1;
         Pos watchPos = null;
-        SetInterface sa = new SetArray<>();
+        SetArray sa = new SetArray<>();
         Elem<Integer>[] elems = new Elem[amount];
         for (int i = 0; i < elems.length; i++) {
             elems[i] = new Elem<>(i);
@@ -225,6 +229,7 @@ public class JUnitTestFrameSetArray {
         }
 
         sa.delete(watchPos);
+        System.out.println("testDeletePOS10000BestCase" + ": " + sa.counter);
         assertEquals(amount-1, sa.size());
     }
 
@@ -234,7 +239,7 @@ public class JUnitTestFrameSetArray {
         int amount = 100000;
         int watchIdx = amount-1;
         Pos watchPos = null;
-        SetInterface sa = new SetArray<>();
+        SetArray sa = new SetArray<>();
         Elem<Integer>[] elems = new Elem[amount];
         for (int i = 0; i < elems.length; i++) {
             elems[i] = new Elem<>(i);
@@ -249,7 +254,260 @@ public class JUnitTestFrameSetArray {
         }
 
         sa.delete(watchPos);
+        System.out.println("testDeletePOS100000BestCase" + ": " + sa.counter);
         assertEquals(amount-1, sa.size());
     }
-}
 
+    //--------------------------------------AverageCase-----------------------------------------------------------------
+    // 2
+    @Test(timeout = timelimit)
+    public void testDeletePOS10AverageCase() {
+        int amount = 10;
+        int watchIdx = amount/2;
+        Pos watchPos = null;
+        SetArray sa = new SetArray<>();
+        Elem<Integer>[] elems = new Elem[amount];
+        for (int i = 0; i < elems.length; i++) {
+            elems[i] = new Elem<>(i);
+        }
+
+        for (int i = 0; i < elems.length; i++) {
+            if (i != watchIdx) {
+                sa.add(elems[i]);
+            } else {
+                watchPos = sa.add(elems[i]);
+            }
+        }
+
+        sa.delete(watchPos);
+        System.out.println("testDeletePOS10AverageCase" + ": " + sa.counter);
+        assertEquals(amount-1, sa.size());
+    }
+
+    // 2
+    @Test(timeout = timelimit)
+    public void testDeletePOS100AverageCase() {
+        int amount = 100;
+        int watchIdx = amount/2;
+        Pos watchPos = null;
+        SetArray sa = new SetArray<>();
+        Elem<Integer>[] elems = new Elem[amount];
+        for (int i = 0; i < elems.length; i++) {
+            elems[i] = new Elem<>(i);
+        }
+
+        for (int i = 0; i < elems.length; i++) {
+            if (i != watchIdx) {
+                sa.add(elems[i]);
+            } else {
+                watchPos = sa.add(elems[i]);
+            }
+        }
+
+        sa.delete(watchPos);
+        System.out.println("testDeletePOS100AverageCase" + ": " + sa.counter);
+        assertEquals(amount-1, sa.size());
+    }
+
+    // 2
+    @Test(timeout = timelimit)
+    public void testDeletePOS1000AverageCase() {
+        int amount = 1000;
+        int watchIdx = amount/2;
+        Pos watchPos = null;
+        SetArray sa = new SetArray<>();
+        Elem<Integer>[] elems = new Elem[amount];
+        for (int i = 0; i < elems.length; i++) {
+            elems[i] = new Elem<>(i);
+        }
+
+        for (int i = 0; i < elems.length; i++) {
+            if (i != watchIdx) {
+                sa.add(elems[i]);
+            } else {
+                watchPos = sa.add(elems[i]);
+            }
+        }
+
+        sa.delete(watchPos);
+        System.out.println("testDeletePOS1000AverageCase" + ": " + sa.counter);
+        assertEquals(amount-1, sa.size());
+    }
+
+    // 2
+    @Test(timeout = timelimit)
+    public void testDeletePOS10000AverageCase() {
+        int amount = 10000;
+        int watchIdx = amount/2;
+        Pos watchPos = null;
+        SetArray sa = new SetArray<>();
+        Elem<Integer>[] elems = new Elem[amount];
+        for (int i = 0; i < elems.length; i++) {
+            elems[i] = new Elem<>(i);
+        }
+
+        for (int i = 0; i < elems.length; i++) {
+            if (i != watchIdx) {
+                sa.add(elems[i]);
+            } else {
+                watchPos = sa.add(elems[i]);
+            }
+        }
+
+        sa.delete(watchPos);
+        System.out.println("testDeletePOS10000AverageCase" + ": " + sa.counter);
+        assertEquals(amount-1, sa.size());
+    }
+
+    // 2
+    @Test(timeout = timelimit)
+    public void testDeletePOS100000AverageCase() {
+        int amount = 100000;
+        int watchIdx = amount/2;
+        Pos watchPos = null;
+        SetArray sa = new SetArray<>();
+        Elem<Integer>[] elems = new Elem[amount];
+        for (int i = 0; i < elems.length; i++) {
+            elems[i] = new Elem<>(i);
+        }
+
+        for (int i = 0; i < elems.length; i++) {
+            if (i != watchIdx) {
+                sa.add(elems[i]);
+            } else {
+                watchPos = sa.add(elems[i]);
+            }
+        }
+
+        sa.delete(watchPos);
+        System.out.println("testDeletePOS100000AverageCase" + ": " + sa.counter);
+        assertEquals(amount-1, sa.size());
+    }
+
+    //-------------------------------------WorstCase--------------------------------------------------------------------
+    @Test(timeout = timelimit)
+    public void testDeletePOS10WorstCase() {
+        int amount = 10;
+        int watchIdx = 0;
+        Pos watchPos = null;
+        SetArray sa = new SetArray<>();
+        Elem<Integer>[] elems = new Elem[amount];
+        for (int i = 0; i < elems.length; i++) {
+            elems[i] = new Elem<>(i);
+        }
+
+        for (int i = 0; i < elems.length; i++) {
+            if (i != watchIdx) {
+                sa.add(elems[i]);
+            } else {
+                watchPos = sa.add(elems[i]);
+            }
+        }
+
+        sa.delete(watchPos);
+        System.out.println("testDeletePOS10WorstCase" + ": " + sa.counter);
+        assertEquals(amount-1, sa.size());
+    }
+
+    // 2
+    @Test(timeout = timelimit)
+    public void testDeletePOS100WorstCase() {
+        int amount = 100;
+        int watchIdx = 0;
+        Pos watchPos = null;
+        SetArray sa = new SetArray<>();
+        Elem<Integer>[] elems = new Elem[amount];
+        for (int i = 0; i < elems.length; i++) {
+            elems[i] = new Elem<>(i);
+        }
+
+        for (int i = 0; i < elems.length; i++) {
+            if (i != watchIdx) {
+                sa.add(elems[i]);
+            } else {
+                watchPos = sa.add(elems[i]);
+            }
+        }
+
+        sa.delete(watchPos);
+        System.out.println("testDeletePOS100WorstCase" + ": " + sa.counter);
+        assertEquals(amount-1, sa.size());
+    }
+
+    // 2
+    @Test(timeout = timelimit)
+    public void testDeletePOS1000WorstCase() {
+        int amount = 1000;
+        int watchIdx = 0;
+        Pos watchPos = null;
+        SetArray sa = new SetArray<>();
+        Elem<Integer>[] elems = new Elem[amount];
+        for (int i = 0; i < elems.length; i++) {
+            elems[i] = new Elem<>(i);
+        }
+
+        for (int i = 0; i < elems.length; i++) {
+            if (i != watchIdx) {
+                sa.add(elems[i]);
+            } else {
+                watchPos = sa.add(elems[i]);
+            }
+        }
+
+        sa.delete(watchPos);
+        System.out.println("testDeletePOS1000WorstCase" + ": " + sa.counter);
+        assertEquals(amount-1, sa.size());
+    }
+
+    // 2
+    @Test(timeout = timelimit)
+    public void testDeletePOS10000WorstCase() {
+        int amount = 10000;
+        int watchIdx = 0;
+        Pos watchPos = null;
+        SetArray sa = new SetArray<>();
+        Elem<Integer>[] elems = new Elem[amount];
+        for (int i = 0; i < elems.length; i++) {
+            elems[i] = new Elem<>(i);
+        }
+
+        for (int i = 0; i < elems.length; i++) {
+            if (i != watchIdx) {
+                sa.add(elems[i]);
+            } else {
+                watchPos = sa.add(elems[i]);
+            }
+        }
+
+        sa.delete(watchPos);
+        System.out.println("testDeletePOS10000WorstCase" + ": " + sa.counter);
+        assertEquals(amount-1, sa.size());
+    }
+
+    // 2
+    @Test(timeout = timelimit)
+    public void testDeletePOS100000WorstCase() {
+        int amount = 100000;
+        int watchIdx = 0;
+        Pos watchPos = null;
+        SetArray sa = new SetArray<>();
+        Elem<Integer>[] elems = new Elem[amount];
+        for (int i = 0; i < elems.length; i++) {
+            elems[i] = new Elem<>(i);
+        }
+
+        for (int i = 0; i < elems.length; i++) {
+            if (i != watchIdx) {
+                sa.add(elems[i]);
+            } else {
+                watchPos = sa.add(elems[i]);
+            }
+        }
+
+        sa.delete(watchPos);
+        System.out.println("testDeletePOS100000WorstCase" + ": " + sa.counter);
+        assertEquals(amount-1, sa.size());
+    }
+
+    
+}
