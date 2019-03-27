@@ -115,6 +115,7 @@ public class SetContainerArray implements SetInterface {
 		}
 		
     	for (int i=1; i <= posSize; i++) {
+    	    counter++;
     		if (positions[i] == pos) {
     			if (positions[i].isValid) {
     				positions[i].isValid = false;
@@ -158,6 +159,7 @@ public class SetContainerArray implements SetInterface {
     	
     	int i=0;
     	while(true) {
+    	    counter++;
     		int pre = positions[i].getPreviousIndex();
 			Elem tmp = (Elem)positions[pre].getPointer();
     		if (tmp != null) {

@@ -116,6 +116,7 @@ public class SetArray<T> implements SetInterface {
 		}
 		
     	for (int i=1; i < positions.length; i++) {
+    	    counter++;
     		if (positions[i] == pos) {
     			if (positions[i].isValid) {
     				positions[i].isValid = false;
@@ -152,6 +153,7 @@ public class SetArray<T> implements SetInterface {
     	positions[0].setPointer(0);
     	
     	for (int i=posSize; i >= 0; i--) {
+    	    counter++;
     		if (positions[i].getPointer() != null) {
 			    if (elements[positions[i].getPointer()].key == key) {
 				    return (Pos<T>) positions[i];

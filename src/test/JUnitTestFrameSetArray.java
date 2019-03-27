@@ -142,7 +142,7 @@ public class JUnitTestFrameSetArray {
         SetArray sa = new SetArray<>();
         Elem<Integer>[] elems = new Elem[amount];
         for (int i = 0; i < elems.length; i++) {
-            elems[i] = new Elem<>(i);
+            elems[i] = new Elem<>(i, i);
         }
 
         for (int i = 0; i < elems.length; i++) {
@@ -167,7 +167,7 @@ public class JUnitTestFrameSetArray {
         SetArray sa = new SetArray<>();
         Elem<Integer>[] elems = new Elem[amount];
         for (int i = 0; i < elems.length; i++) {
-            elems[i] = new Elem<>(i);
+            elems[i] = new Elem<>(i, i);
         }
 
         for (int i = 0; i < elems.length; i++) {
@@ -192,7 +192,7 @@ public class JUnitTestFrameSetArray {
         SetArray sa = new SetArray<>();
         Elem<Integer>[] elems = new Elem[amount];
         for (int i = 0; i < elems.length; i++) {
-            elems[i] = new Elem<>(i);
+            elems[i] = new Elem<>(i, i);
         }
 
         for (int i = 0; i < elems.length; i++) {
@@ -217,7 +217,7 @@ public class JUnitTestFrameSetArray {
         SetArray sa = new SetArray<>();
         Elem<Integer>[] elems = new Elem[amount];
         for (int i = 0; i < elems.length; i++) {
-            elems[i] = new Elem<>(i);
+            elems[i] = new Elem<>(i, i);
         }
 
         for (int i = 0; i < elems.length; i++) {
@@ -242,7 +242,7 @@ public class JUnitTestFrameSetArray {
         SetArray sa = new SetArray<>();
         Elem<Integer>[] elems = new Elem[amount];
         for (int i = 0; i < elems.length; i++) {
-            elems[i] = new Elem<>(i);
+            elems[i] = new Elem<>(i, i);
         }
 
         for (int i = 0; i < elems.length; i++) {
@@ -268,7 +268,7 @@ public class JUnitTestFrameSetArray {
         SetArray sa = new SetArray<>();
         Elem<Integer>[] elems = new Elem[amount];
         for (int i = 0; i < elems.length; i++) {
-            elems[i] = new Elem<>(i);
+            elems[i] = new Elem<>(i, i);
         }
 
         for (int i = 0; i < elems.length; i++) {
@@ -293,7 +293,7 @@ public class JUnitTestFrameSetArray {
         SetArray sa = new SetArray<>();
         Elem<Integer>[] elems = new Elem[amount];
         for (int i = 0; i < elems.length; i++) {
-            elems[i] = new Elem<>(i);
+            elems[i] = new Elem<>(i, i);
         }
 
         for (int i = 0; i < elems.length; i++) {
@@ -318,7 +318,7 @@ public class JUnitTestFrameSetArray {
         SetArray sa = new SetArray<>();
         Elem<Integer>[] elems = new Elem[amount];
         for (int i = 0; i < elems.length; i++) {
-            elems[i] = new Elem<>(i);
+            elems[i] = new Elem<>(i, i);
         }
 
         for (int i = 0; i < elems.length; i++) {
@@ -343,7 +343,7 @@ public class JUnitTestFrameSetArray {
         SetArray sa = new SetArray<>();
         Elem<Integer>[] elems = new Elem[amount];
         for (int i = 0; i < elems.length; i++) {
-            elems[i] = new Elem<>(i);
+            elems[i] = new Elem<>(i, i);
         }
 
         for (int i = 0; i < elems.length; i++) {
@@ -368,7 +368,7 @@ public class JUnitTestFrameSetArray {
         SetArray sa = new SetArray<>();
         Elem<Integer>[] elems = new Elem[amount];
         for (int i = 0; i < elems.length; i++) {
-            elems[i] = new Elem<>(i);
+            elems[i] = new Elem<>(i, i);
         }
 
         for (int i = 0; i < elems.length; i++) {
@@ -393,7 +393,7 @@ public class JUnitTestFrameSetArray {
         SetArray sa = new SetArray<>();
         Elem<Integer>[] elems = new Elem[amount];
         for (int i = 0; i < elems.length; i++) {
-            elems[i] = new Elem<>(i);
+            elems[i] = new Elem<>(i, i);
         }
 
         for (int i = 0; i < elems.length; i++) {
@@ -418,7 +418,7 @@ public class JUnitTestFrameSetArray {
         SetArray sa = new SetArray<>();
         Elem<Integer>[] elems = new Elem[amount];
         for (int i = 0; i < elems.length; i++) {
-            elems[i] = new Elem<>(i);
+            elems[i] = new Elem<>(i, i);
         }
 
         for (int i = 0; i < elems.length; i++) {
@@ -443,7 +443,7 @@ public class JUnitTestFrameSetArray {
         SetArray sa = new SetArray<>();
         Elem<Integer>[] elems = new Elem[amount];
         for (int i = 0; i < elems.length; i++) {
-            elems[i] = new Elem<>(i);
+            elems[i] = new Elem<>(i, i);
         }
 
         for (int i = 0; i < elems.length; i++) {
@@ -468,7 +468,7 @@ public class JUnitTestFrameSetArray {
         SetArray sa = new SetArray<>();
         Elem<Integer>[] elems = new Elem[amount];
         for (int i = 0; i < elems.length; i++) {
-            elems[i] = new Elem<>(i);
+            elems[i] = new Elem<>(i, i);
         }
 
         for (int i = 0; i < elems.length; i++) {
@@ -493,7 +493,7 @@ public class JUnitTestFrameSetArray {
         SetArray sa = new SetArray<>();
         Elem<Integer>[] elems = new Elem[amount];
         for (int i = 0; i < elems.length; i++) {
-            elems[i] = new Elem<>(i);
+            elems[i] = new Elem<>(i, i);
         }
 
         for (int i = 0; i < elems.length; i++) {
@@ -509,5 +509,322 @@ public class JUnitTestFrameSetArray {
         assertEquals(amount-1, sa.size());
     }
 
-    
+    //--------------------------------------DeleteKEY-------------------------------------------------------------------
+    //--------------------------------------BestCase--------------------------------------------------------------------
+    // 2
+    @Test(timeout = timelimit)
+    public void testDeleteKEY10BestCase() {
+        int amount = 10;
+        int watchIdx = amount-1;
+
+        SetArray sa = new SetArray<>();
+        Elem<Integer>[] elems = new Elem[amount];
+        for (int i = 0; i < elems.length; i++) {
+            elems[i] = new Elem<>(i, i);
+        }
+
+        for (int i = 0; i < elems.length; i++) {
+                sa.add(elems[i]);
+        }
+
+        sa.delete(elems[watchIdx].key);
+        System.out.println("testDeleteKEY10BestCase" + ": " + sa.counter);
+        assertEquals(amount-1, sa.size());
+    }
+
+    // 2
+    @Test(timeout = timelimit)
+    public void testDeleteKEY100BestCase() {
+        int amount = 100;
+        int watchIdx = amount-1;
+
+        SetArray sa = new SetArray<>();
+        Elem<Integer>[] elems = new Elem[amount];
+        for (int i = 0; i < elems.length; i++) {
+            elems[i] = new Elem<>(i, i);
+        }
+
+        for (int i = 0; i < elems.length; i++) {
+            sa.add(elems[i]);
+        }
+
+        sa.delete(elems[watchIdx].key);
+        System.out.println("testDeleteKEY100BestCase" + ": " + sa.counter);
+        assertEquals(amount-1, sa.size());
+    }
+
+    // 2
+    @Test(timeout = timelimit)
+    public void testDeleteKEY1000BestCase() {
+        int amount = 1000;
+        int watchIdx = amount-1;
+
+        SetArray sa = new SetArray<>();
+        Elem<Integer>[] elems = new Elem[amount];
+        for (int i = 0; i < elems.length; i++) {
+            elems[i] = new Elem<>(i, i);
+        }
+
+        for (int i = 0; i < elems.length; i++) {
+            sa.add(elems[i]);
+        }
+
+        sa.delete(elems[watchIdx].key);
+        System.out.println("testDeleteKEY1000BestCase" + ": " + sa.counter);
+        assertEquals(amount-1, sa.size());
+    }
+
+    // 2
+    @Test(timeout = timelimit)
+    public void testDeleteKEY10000BestCase() {
+        int amount = 10000;
+        int watchIdx = amount-1;
+
+        SetArray sa = new SetArray<>();
+        Elem<Integer>[] elems = new Elem[amount];
+        for (int i = 0; i < elems.length; i++) {
+            elems[i] = new Elem<>(i, i);
+        }
+
+        for (int i = 0; i < elems.length; i++) {
+            sa.add(elems[i]);
+        }
+
+        sa.delete(elems[watchIdx].key);
+        System.out.println("testDeleteKEY10000BestCase" + ": " + sa.counter);
+        assertEquals(amount-1, sa.size());
+    }
+
+    // 2
+    @Test(timeout = timelimit)
+    public void testDeleteKEY100000BestCase() {
+        int amount = 100000;
+        int watchIdx = amount-1;
+
+        SetArray sa = new SetArray<>();
+        Elem<Integer>[] elems = new Elem[amount];
+        for (int i = 0; i < elems.length; i++) {
+            elems[i] = new Elem<>(i, i);
+        }
+
+        for (int i = 0; i < elems.length; i++) {
+            sa.add(elems[i]);
+        }
+
+        sa.delete(elems[watchIdx].key);
+        System.out.println("testDeleteKEY100000BestCase" + ": " + sa.counter);
+        assertEquals(amount-1, sa.size());
+    }
+
+    //-----------------------------------AverageCase--------------------------------------------------------------------
+    // 2
+    @Test(timeout = timelimit)
+    public void testDeleteKEY10AverageCase() {
+        int amount = 10;
+        int watchIdx = amount/2;
+
+        SetArray sa = new SetArray<>();
+        Elem<Integer>[] elems = new Elem[amount];
+        for (int i = 0; i < elems.length; i++) {
+            elems[i] = new Elem<>(i, i);
+        }
+
+        for (int i = 0; i < elems.length; i++) {
+            sa.add(elems[i]);
+        }
+
+        sa.delete(elems[watchIdx].key);
+        System.out.println("testDeleteKEY10AverageCase" + ": " + sa.counter);
+        assertEquals(amount-1, sa.size());
+    }
+
+    // 2
+    @Test(timeout = timelimit)
+    public void testDeleteKEY100AverageCase() {
+        int amount = 100;
+        int watchIdx = amount/2;
+
+        SetArray sa = new SetArray<>();
+        Elem<Integer>[] elems = new Elem[amount];
+        for (int i = 0; i < elems.length; i++) {
+            elems[i] = new Elem<>(i, i);
+        }
+
+        for (int i = 0; i < elems.length; i++) {
+            sa.add(elems[i]);
+        }
+
+        sa.delete(elems[watchIdx].key);
+        System.out.println("testDeleteKEY100AverageCase" + ": " + sa.counter);
+        assertEquals(amount-1, sa.size());
+    }
+
+    // 2
+    @Test(timeout = timelimit)
+    public void testDeleteKEY1000AverageCase() {
+        int amount = 1000;
+        int watchIdx = amount/2;
+
+        SetArray sa = new SetArray<>();
+        Elem<Integer>[] elems = new Elem[amount];
+        for (int i = 0; i < elems.length; i++) {
+            elems[i] = new Elem<>(i, i);
+        }
+
+        for (int i = 0; i < elems.length; i++) {
+            sa.add(elems[i]);
+        }
+
+        sa.delete(elems[watchIdx].key);
+        System.out.println("testDeleteKEY1000AverageCase" + ": " + sa.counter);
+        assertEquals(amount-1, sa.size());
+    }
+
+    // 2
+    @Test(timeout = timelimit)
+    public void testDeleteKEY10000AverageCase() {
+        int amount = 10000;
+        int watchIdx = amount/2;
+
+        SetArray sa = new SetArray<>();
+        Elem<Integer>[] elems = new Elem[amount];
+        for (int i = 0; i < elems.length; i++) {
+            elems[i] = new Elem<>(i, i);
+        }
+
+        for (int i = 0; i < elems.length; i++) {
+            sa.add(elems[i]);
+        }
+
+        sa.delete(elems[watchIdx].key);
+        System.out.println("testDeleteKEY10000AverageCase" + ": " + sa.counter);
+        assertEquals(amount-1, sa.size());
+    }
+
+    // 2
+    @Test(timeout = timelimit)
+    public void testDeleteKEY100000AverageCase() {
+        int amount = 100000;
+        int watchIdx = amount/2;
+
+        SetArray sa = new SetArray<>();
+        Elem<Integer>[] elems = new Elem[amount];
+        for (int i = 0; i < elems.length; i++) {
+            elems[i] = new Elem<>(i, i);
+        }
+
+        for (int i = 0; i < elems.length; i++) {
+            sa.add(elems[i]);
+        }
+
+        sa.delete(elems[watchIdx].key);
+        System.out.println("testDeleteKEY100000AverageCase" + ": " + sa.counter);
+        assertEquals(amount-1, sa.size());
+    }
+
+    //-----------------------------------WorstCase--------------------------------------------------------------------
+    // 2
+    @Test(timeout = timelimit)
+    public void testDeleteKEY10WorstCase() {
+        int amount = 10;
+        int watchIdx = 0;
+
+        SetArray sa = new SetArray<>();
+        Elem<Integer>[] elems = new Elem[amount];
+        for (int i = 0; i < elems.length; i++) {
+            elems[i] = new Elem<>(i, i);
+        }
+
+        for (int i = 0; i < elems.length; i++) {
+            sa.add(elems[i]);
+        }
+
+        sa.delete(elems[watchIdx].key);
+        System.out.println("testDeleteKEY10WorstCase" + ": " + sa.counter);
+        assertEquals(amount-1, sa.size());
+    }
+
+    // 2
+    @Test(timeout = timelimit)
+    public void testDeleteKEY100WorstCase() {
+        int amount = 100;
+        int watchIdx = 0;
+
+        SetArray sa = new SetArray<>();
+        Elem<Integer>[] elems = new Elem[amount];
+        for (int i = 0; i < elems.length; i++) {
+            elems[i] = new Elem<>(i, i);
+        }
+
+        for (int i = 0; i < elems.length; i++) {
+            sa.add(elems[i]);
+        }
+
+        sa.delete(elems[watchIdx].key);
+        System.out.println("testDeleteKEY100WorstCase" + ": " + sa.counter);
+        assertEquals(amount-1, sa.size());
+    }
+
+    // 2
+    @Test(timeout = timelimit)
+    public void testDeleteKEY1000WorstCase() {
+        int amount = 1000;
+        int watchIdx = 0;
+
+        SetArray sa = new SetArray<>();
+        Elem<Integer>[] elems = new Elem[amount];
+        for (int i = 0; i < elems.length; i++) {
+            elems[i] = new Elem<>(i, i);
+        }
+
+        for (int i = 0; i < elems.length; i++) {
+            sa.add(elems[i]);
+        }
+
+        sa.delete(elems[watchIdx].key);
+        System.out.println("testDeleteKEY1000WorstCase" + ": " + sa.counter);
+        assertEquals(amount-1, sa.size());
+    }
+
+    // 2
+    @Test(timeout = timelimit)
+    public void testDeleteKEY10000WorstCase() {
+        int amount = 10000;
+        int watchIdx = 0;
+
+        SetArray sa = new SetArray<>();
+        Elem<Integer>[] elems = new Elem[amount];
+        for (int i = 0; i < elems.length; i++) {
+            elems[i] = new Elem<>(i, i);
+        }
+
+        for (int i = 0; i < elems.length; i++) {
+            sa.add(elems[i]);
+        }
+
+        sa.delete(elems[watchIdx].key);
+        System.out.println("testDeleteKEY10000WorstCase" + ": " + sa.counter);
+        assertEquals(amount-1, sa.size());
+    }
+
+    // 2
+    @Test(timeout = timelimit)
+    public void testDeleteKEY100000WorstCase() {
+        int amount = 100000;
+        int watchIdx = 0;
+
+        SetArray sa = new SetArray<>();
+        Elem<Integer>[] elems = new Elem[amount];
+        for (int i = 0; i < elems.length; i++) {
+            elems[i] = new Elem<>(i, i);
+        }
+
+        for (int i = 0; i < elems.length; i++) {
+            sa.add(elems[i]);
+        }
+
+        sa.delete(elems[watchIdx].key);
+        System.out.println("testDeleteKEY100000WorstCase" + ": " + sa.counter);
+        assertEquals(amount-1, sa.size());
+    }
 }
