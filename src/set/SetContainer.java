@@ -101,21 +101,26 @@ public class SetContainer implements SetInterface {
      */
     @Override
     public void delete(Pos pos) {
+        int counter = 0;
         for (int i = 0; i < positions.length; i++) {
+            counter++;
             Pos<Node> deletePos = positions[i];
             if (deletePos == pos) {
                 Node deleteNode = deletePos.getPointer();
                 Node worker = head;
                 do {
+                    counter++;
                     worker = worker.getNext();
                 } while (worker.getNext() != deleteNode);
                 worker.setNext(deleteNode.getNext());
 
                 positions[i] = null;
                 posSize--;
+                System.out.println("delete(pos) counter:" + counter);
                 return;
             }
         }
+        System.out.println("delete(pos) counter:" + counter);
     }
 
     /**
@@ -136,20 +141,25 @@ public class SetContainer implements SetInterface {
      */
     @Override
     public Pos find(int key) {
+        int counter = 0;
         // find the Elem with its key and set it to worker
         tail.getElem().key = key;
         Node worker = head;
         do {
+            counter++;
             worker = worker.getNext();
         } while (worker.getElem().key != key);
 
         // find the Pos of worker
         for (Pos<Node> p : positions) {
+            counter++;
             if (p != null && p.getPointer().getElem() != null && p.getPointer().getElem().key == worker.getElem().key) {
+                System.out.println("find(key) counter:" + counter);
                 return p;
             }
         }
         // TODO: add check if worker = tail?
+        System.out.println("find(key) counter:" + counter);
         return null;
     }
 

@@ -53,7 +53,7 @@ public class JUnitTestFrameSetArray {
         assertEquals(10, sa.size());
     }
 
-    // 2
+    // 1.2
     @Test(timeout = timelimit)
     public void testDeleteTwice() {
         SetInterface sa = new SetArray();
@@ -65,7 +65,7 @@ public class JUnitTestFrameSetArray {
         assertEquals(0, sa.size());
     }
 
-    // 2
+    // 1.2
     @Test(timeout = timelimit)
     public void testDeleteElementNotInSet() {
         SetInterface sa = new SetArray();
@@ -86,7 +86,7 @@ public class JUnitTestFrameSetArray {
         assertEquals(1, sa.size());
     }
 
-    // 1.(a) and 1.(b)
+    // 1.1.(a) and 1.(b)
     @Test(timeout = timelimit)
     public void testAdd10() {
         SetInterface sa = new SetArray<>();
@@ -112,7 +112,7 @@ public class JUnitTestFrameSetArray {
         assertEquals(9, sa.size());
     }
 
-    // 1.(c)
+    // 1.1.(c)
     @Test(timeout = timelimit)
     public void testAdd1000() {
         SetInterface sa = new SetArray<>();
@@ -131,4 +131,125 @@ public class JUnitTestFrameSetArray {
 
         assertEquals(1000, sa.size());
     }
+
+    // 2
+    @Test(timeout = timelimit)
+    public void testDeletePOS10BestCase() {
+        int amount = 10;
+        int watchIdx = amount-1;
+        Pos watchPos = null;
+        SetInterface sa = new SetArray<>();
+        Elem<Integer>[] elems = new Elem[amount];
+        for (int i = 0; i < elems.length; i++) {
+            elems[i] = new Elem<>(i);
+        }
+
+        for (int i = 0; i < elems.length; i++) {
+            if (i != watchIdx) {
+                sa.add(elems[i]);
+            } else {
+                watchPos = sa.add(elems[i]);
+            }
+        }
+
+        sa.delete(watchPos);
+        assertEquals(amount-1, sa.size());
+    }
+
+    // 2
+    @Test(timeout = timelimit)
+    public void testDeletePOS100BestCase() {
+        int amount = 100;
+        int watchIdx = amount-1;
+        Pos watchPos = null;
+        SetInterface sa = new SetArray<>();
+        Elem<Integer>[] elems = new Elem[amount];
+        for (int i = 0; i < elems.length; i++) {
+            elems[i] = new Elem<>(i);
+        }
+
+        for (int i = 0; i < elems.length; i++) {
+            if (i != watchIdx) {
+                sa.add(elems[i]);
+            } else {
+                watchPos = sa.add(elems[i]);
+            }
+        }
+
+        sa.delete(watchPos);
+        assertEquals(amount-1, sa.size());
+    }
+
+    // 2
+    @Test(timeout = timelimit)
+    public void testDeletePOS1000BestCase() {
+        int amount = 1000;
+        int watchIdx = amount-1;
+        Pos watchPos = null;
+        SetInterface sa = new SetArray<>();
+        Elem<Integer>[] elems = new Elem[amount];
+        for (int i = 0; i < elems.length; i++) {
+            elems[i] = new Elem<>(i);
+        }
+
+        for (int i = 0; i < elems.length; i++) {
+            if (i != watchIdx) {
+                sa.add(elems[i]);
+            } else {
+                watchPos = sa.add(elems[i]);
+            }
+        }
+
+        sa.delete(watchPos);
+        assertEquals(amount-1, sa.size());
+    }
+
+    // 2
+    @Test(timeout = timelimit)
+    public void testDeletePOS10000BestCase() {
+        int amount = 10000;
+        int watchIdx = amount-1;
+        Pos watchPos = null;
+        SetInterface sa = new SetArray<>();
+        Elem<Integer>[] elems = new Elem[amount];
+        for (int i = 0; i < elems.length; i++) {
+            elems[i] = new Elem<>(i);
+        }
+
+        for (int i = 0; i < elems.length; i++) {
+            if (i != watchIdx) {
+                sa.add(elems[i]);
+            } else {
+                watchPos = sa.add(elems[i]);
+            }
+        }
+
+        sa.delete(watchPos);
+        assertEquals(amount-1, sa.size());
+    }
+
+    // 2
+    @Test(timeout = timelimit)
+    public void testDeletePOS100000BestCase() {
+        int amount = 100000;
+        int watchIdx = amount-1;
+        Pos watchPos = null;
+        SetInterface sa = new SetArray<>();
+        Elem<Integer>[] elems = new Elem[amount];
+        for (int i = 0; i < elems.length; i++) {
+            elems[i] = new Elem<>(i);
+        }
+
+        for (int i = 0; i < elems.length; i++) {
+            if (i != watchIdx) {
+                sa.add(elems[i]);
+            } else {
+                watchPos = sa.add(elems[i]);
+            }
+        }
+
+        sa.delete(watchPos);
+        assertEquals(amount-1, sa.size());
+    }
 }
+
