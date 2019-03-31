@@ -117,7 +117,7 @@ public class SetArray<T> implements SetInterface {
 			return;
 		}
 		
-    	for (int i=1; i < positions.length; i++) {
+    	for (int i=1; i <= posSize; i++) {
     	    counter++;
     		if (positions[i] == pos) {
     			if (positions[i].isValid) {
@@ -127,6 +127,7 @@ public class SetArray<T> implements SetInterface {
                     if (elements.length - 1 - gap >= 0)
                         System.arraycopy(elements, gap + 1, elements, gap, elements.length - 1 - gap);
     				elemSize--;
+    				return;
     			}
     		}
     	}
