@@ -117,7 +117,7 @@ public class SetArray<T> implements SetInterface {
 			return;
 		}
 		
-    	for (int i=1; i <= posSize; i++) {
+    	for (int i=posSize; i > 0; i--) {
     	    counter++;
     		if (positions[i] == pos) {
     			if (positions[i].isValid) {

@@ -115,28 +115,33 @@ public class SetContainerArray implements SetInterface {
 		if (pos.getSet() != this) {
 			return;
 		}
-		
-    	for (int i=1; i <= posSize; i++) {
-    	    counter++;
-    		if (positions[i] == pos) {
-    			if (positions[i].isValid) {
-    				positions[i].isValid = false;
-    				positions[i].setPointer(null);
-    				
-    				// Link neighbours
-    				int pre = positions[i].getPreviousIndex();
-    				int next = positions[i].getNextIndex();
-    				positions[pre].setNextIndex(next);
-    				positions[next].setPreviousIndex(pre);
-    				
-    				// Append at ending
-    				positions[positions[0].getPreviousIndex()].setNextIndex(i);
-    				positions[i].setNextIndex(0);
-    				positions[0].setPreviousIndex(i);
-    				elemSize--;
-    			}
-    		}
-    	}
+
+        int j=0;
+        for (int i = this.posSize; i > 0; i--) {
+            counter++;
+            int preIndex = positions[j].getPreviousIndex();
+            Pos tmp = positions[preIndex];
+            if (tmp == pos) {
+                if (positions[i].isValid) {
+                    positions[i].isValid = false;
+                    positions[i].setPointer(null);
+
+                    // Link neighbours
+                    int pre = positions[i].getPreviousIndex();
+                    int next = positions[i].getNextIndex();
+                    positions[pre].setNextIndex(next);
+                    positions[next].setPreviousIndex(pre);
+
+                    // Append at ending
+                    positions[positions[0].getPreviousIndex()].setNextIndex(i);
+                    positions[i].setNextIndex(0);
+                    positions[0].setPreviousIndex(i);
+                    elemSize--;
+                    return;
+                }
+            }
+            j = preIndex;
+        }
     }
 
     /**
