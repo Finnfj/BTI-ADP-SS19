@@ -58,12 +58,10 @@ public class SetContainer implements SetInterface {
     @Override
     public Pos add(Elem elem) {
         //look if we already have the element in the list
-        long tmpCounter = this.counter;
         Pos foundElemPos = find(elem.key);
         if (foundElemPos != null) {
             return foundElemPos;
         }
-        this.counter = tmpCounter;
 
         // create a new node and put it at the end of the list
         Node newNode = new Node(elem);

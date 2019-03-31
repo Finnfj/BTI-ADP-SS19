@@ -33,6 +33,7 @@ public class SetContainerArray implements SetInterface {
         this.posSize = 0;
         this.elemSize = 0;
         positions[0] = new Pos<>(null, this, 0, 0);
+        positions[0].setPointer(new Elem<>(-1, null));
         positions[0].isValid = false;
         this.counter = 0;
     }
@@ -95,7 +96,6 @@ public class SetContainerArray implements SetInterface {
             return positions[posSize];
         } else if (!positions[nextFree].isValid) {            // found empty position, insert
             positions[nextFree].setPointer(elem);
-            //REDUNDANT? positions[nextFree].setPreviousIndex(i);
             positions[nextFree].isValid = true;
             elemSize++;
             return positions[nextFree];
@@ -156,8 +156,7 @@ public class SetContainerArray implements SetInterface {
      */
     @Override
     public Pos find(int key) {
-    	Elem dummy = new Elem<>(key, null);
-    	positions[0].setPointer(dummy);
+        ((Elem)positions[0].getPointer()).key = key;
     	
     	int i=0;
     	while(true) {
