@@ -54,10 +54,12 @@ public class SetArray<T> implements SetInterface {
     @Override
     public Pos<Integer> add(Elem elem) {
     	// Check if element already exists
+        long tmpCounter = this.counter;
     	Pos temp = this.find(elem.key);
     	if (temp.isValid) {
     		return temp;
     	}
+    	this.counter = tmpCounter;
     	
         // check if the array needs to be enlarged and do so if necessary
         if (elemSize == elements.length-1) {

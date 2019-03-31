@@ -59,12 +59,14 @@ public class SetContainerArray implements SetInterface {
     @Override
     public Pos add(Elem elem) {
         // Check if element already exists
+        long tmpCounter = this.counter;
         Pos temp = this.find(elem.key);
         if (temp != null) {
             if (temp.isValid) {
                 return temp;
             }
         }
+        this.counter = tmpCounter;
 
         // check if the array needs to be enlarged and do so if necessary
         if (posSize == positions.length-2) {
