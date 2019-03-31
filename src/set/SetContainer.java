@@ -21,6 +21,7 @@ public class SetContainer implements SetInterface {
     private Node tail;
     private Pos<Node>[] positions;
     private int posSize;
+    private int elemSize;
 
     public long counter;
 
@@ -34,6 +35,7 @@ public class SetContainer implements SetInterface {
         this.positions = (Pos<Node>[]) new Pos[DEFSIZE];
         this.posSize = 0;
         this.counter = 0;
+        this.elemSize = 0;
     }
 
     /**
@@ -47,6 +49,7 @@ public class SetContainer implements SetInterface {
         this.positions = (Pos<Node>[]) new Pos[size];
         this.posSize = 0;
         this.counter = 0;
+        this.elemSize = 0;
     }
 
     /**
@@ -68,34 +71,53 @@ public class SetContainer implements SetInterface {
         newNode.setNext(tail);
         Node worker = head;
         do {
-                worker = worker.getNext();
+            worker = worker.getNext();
 
         } while (worker.getNext() != null && worker.getNext() != tail);
         worker.setNext(newNode);
 
-        // create a new Pos for the node
-        Pos newPos = new Pos(newNode, this);
-        newPos.isValid = true;
+        // look if there is a free pos available
+        int i = 0;
+        boolean freePosFound = false;
+        while(!freePosFound) {
+            if(!positions[i].isValid) {
+                freePosFound = true;
+            }
+            i++;
+        }
 
-        // put the new pos in the pos array
-        // check if there is enough space in the pos array and if not create a new one with a larger length
-        if (posSize == positions.length - 1) {
-            positions = Arrays.copyOf(positions, positions.length * 2);
-            positions[posSize] = newPos;
-        } else { // if there is enough space just put it at the end
-            int i = 0;
-            boolean found = false;
-            while ((i < positions.length) && !found) {
-                if (positions[i] == null) {
-                    positions[i] = newPos;
-                    found = true;
+        Pos returnPos = null;
+        if(freePosFound) {
+            positions[i].setPointer(newNode);
+            positions[i].isValid = true;
+            returnPos = positions[i];
+        } else {
+            // create a new Pos for the node
+            Pos newPos = new Pos(newNode, this);
+            newPos.isValid = true;
+            returnPos = newPos;
+
+            // put the new pos in the pos array
+            // check if there is enough space in the pos array and if not create a new one with a larger length
+            if (posSize == positions.length - 1) {
+                positions = Arrays.copyOf(positions, positions.length * 2);
+                positions[posSize] = newPos;
+            } else { // if there is enough space just put it at the end
+                int j = 0;
+                boolean found = false;
+                while ((j < positions.length) && !found) {
+                    if (positions[j] == null) {
+                        positions[j] = newPos;
+                        found = true;
+                    }
+                    j++;
                 }
-                i++;
             }
         }
 
         posSize++;
-        return newPos;
+        elemSize++;
+        return returnPos;
     }
 
     /**
@@ -105,7 +127,7 @@ public class SetContainer implements SetInterface {
      */
     @Override
     public void delete(Pos pos) {
-        for (int i = 0; i < positions.length; i++) {
+        for (int i = 0; i < posSize; i++) {
             counter++;
             Pos<Node> deletePos = positions[i];
             if (deletePos == pos) {
@@ -117,8 +139,8 @@ public class SetContainer implements SetInterface {
                 } while (worker.getNext() != deleteNode);
                 worker.setNext(deleteNode.getNext());
 
-                positions[i] = null;
-                posSize--;
+                positions[i].isValid = false;
+                elemSize--;
                 return;
             }
         }
