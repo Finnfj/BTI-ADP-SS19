@@ -55,15 +55,6 @@ title __ADP Set Class Diagram__
         - posSize : int
         + SetArray()
         + SetArray(size : int)
-        + add(elem : Elem)
-        + delete(pos : Pos)
-        + delete(key : Key)
-        + find(Key : int) : Pos
-        + retrieve(pos : Pos) : Elem
-        + showall()
-        + size() : int
-        {static} + unify()
-        + retrieveAll() : Elem[]
     }
   }
 
@@ -76,15 +67,6 @@ title __ADP Set Class Diagram__
         - elemSize : int
         + SetContainerArray()
         + SetContainerArray(size : int)
-        + add(elem : Elem)
-        + delete(pos : Pos)
-        + delete(key : Key)
-        + find(Key : int) : Pos
-        + retrieve(pos : Pos) : Elem
-        + retrieveAll() : Elem[]
-        + showall()
-        + size() : int
-        {static} + unify()
     }
   }
 
@@ -96,15 +78,6 @@ title __ADP Set Class Diagram__
         - posSize : int
         + SetContainer()
         + SetContainer(size : int)
-        + add(elem : Elem)
-        + delete(pos : Pos)
-        + delete(key : Key)
-        + find(Key : int) : Pos
-        + retrieve(pos : Pos) : Elem
-        + retrieveAll() : Elem[]
-        + showall()
-        + size() : int
-        {static} + unify()
     }
   }
 
