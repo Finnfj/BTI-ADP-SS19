@@ -79,13 +79,14 @@ public class SetContainer implements SetInterface {
         // look if there is a free pos available
         int i = 0;
         boolean freePosFound = false;
-        while(!freePosFound) {
-            if(!positions[i].isValid) {
+        while(!freePosFound && i < posSize) {
+            if(positions[i] != null && !positions[i].isValid) {
                 freePosFound = true;
             }
             i++;
         }
 
+        // set the pointer of the found free pos to the node of the new element
         Pos returnPos = null;
         if(freePosFound) {
             positions[i].setPointer(newNode);
@@ -93,6 +94,7 @@ public class SetContainer implements SetInterface {
             returnPos = positions[i];
         } else {
             // create a new Pos for the node
+            posSize++;
             Pos newPos = new Pos(newNode, this);
             newPos.isValid = true;
             returnPos = newPos;
@@ -106,16 +108,13 @@ public class SetContainer implements SetInterface {
                 int j = 0;
                 boolean found = false;
                 while ((j < positions.length) && !found) {
-                    if (positions[j] == null) {
-                        positions[j] = newPos;
-                        found = true;
-                    }
+                    positions[j] = newPos;
+                    found = true;
                     j++;
                 }
             }
         }
 
-        posSize++;
         elemSize++;
         return returnPos;
     }
@@ -126,11 +125,12 @@ public class SetContainer implements SetInterface {
      * @param pos The Pos of the element.
      */
     @Override
+    // TODO: fix
     public void delete(Pos pos) {
         for (int i = 0; i < posSize; i++) {
             counter++;
             Pos<Node> deletePos = positions[i];
-            if (deletePos == pos) {
+            if (deletePos != null && deletePos == pos) {
                 Node deleteNode = deletePos.getPointer();
                 Node worker = head;
                 do {
@@ -179,7 +179,6 @@ public class SetContainer implements SetInterface {
                 return p;
             }
         }
-        // TODO: add check if worker = tail?
         return null;
     }
 
@@ -192,7 +191,7 @@ public class SetContainer implements SetInterface {
     @Override
     public Elem retrieve(Pos pos) {
         for (Pos<Node> position : positions) {
-            if (position == pos) {
+            if (position != null && position == pos) {
                 return position.getPointer().getElem();
             }
         }
@@ -206,11 +205,9 @@ public class SetContainer implements SetInterface {
      */
     @Override
     public Elem<?>[] retrieveAll() {
-        Elem[] elemAll = new Elem[positions.length];
-        for (int i = 0; i < positions.length; i++) {
-            if (positions[i] != null) {
-                elemAll[i] = positions[i].getPointer().getElem();
-            }
+        Elem[] elemAll = new Elem[posSize];
+        for (int i = 0; i < posSize; i++) {
+            elemAll[i] = positions[i].getPointer().getElem();
         }
         return elemAll;
     }
@@ -233,7 +230,7 @@ public class SetContainer implements SetInterface {
      */
     @Override
     public int size() {
-        return posSize;
+        return elemSize;
     }
 
     /**
