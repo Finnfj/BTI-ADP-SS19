@@ -61,10 +61,14 @@ public class SetContainer implements SetInterface {
     @Override
     public Pos add(Elem elem) {
         //look if we already have the element in the list
-        Pos foundElemPos = find(elem.key);
-        if (foundElemPos != null) {
-            return foundElemPos;
+        long tmpCounter = this.counter;
+        Pos temp = this.find(elem.key);
+        if (temp != null) {
+            if (temp.isValid) {
+                return temp;
+            }
         }
+        this.counter = tmpCounter;
 
         // create a new node and put it at the end of the list
         Node newNode = new Node(elem);
@@ -82,8 +86,9 @@ public class SetContainer implements SetInterface {
         while(!freePosFound && i < posSize) {
             if(positions[i] != null && !positions[i].isValid) {
                 freePosFound = true;
+            } else {
+                i++;
             }
-            i++;
         }
 
         // set the pointer of the found free pos to the node of the new element
@@ -125,7 +130,6 @@ public class SetContainer implements SetInterface {
      * @param pos The Pos of the element.
      */
     @Override
-    // TODO: fix
     public void delete(Pos pos) {
         for (int i = 0; i < posSize; i++) {
             counter++;
@@ -139,6 +143,7 @@ public class SetContainer implements SetInterface {
                 } while (worker.getNext() != deleteNode);
                 worker.setNext(deleteNode.getNext());
 
+                positions[i].setPointer(null);
                 positions[i].isValid = false;
                 elemSize--;
                 return;
@@ -173,10 +178,10 @@ public class SetContainer implements SetInterface {
         } while (worker.getElem().key != key);
 
         // find the Pos of worker
-        for (Pos<Node> p : positions) {
+        for (int i = 0; i < posSize; i++) {
             counter++;
-            if (p != null && p.getPointer().getElem() != null && p.getPointer().getElem().key == worker.getElem().key) {
-                return p;
+            if (positions[i].getPointer() != null) {
+                return positions[i];
             }
         }
         return null;
