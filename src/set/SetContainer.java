@@ -99,7 +99,6 @@ public class SetContainer implements SetInterface {
             returnPos = positions[i];
         } else {
             // create a new Pos for the node
-            posSize++;
             Pos newPos = new Pos(newNode, this);
             newPos.isValid = true;
             returnPos = newPos;
@@ -108,16 +107,9 @@ public class SetContainer implements SetInterface {
             // check if there is enough space in the pos array and if not create a new one with a larger length
             if (posSize == positions.length - 1) {
                 positions = Arrays.copyOf(positions, positions.length * 2);
-                positions[posSize] = newPos;
-            } else { // if there is enough space just put it at the end
-                int j = 0;
-                boolean found = false;
-                while ((j < positions.length) && !found) {
-                    positions[j] = newPos;
-                    found = true;
-                    j++;
-                }
             }
+            positions[posSize] = newPos;
+            posSize++;
         }
 
         elemSize++;
@@ -134,7 +126,7 @@ public class SetContainer implements SetInterface {
         for (int i = 0; i < posSize; i++) {
             counter++;
             Pos<Node> deletePos = positions[i];
-            if (deletePos != null && deletePos == pos) {
+            if (deletePos != null && deletePos == pos && deletePos.isValid) {
                 Node deleteNode = deletePos.getPointer();
                 Node worker = head;
                 do {
@@ -180,9 +172,10 @@ public class SetContainer implements SetInterface {
         // find the Pos of worker
         for (int i = 0; i < posSize; i++) {
             counter++;
-            if (positions[i] != null && positions[i].getPointer() != null && positions[i].getPointer().getElem() != null && positions[i].getPointer().getElem().key == key) {
+            if (positions[i].getPointer() != null && positions[i].getPointer().getElem() != null && positions[i].getPointer().getElem().key == key) {
                 return positions[i];
             }
+            continue;
         }
         return null;
     }
