@@ -4,50 +4,132 @@ title __BTI-ADP-SS19's Class Diagram__\n
 
   package types {
     class Elem {
+        + key : int
+        + data : T
+        + Elem(data : T)
+        + Elem(key : int, data : T)
+        + toString() : String
     }
   }
-  
+
 
   package types {
     class Node {
+        - next : Node
+        - elem : Elem
+        + Node()
+        + Node(elem : Elem)
+        + getNext() : Node
+        + setNext(next : Node)
+        + getElem() : Elem
     }
   }
-  
+
 
   package types {
     class Pos {
+        + isValid : Boolean
+        # pointer : T
+        # set : SetInterface
+        - previousIndex : Integer
+        - nextIndex : Integer
+        + Pos(pointer : T, set : SetInterface)
+        + Pos(pointer : T, set : SetInterface, preI : int, nextI : int)
+        + getPointer() : T
+        + getPreviousIndex() : int
+        + setPreviousIndex(preI : int)
+        + setNextIndex(nextI : int)
+        + getNextIndex() : int
+        + getSet() : SetInterface
+        + setPointer(pointer : Object)
     }
   }
   
 
   package set {
     class SetArray {
+        - DEFSIZE : int
+        - elements : Elem<?>[]
+        - positions : Pos<Integer>[]
+        - elemSize : int
+        - posSize : int
+        + counter : long
+        + SetArray()
+        + SetArray(size : int)
+        + add(elem : Elem)
+        + delete(pos : Pos)
+        + delete(key : Key)
+        + find(Key : int) : Pos
+        + retrieve(pos : Pos) : Elem
+        + showall()
+        + size() : int
+        {static} + unify()
+        + retrieveAll() : Elem[]
     }
   }
-  
+
 
   package set {
     class SetContainer {
+        - DEFSIZE : int
+        - positions : Pos<Node>[]
+        - posSize : int
+        + counter : long
+        + SetContainer()
+        + SetContainer(size : int)
+        + add(elem : Elem)
+        + delete(pos : Pos)
+        + delete(key : Key)
+        + find(Key : int) : Pos
+        + retrieve(pos : Pos) : Elem
+        + retrieveAll() : Elem[]
+        + showall()
+        + size() : int
+        {static} + unify()
     }
   }
-  
+
 
   package set {
     class SetContainerArray {
+        - DEFSIZE : int
+        - positions : Pos<?>[]
+        - posSize : int
+        - elemSize : int
+        + counter : long
+        + SetContainerArray()
+        + SetContainerArray(size : int)
+        + add(elem : Elem)
+        + delete(pos : Pos)
+        + delete(key : Key)
+        + find(Key : int) : Pos
+        + retrieve(pos : Pos) : Elem
+        + retrieveAll() : Elem[]
+        + showall()
+        + size() : int
+        {static} + unify()
     }
   }
-  
+
 
   package set {
     interface SetInterface {
+        {abstract} + add(elem : Elem)
+        {abstract} + delete(pos : Pos)
+        {abstract} + delete(key : Key)
+        {abstract} + find(Key : int) : Pos
+        {abstract} + retrieve(pos : Pos) : Elem
+        {abstract} + retrieveAll() : Elem[]
+        {abstract} + showall()
+        {abstract} + size() : int
+        {static} + unify()
     }
   }
   
 
-  Elem o-- T : data
   Node o-- Node : next
   Node o-- Elem : elem
-  Pos o-- T : pointer
+  Pos o-- Elem : elem
   Pos o-- SetInterface : set
   SetArray -up-|> SetInterface
   SetContainer -up-|> SetInterface

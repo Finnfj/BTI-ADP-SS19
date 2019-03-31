@@ -5,20 +5,23 @@ title __TYPES's Class Diagram__\n
   package types {
     class Elem {
         + key : int
-        + Elem()
-        + Elem()
-        + toString()
+        + data : T
+        + Elem(data : T)
+        + Elem(key : int, data : T)
+        + toString() : String
     }
   }
   
 
   package types {
     class Node {
+        - next : Node
+        - elem : Elem
         + Node()
-        + Node()
-        + getNext()
-        + setNext()
-        + getElem()
+        + Node(elem : Elem)
+        + getNext() : Node
+        + setNext(next : Node)
+        + getElem() : Elem
     }
   }
   
@@ -26,17 +29,19 @@ title __TYPES's Class Diagram__\n
   package types {
     class Pos {
         + isValid : Boolean
+        # pointer : T
+        # set : SetInterface
         - previousIndex : Integer
         - nextIndex : Integer
-        + Pos()
-        + Pos()
-        + getPointer()
-        + getPreviousIndex()
-        + setPreviousIndex()
-        + setNextIndex()
-        + getNextIndex()
-        + getSet()
-        + setPointer()
+        + Pos(pointer : T, set : SetInterface)
+        + Pos(pointer : T, set : SetInterface, preI : int, nextI : int)
+        + getPointer() : T
+        + getPreviousIndex() : int
+        + setPreviousIndex(preI : int)
+        + setNextIndex(nextI : int)
+        + getNextIndex() : int
+        + getSet() : SetInterface
+        + setPointer(pointer : Object)
     }
   }
   

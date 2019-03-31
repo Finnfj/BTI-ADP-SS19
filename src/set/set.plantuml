@@ -11,19 +11,19 @@ title __SET's Class Diagram__\n
         - posSize : int
         + counter : long
         + SetArray()
-        + SetArray()
-        + add()
-        + delete()
-        + delete()
-        + find()
-        + retrieve()
+        + SetArray(size : int)
+        + add(elem : Elem)
+        + delete(pos : Pos)
+        + delete(key : Key)
+        + find(Key : int) : Pos
+        + retrieve(pos : Pos) : Elem
         + showall()
-        + size()
+        + size() : int
         {static} + unify()
-        + retrieveAll()
+        + retrieveAll() : Elem[]
     }
   }
-  
+
 
   package set {
     class SetContainer {
@@ -32,19 +32,19 @@ title __SET's Class Diagram__\n
         - posSize : int
         + counter : long
         + SetContainer()
-        + SetContainer()
-        + add()
-        + delete()
-        + delete()
-        + find()
-        + retrieve()
-        + retrieveAll()
+        + SetContainer(size : int)
+        + add(elem : Elem)
+        + delete(pos : Pos)
+        + delete(key : Key)
+        + find(Key : int) : Pos
+        + retrieve(pos : Pos) : Elem
+        + retrieveAll() : Elem[]
         + showall()
-        + size()
+        + size() : int
         {static} + unify()
     }
   }
-  
+
 
   package set {
     class SetContainerArray {
@@ -54,30 +54,30 @@ title __SET's Class Diagram__\n
         - elemSize : int
         + counter : long
         + SetContainerArray()
-        + SetContainerArray()
-        + add()
-        + delete()
-        + delete()
-        + find()
-        + retrieve()
-        + retrieveAll()
+        + SetContainerArray(size : int)
+        + add(elem : Elem)
+        + delete(pos : Pos)
+        + delete(key : Key)
+        + find(Key : int) : Pos
+        + retrieve(pos : Pos) : Elem
+        + retrieveAll() : Elem[]
         + showall()
-        + size()
+        + size() : int
         {static} + unify()
     }
   }
-  
+
 
   package set {
     interface SetInterface {
-        {abstract} + add()
-        {abstract} + delete()
-        {abstract} + delete()
-        {abstract} + find()
-        {abstract} + retrieve()
-        {abstract} + retrieveAll()
+        {abstract} + add(elem : Elem)
+        {abstract} + delete(pos : Pos)
+        {abstract} + delete(key : Key)
+        {abstract} + find(Key : int) : Pos
+        {abstract} + retrieve(pos : Pos) : Elem
+        {abstract} + retrieveAll() : Elem[]
         {abstract} + showall()
-        {abstract} + size()
+        {abstract} + size() : int
         {static} + unify()
     }
   }

@@ -180,8 +180,12 @@ public class SetContainer implements SetInterface {
         // find the Pos of worker
         for (int i = 0; i < posSize; i++) {
             counter++;
-            if (positions[i] != null && positions[i].getPointer() != null && positions[i].getPointer().getElem() != null && positions[i].getPointer().getElem().key == key) {
-                return positions[i];
+            if(positions[i].getPointer() != null) {
+                if (positions[i].getPointer().getElem() != null) {
+                    if (positions[i].getPointer().getElem().key == key) {
+                        return positions[i];
+                    }
+                }
             }
         }
         return null;
