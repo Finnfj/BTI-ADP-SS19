@@ -112,6 +112,96 @@ Alle drei Implementations-Varianten erfüllen die oben genannten Tests mit pre- 
 \newcommand{\keyMark}{*}
 \begin{tikzpicture}
 \begin{loglogaxis}[
+	title={\large Array Test-Diagramm},
+	height=15cm,
+	width=15cm,
+	grid=major,
+    x tick label style={
+        /pgf/number format/1000 sep=},
+    ylabel=Operationen,
+    xlabel=Listengröße,
+    enlargelimits=0.05,
+    legend style={at={(0.5,-0.1)},
+    anchor=north,legend columns=-1},
+]
+\addplot[color=\bestCol,mark=\keyMark]
+    coordinates {(100000,2) (10000,2)
+         (1000,2) (100,2) (10, 2)};
+\addplot[color=\avgCol,mark=\keyMark]
+    coordinates {(100000,100000) (10000,10000)
+         (1000,1000) (100,100) (10, 10)};
+\addplot[color=\worstCol,mark=\keyMark]
+    coordinates {(100000,200000) (10000,20000)
+         (1000,2000) (100,200) (10, 20)};
+\addplot[color=\bestCol,mark=\posMark]
+    coordinates {(100000,1) (10000,1)
+         (1000,1) (100,1) (10, 1)};
+\addplot[color=\avgCol,mark=\posMark]
+    coordinates {(100000,50000) (10000,5000)
+         (1000,500) (100,50) (10, 5)};
+\addplot[color=\worstCol,mark=\posMark]
+    coordinates {(100000,100000) (10000,10000)
+         (1000,1000) (100,100) (10, 10)};
+\legend{KeyBest,KeyAverage, KeyWorst, 
+PosBest,PosAverage, PosWorst}
+\end{loglogaxis}
+\end{tikzpicture}
+\caption{delete(Pos) und delete(Key) in Array-Liste}
+\end{figure}
+
+\begin{figure}
+\newcommand{\bestCol}{brown}
+\newcommand{\avgCol}{blue}
+\newcommand{\worstCol}{red}
+\newcommand{\posMark}{square*}
+\newcommand{\keyMark}{*}
+\begin{tikzpicture}
+\begin{loglogaxis}[
+	title={\large ContainerArray Test-Diagramm},
+	height=15cm,
+	width=15cm,
+	grid=major,
+    x tick label style={
+        /pgf/number format/1000 sep=},
+    ylabel=Operationen,
+    xlabel=Listengröße,
+    enlargelimits=0.05,
+    legend style={at={(0.5,-0.1)},
+    anchor=north,legend columns=-1},
+]
+\addplot[color=\bestCol,mark=\keyMark]
+    coordinates {(100000,2) (10000,2)
+         (1000,2) (100,2) (10, 2)};
+\addplot[color=\avgCol,mark=\keyMark]
+    coordinates {(100000,100000) (10000,10000)
+         (1000,1000) (100,100) (10, 10)};
+\addplot[color=\worstCol,mark=\keyMark]
+    coordinates {(100000,200000) (10000,20000)
+         (1000,2000) (100,200) (10, 20)};
+\addplot[color=\bestCol,mark=\posMark]
+    coordinates {(100000,1) (10000,1)
+         (1000,1) (100,1) (10, 1)};
+\addplot[color=\avgCol,mark=\posMark]
+    coordinates {(100000,50000) (10000,5000)
+         (1000,500) (100,50) (10, 5)};
+\addplot[color=\worstCol,mark=\posMark]
+    coordinates {(100000,100000) (10000,10000)
+         (1000,1000) (100,100) (10, 10)};
+\legend{KeyBest,KeyAverage, KeyWorst, 
+PosBest,PosAverage, PosWorst}
+\end{loglogaxis}
+\end{tikzpicture}
+\caption{delete(Pos) und delete(Key) in ContainerArray-Liste}
+\end{figure}
+
+\begin{figure}
+\newcommand{\bestCol}{brown}
+\newcommand{\avgCol}{blue}
+\newcommand{\worstCol}{red}
+\newcommand{\posMark}{square*}
+\newcommand{\keyMark}{*}
+\begin{tikzpicture}
+\begin{loglogaxis}[
 	title={\large Container Test-Diagramm},
 	height=15cm,
 	width=15cm,
