@@ -32,6 +32,18 @@ Anschließend wird in Abschnitt \ref{sec:verfun} geprüft, ob die vorgegebenen O
 
 \section{Implementation}
 \label{sec:implementation}
+
+Die drei Varianten wurden in Java als Klassen implementiert. Da alle den gleichen Funktionssatz brauchen implementieren sie alle das gleiche Interface namens SetInterface.\\
+Abbildung \ref{figure:classdia} stellt die verwendeten Klassen und Interfaces dar. Dort ist auch zu sehen, welche Methoden das SetInterface vorgibt. Für Interkompatibilität bezüglich der Vereinigung von Mengen wurde die unify-Methode statisch gemacht. Die jeweiligen Implementationen sind bezüglich unify(s1, s2) interkompatibel, da sie jegliche Sets, die das SetInterface implementieren entgegennehmen und dieses zu einem neuen Set (Typ abh. von aufgerufener Methode) vereinigen.\\
+Auch wurden Maßnahmen gegen Verstöße, vor allem das verwenden von Pos-Objekten aus uneigenen Sets, getroffen.\\
+Mittels Generics wurden Elem und Pos außerdem kompatibel zu allen drei Varianten modelliert.
+
+\begin{figure}
+\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{BTI-ADP-SS19.png}
+\caption{Klassendiagramm}
+\label{figure:classdia}
+\end{figure}
+
 \subsection{Set als Array}
 \label{sec:setArray}
 
