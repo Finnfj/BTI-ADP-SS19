@@ -94,7 +94,11 @@ while(true) {\\
 \subsection{Set als einfach verkettete Liste von Containern}
 \label{sec:setCon}
 
-Implementation beschreiben
+Für die Implementation einer Menge mittels Containerklassen wurde eine neue Klasse 'Node' erstellt. Diese Klasse hat einen Zeiger auf eine nächste und vorherige Node, aber auch einen Zeiger auf ein Listenelement. Zusätzlich gibt es noch ein Pos-Array, dessen Pos auf Nodes zeigen.
+Bei der Methode add, wird zuerst mittels der Methode find geguckt, ob sich das Element schon in der Liste befindet und wenn nicht, wird geguckt welches Pos im Array als erstes frei ist bzw. ob ein neues erstellt werden muss, welches dann auf die Node mit dem Element zeigt. Anschließend wird die Referenz des Pos des Elements zurückgegeben.
+Bei der Methode delete wird die Pos von dem Element gesucht und anhand dieser, wird die Referenz der vorherigen Node auf die nachfolgende gesetzt. Bei der Pos wird isValid auf false gesetzt.
+Bei der Methode find werden alle Nodes durchgelaufen bis das Element gefunden wurde und wenn es gefunden wurde, wird die Pos gesucht, die auf diese Node zeigt und wenn sie gefunden wurde wird sie zurückgegeben.
+Bei der Methode retrieve wird das Pos-Array so lange durchsucht, bis wir die Pos die wir suchen gefunden haben und dann wird ihr Element zurückgegeben.
 
 \section{Verifizieren und Testen}
 \label{sec:vertests}
