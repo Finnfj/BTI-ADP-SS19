@@ -35,7 +35,10 @@ Anschließend wird in Abschnitt \ref{sec:verfun} geprüft, ob die vorgegebenen O
 \subsection{Set als Array}
 \label{sec:setArray}
 
-Das Set wurde zunächst als Array implementiert. Hierfür wurde ein Array von unserem 
+Das Set wurde zunächst als Array implementiert. Hierfür wurde ein Array von der Elem-Klasse erstellt, sowie von der Pos-Klasse mit Zeigern auf die Integer-Indexe von Elem[].\\
+Werden Plätze für Elemente im Set benötigt, so erfolgt eine dynamische Erstellung von Pos-Objekten, die die belegten und unbelegten Plätze im Set verwalten.\\
+Beim Aufrufen der delete(Pos)-Methode werden jegliche Referenzen des Elements entfernt und Pos wird über isValid=FALSE unbelegt und später wieder beim Hinzufügen von Elementen benutzt.\\
+Die Methode find(Key) iteriert die Positionen von der höchsten an und sucht dabei nach dem zugehörigen Element. Wird es nicht gefunden, so wird das invalide Stopper-Element als Position zurückgegeben.\\
 
 \subsection{Set als Array von Containern}
 \label{sec:setConArray}
