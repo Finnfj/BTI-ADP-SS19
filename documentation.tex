@@ -25,10 +25,10 @@
 \section{Einführung}
 \label{sec:einfuehrung}
 
-Diese Dokumentation beschreibt drei Implementations-Varianten des Abstrakten Datentyps Set. Dieser Datentyp soll, sofern möglich, eine Menge darstellen.
+Diese Dokumentation beschreibt drei Implementations-Varianten des Abstrakten Datentyps Set. Dieser Datentyp soll eine Menge darstellen.
 Als Vorgabe zur Art der Implementation wurde 1. ein Array von Elementen, 2. ein Array von Containern und 3. eine verkettete Liste von Containern angeführt.
 In Abschnitt \ref{sec:implementation} wird darauf eingegangen, wie die verschiedenen Varianten realisiert wurden.
-Anschließend prüfen wir in Abschnitt \ref{sec:verifikation}, ob die vorgegebenen Operationen funktionieren und vergleichen in Abschnitt \ref{sec:aufwand} die Performance der Varianten.
+Anschließend wird in Abschnitt \ref{sec:verfun} geprüft, ob die vorgegebenen Operationen funktionieren und in Abschnitt \ref{sec:aufwand} die Performance der Varianten verglichen.
 
 \section{Implementation}
 \label{sec:implementation}
@@ -54,7 +54,7 @@ Implementation beschreiben
 \subsection{Verifizieren der Funktionalität}
 \label{sec:verfun}
 Da die drei Varianten sich nur intern im Aufbau unterscheiden und dies nach außen hin gekapselt ist, verifizieren wir ihre Funktion anhand einer Menge an gleichen Tests.
-Die in Tabelle ~\ref{table:vertests} enthaltenen Tests soll eine ausreichende Verifizierung der Operationen auf den Sets ermöglichen.
+Die in Tabelle ~\ref{table:vertests} enthaltenen Tests sollen eine ausreichende Verifizierung der Operationen auf den Sets ermöglichen.
 
 \begin{table}
 \begin{tabular}[ht]{|l|p{12cm}|}
