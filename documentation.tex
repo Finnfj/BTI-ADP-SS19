@@ -7,6 +7,8 @@
 \usepackage{graphicx}
 \usepackage[automark]{scrpage2}
 \usepackage{pgfplots}
+\usepackage{chngcntr}
+\counterwithin{figure}{section}
 
 \pagestyle{scrheadings}
 
@@ -23,10 +25,120 @@
 \section{Einführung}
 \label{sec:einfuehrung}
 
-Einführung hier
+Diese Dokumentation beschreibt drei Implementations-Varianten des Abstrakten Datentyps Set. Dieser Datentyp soll, sofern möglich, eine Menge darstellen.
+Als Vorgabe zur Art der Implementation wurde 1. ein Array von Elementen, 2. ein Array von Containern und 3. eine verkettete Liste von Containern angeführt.
+In Abschnitt \ref{sec:implementation} wird darauf eingegangen, wie die verschiedenen Varianten realisiert wurden.
+Anschließend prüfen wir in Abschnitt \ref{sec:verifikation}, ob die vorgegebenen Operationen funktionieren und vergleichen in Abschnitt \ref{sec:aufwand} die Performance der Varianten.
 
 \section{Implementation}
 \label{sec:implementation}
+
+\subsection{Set als Array}
+\label{sec:setArray-I}
+
+Implementation beschreiben
+
+\subsection{Set als Array von Containern}
+\label{sec:setConArray-I}
+
+Implementation beschreiben
+
+\subsection{Set als einfach verkettete Liste von Containern}
+\label{sec:setCon-I}
+
+Implementation beschreiben
+
+\section{Verifikation}
+\label{sec:verifikation}
+
+Da die drei Varianten sich nur intern im Aufbau unterscheiden und dies nach außen hin gekapselt ist, verifizieren wir ihre Funktion anhand einer Menge an gleichen Tests.
+Die folgende Liste an Tests soll eine ausreichende Verifizierung der Operationen auf den Sets ermöglichen:
+
+\begin{table}[h]
+\begin{tabular}{|l|p{12cm}|}
+\hline
+T1             & \(add : SET \times ELEMENT \to SET \times POS\) \\ \hline
+Beschreibung  & Hinzufügen eines Elements \(e \in ELEM\) in die Menge \(s \in SET\)           \\ \hline
+pre-condition  & -           \\ \hline
+post-condition & \texttt{s.find(e.key).isValid = TRUE}           \\ \hline
+\end{tabular}
+\begin{tabular}{|l|p{12cm}|}
+\hline
+T2             & \(delete : SET \times POS \to SET\) \\ \hline
+Beschreibung  & Entfernen eines Elements \(e \in ELEM\) in Position \(p \in POS\) aus der Menge \(s \in SET\)           \\ \hline
+pre-condition  & \texttt{p.getSet() == s \&\& s.retrieve(p) == e \&\& p.isValid = TRUE}            \\ \hline
+post-condition & \texttt{p.isValid = FALSE}           \\ \hline
+\end{tabular}
+\begin{tabular}{|l|p{12cm}|}
+\hline
+T3             & \(delete : SET \times KEY \to SET\) \\ \hline
+Beschreibung  & Entfernen eines Elements \(e \in ELEM\) in Position \(p \in POS\) mit Schlüssel \(k \in KEY\) aus der Menge \(s \in SET\)           \\ \hline
+pre-condition  & \texttt{s.find(k).getSet() == s \&\& s.retrieve(s.find(k)) == e \&\& s.find(k).isValid = TRUE}            \\ \hline
+post-condition & \texttt{p.isValid = FALSE}           \\ \hline
+\end{tabular}
+\begin{tabular}{|l|p{12cm}|}
+\hline
+T4             & \(find : SET \times KEY \to POS\) \\ \hline
+Beschreibung  & Suchen der Position \(p \in POS\) eines Elements \(e \in ELEM\) mit Schlüssel \(k \in KEY\) aus der Menge \(s \in SET\)           \\ \hline
+pre-condition  & -           \\ \hline
+post-condition & Wenn \(k \in s\): \texttt{s.find(k).isValid = TRUE}. Wenn \(k \notin s\): \texttt{s.find(k).isValid = FALSE}           \\ \hline
+\end{tabular}
+\begin{tabular}{|l|p{12cm}|}
+\hline
+T5             & \(retrieve : SET \times POS \to ELEM\) \\ \hline
+Beschreibung  & Zugriff auf Element \(e \in ELEM\) in Position \(p \in POS\) aus der Menge \(s \in SET\)           \\ \hline
+pre-condition  & \texttt{p.getSet() == s \&\& p.isValid = TRUE}           \\ \hline
+post-condition & \texttt{s.retrieve(p) == e}           \\ \hline
+\end{tabular}
+\begin{tabular}{|l|p{12cm}|}
+\hline
+T6             & \(size : SET \to INTEGER\) \\ \hline
+Beschreibung  & Mächtigkeit der Menge \(s \in SET\)           \\ \hline
+pre-condition  & -           \\ \hline
+post-condition & \texttt{s.size() == |s|}           \\ \hline
+\end{tabular}
+\begin{tabular}{|l|p{12cm}|}
+\hline
+T7             & \(unify : SET \times SET \to SET\) \\ \hline
+Beschreibung  & Vereinigung zweier Mengen \(s_{1},s_{2} \in SET\)           \\ \hline
+pre-condition  & -           \\ \hline
+post-condition & \texttt{s.unify(s1, s2) == }\(s_{1} \cup s_{2}\)           \\ \hline
+\end{tabular}
+\end{table}
+
+\subsection{Set als Array}
+\label{sec:setArray-V}
+
+Verifizieren
+
+\subsection{Set als Array von Containern}
+\label{sec:setConArray-V}
+
+Verifizieren
+
+\subsection{Set als einfach verkettete Liste von Containern}
+\label{sec:setCon-V}
+
+Verifizieren
+
+\section{Aufwandsanalyse}
+\label{sec:aufwand}
+
+
+\subsection{Set als Array}
+\label{sec:setArray-A}
+
+Verifizieren
+
+\subsection{Set als Array von Containern}
+\label{sec:setConArray-A}
+
+Verifizieren
+
+\subsection{Set als einfach verkettete Liste von Containern}
+\label{sec:setCon-A}
+
+\begin{figure}
 \newcommand{\bestCol}{brown}
 \newcommand{\avgCol}{blue}
 \newcommand{\worstCol}{red}
@@ -68,27 +180,8 @@ Einführung hier
 PosBest,PosAverage, PosWorst}
 \end{loglogaxis}
 \end{tikzpicture}
-
-\subsection{Set als Array}
-\label{sec:setArray}
-
-Implementation beschreiben
-
-\subsection{Set als Array von Containern}
-\label{sec:setConArray}
-
-Implementation beschreiben
-
-\subsection{Set als einfach verkettete Liste von Containern}
-\label{sec:setCon}
-
-Implementation beschreiben
-
-\section{Verifikation und Test}
-\label{sec:ver-test}
-
-Verifizieren der Funktionen und Testen auf Fehler
-
+\caption{delete(Pos) und delete(Key) in Container-Liste}
+\end{figure}
 
 \end{document}
 
