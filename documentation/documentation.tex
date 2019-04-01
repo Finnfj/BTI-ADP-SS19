@@ -32,19 +32,64 @@ Anschließend wird in Abschnitt \ref{sec:verfun} geprüft, ob die vorgegebenen O
 
 \section{Implementation}
 \label{sec:implementation}
-
 \subsection{Set als Array}
-\label{sec:setArray-I}
+\label{sec:setArray}
 
-Implementation beschreiben
+Das Set wurde zunächst als Array implementiert. Hierfür wurde ein Array von unserem 
 
 \subsection{Set als Array von Containern}
-\label{sec:setConArray-I}
+\label{sec:setConArray}
 
-Implementation beschreiben
+Für die Implementation einer Menge mithilfe eines Arrays von Container-Klassen wurde die Container-Klasse Pos mit einem nextIndex und previousIndex versehen, 
+welche auf den Integer-Index der vorherigen und nächsten Pos-Objekte im Container-Array zeigen. 
+Hiermit wird eine stets korrekte Reihenfolge der Elemente im Set ermöglicht und sie ist realisiert durch folgende Mechaniken in den Methoden:\\
+Wird ein neuer Pos-Container benötigt, dann wird er hinter den letzten Pos-Container durch setzen der Indexe angereiht.\\
+In Abbildung \ref{figure:delmech} sieht man, wie beim Löschen eines Elements die laut nextIndex und previousIndex benachbarten Container durch ändern derer Indexe verknüpft werden. Der nun leere Container wird hinter den letzten Container in der Reihe eingereiht.
+\begin{figure}[h!]
+\texttt{ \\
+// Link neighbours\\
+int pre = positions[i].getPreviousIndex();\\
+int next = positions[i].getNextIndex();\\
+positions[pre].setNextIndex(next);\\
+positions[next].setPreviousIndex(pre);\\
+\\
+// Append at ending\\
+positions[positions[0].getPreviousIndex()].setNextIndex(i);\\
+positions[i].setNextIndex(0);\\
+positions[0].setPreviousIndex(i);\\
+elemSize--;\\
+}
+\caption{Ausschnitt Lösch-Mechanik Container-Array}
+\label{figure:delmech}
+\end{figure}
+
+Die Suche nach Elementen fängt von dem letzten Container in der Reihe an und läuft über previousIndex maximal bis zur Position von einem Stopper-Element, wo die Suche spätestens endet. Dies ist in Abbildung \ref{figure:findmech} zu sehen.\\
+Die delete(Pos)-Methode iteriert auf die gleiche Weise.
+\begin{figure}[h!]
+\texttt{ \\
+// Index 0 is reserved for stopper, but previousIndex always pointing to last Pos-Container in row\\
+int i=0;    \\
+while(true) {\\
+    counter++;\\
+    int pre = positions[i].getPreviousIndex();\\
+    Elem tmp = (Elem)positions[pre].getPointer();\\
+    if (tmp != null) {\\
+        if (tmp.key == key) {\\
+            return positions[pre];\\
+        }\\
+    } else {\\
+        //error\\
+        return null;\\
+    }\\
+    i = pre;\\
+}\\
+}
+\caption{Ausschnitt Such-Mechanik Container-Array}
+\label{figure:findmech}
+\end{figure}
 
 \subsection{Set als einfach verkettete Liste von Containern}
-\label{sec:setCon-I}
+\label{sec:setCon}
 
 Implementation beschreiben
 
