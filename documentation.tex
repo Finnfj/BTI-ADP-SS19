@@ -48,95 +48,61 @@ Implementation beschreiben
 
 Implementation beschreiben
 
-\section{Verifikation}
-\label{sec:verifikation}
+\section{Verifizieren und Testen}
+\label{sec:vertests}
 
+\subsection{Verifizieren der Funktionalität}
+\label{sec:verfun}
 Da die drei Varianten sich nur intern im Aufbau unterscheiden und dies nach außen hin gekapselt ist, verifizieren wir ihre Funktion anhand einer Menge an gleichen Tests.
-Die folgende Liste an Tests soll eine ausreichende Verifizierung der Operationen auf den Sets ermöglichen:
+Die in Tabelle ~\ref{table:vertests} enthaltenen Tests soll eine ausreichende Verifizierung der Operationen auf den Sets ermöglichen.
 
-\begin{table}[h]
-\begin{tabular}{|l|p{12cm}|}
+\begin{table}
+\begin{tabular}[ht]{|l|p{12cm}|}
 \hline
 T1             & \(add : SET \times ELEMENT \to SET \times POS\) \\ \hline
 Beschreibung  & Hinzufügen eines Elements \(e \in ELEM\) in die Menge \(s \in SET\)           \\ \hline
 pre-condition  & -           \\ \hline
 post-condition & \texttt{s.find(e.key).isValid = TRUE}           \\ \hline
-\end{tabular}
-\begin{tabular}{|l|p{12cm}|}
 \hline
 T2             & \(delete : SET \times POS \to SET\) \\ \hline
 Beschreibung  & Entfernen eines Elements \(e \in ELEM\) in Position \(p \in POS\) aus der Menge \(s \in SET\)           \\ \hline
 pre-condition  & \texttt{p.getSet() == s \&\& s.retrieve(p) == e \&\& p.isValid = TRUE}            \\ \hline
 post-condition & \texttt{p.isValid = FALSE}           \\ \hline
-\end{tabular}
-\begin{tabular}{|l|p{12cm}|}
 \hline
 T3             & \(delete : SET \times KEY \to SET\) \\ \hline
 Beschreibung  & Entfernen eines Elements \(e \in ELEM\) in Position \(p \in POS\) mit Schlüssel \(k \in KEY\) aus der Menge \(s \in SET\)           \\ \hline
 pre-condition  & \texttt{s.find(k).getSet() == s \&\& s.retrieve(s.find(k)) == e \&\& s.find(k).isValid = TRUE}            \\ \hline
 post-condition & \texttt{p.isValid = FALSE}           \\ \hline
-\end{tabular}
-\begin{tabular}{|l|p{12cm}|}
 \hline
 T4             & \(find : SET \times KEY \to POS\) \\ \hline
 Beschreibung  & Suchen der Position \(p \in POS\) eines Elements \(e \in ELEM\) mit Schlüssel \(k \in KEY\) aus der Menge \(s \in SET\)           \\ \hline
 pre-condition  & -           \\ \hline
 post-condition & Wenn \(k \in s\): \texttt{s.find(k).isValid = TRUE}. Wenn \(k \notin s\): \texttt{s.find(k).isValid = FALSE}           \\ \hline
-\end{tabular}
-\begin{tabular}{|l|p{12cm}|}
 \hline
 T5             & \(retrieve : SET \times POS \to ELEM\) \\ \hline
 Beschreibung  & Zugriff auf Element \(e \in ELEM\) in Position \(p \in POS\) aus der Menge \(s \in SET\)           \\ \hline
 pre-condition  & \texttt{p.getSet() == s \&\& p.isValid = TRUE}           \\ \hline
 post-condition & \texttt{s.retrieve(p) == e}           \\ \hline
-\end{tabular}
-\begin{tabular}{|l|p{12cm}|}
 \hline
 T6             & \(size : SET \to INTEGER\) \\ \hline
 Beschreibung  & Mächtigkeit der Menge \(s \in SET\)           \\ \hline
 pre-condition  & -           \\ \hline
 post-condition & \texttt{s.size() == |s|}           \\ \hline
-\end{tabular}
-\begin{tabular}{|l|p{12cm}|}
 \hline
 T7             & \(unify : SET \times SET \to SET\) \\ \hline
 Beschreibung  & Vereinigung zweier Mengen \(s_{1},s_{2} \in SET\)           \\ \hline
 pre-condition  & -           \\ \hline
 post-condition & \texttt{s.unify(s1, s2) == }\(s_{1} \cup s_{2}\)           \\ \hline
 \end{tabular}
+\caption{Verifikationstests}
+\label{table:vertests}
 \end{table}
 
-\subsection{Set als Array}
-\label{sec:setArray-V}
+Die in der Tabelle ~\ref{table:vertests} aufgeführten Tests wurden mit verschiedenen Parametern und Quantitäten in verschiedenen Sequenzen in JUnit4 getestet. 
+Alle drei Implementations-Varianten erfüllen die oben genannten Tests mit pre- und post-condition.
 
-Verifizieren
-
-\subsection{Set als Array von Containern}
-\label{sec:setConArray-V}
-
-Verifizieren
-
-\subsection{Set als einfach verkettete Liste von Containern}
-\label{sec:setCon-V}
-
-Verifizieren
-
-\section{Aufwandsanalyse}
+\subsection{Aufwandsanalyse}
 \label{sec:aufwand}
-
-
-\subsection{Set als Array}
-\label{sec:setArray-A}
-
-Verifizieren
-
-\subsection{Set als Array von Containern}
-\label{sec:setConArray-A}
-
-Verifizieren
-
-\subsection{Set als einfach verkettete Liste von Containern}
-\label{sec:setCon-A}
 
 \begin{figure}
 \newcommand{\bestCol}{brown}
