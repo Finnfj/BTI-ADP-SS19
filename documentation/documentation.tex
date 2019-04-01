@@ -38,7 +38,7 @@ Abbildung \ref{figure:classdia} stellt die verwendeten Klassen und Interfaces da
 Auch wurden Maßnahmen gegen Verstöße, vor allem das verwenden von Pos-Objekten aus uneigenen Sets, getroffen.\\
 Mittels Generics wurden Elem und Pos außerdem kompatibel zu allen drei Varianten modelliert.
 
-\begin{figure}
+\begin{figure}[h!]
 \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{BTI-ADP-SS19.png}
 \caption{Klassendiagramm}
 \label{figure:classdia}
@@ -106,11 +106,11 @@ while(true) {\\
 \subsection{Set als einfach verkettete Liste von Containern}
 \label{sec:setCon}
 
-Für die Implementation einer Menge mittels Containerklassen wurde eine neue Klasse 'Node' erstellt. Diese Klasse hat einen Zeiger auf eine nächste und vorherige Node, aber auch einen Zeiger auf ein Listenelement. Zusätzlich gibt es noch ein Pos-Array, dessen Pos auf Nodes zeigen.
-Bei der Methode add, wird zuerst mittels der Methode find geguckt, ob sich das Element schon in der Liste befindet und wenn nicht, wird geguckt welches Pos im Array als erstes frei ist bzw. ob ein neues erstellt werden muss, welches dann auf die Node mit dem Element zeigt. Anschließend wird die Referenz des Pos des Elements zurückgegeben.
-Bei der Methode delete wird die Pos von dem Element gesucht und anhand dieser, wird die Referenz der vorherigen Node auf die nachfolgende gesetzt. Bei der Pos wird isValid auf false gesetzt.
-Bei der Methode find werden alle Nodes durchgelaufen bis das Element gefunden wurde und wenn es gefunden wurde, wird die Pos gesucht, die auf diese Node zeigt und wenn sie gefunden wurde wird sie zurückgegeben.
-Bei der Methode retrieve wird das Pos-Array so lange durchsucht, bis wir die Pos die wir suchen gefunden haben und dann wird ihr Element zurückgegeben.
+Für die Implementation einer Menge mittels Container-Klassen wurde eine neue Klasse 'Node' erstellt. Diese Klasse hat einen Zeiger auf eine nächste Node, aber auch einen Zeiger auf ein Listenelement. Zusätzlich gibt es noch ein Pos-Array, dessen Pos auf Nodes zeigen.\\
+Bei der Methode add(), wird zuerst mittels der Methode find(Key) überprüft, ob sich das Element schon in der Liste befindet und wenn nicht, welches Pos im Array als erstes frei ist, bzw. ob ein neues erstellt werden muss, welches dann auf die Node mit dem Element zeigt. Anschließend wird die Referenz des Pos mit dem neuen Element zurückgegeben.\\
+Bei der Methode delete() wird die Pos von dem Element gesucht und anhand dieser, wird die Referenz der vorherigen Node auf die nachfolgende gesetzt. Bei der Pos wird isValid=false gesetzt.\\
+Bei der Methode find() werden alle Nodes durchlaufen bis das Element gefunden wurde und anschließend die dazugehörige Pos gesucht und zurückgegeben.\\
+Bei der Methode retrieve() wird das Pos-Array so lange durchsucht, bis wir die Pos die wir suchen gefunden haben und dann wird ihr Element zurückgegeben.\\
 
 \section{Verifizieren und Testen}
 \label{sec:vertests}
