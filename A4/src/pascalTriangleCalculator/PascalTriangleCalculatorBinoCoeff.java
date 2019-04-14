@@ -11,4 +11,14 @@ public class PascalTriangleCalculatorBinoCoeff implements PascalTriangleCalculat
     public int[] calculateRow(int rowNum) {
         return new int[0];
     }
+
+    @Override
+    public int getCounter() {
+        return 0;
+    }
+
+    @Override
+    public void resetCounter() {
+        counter = 0;
+    }
 }
