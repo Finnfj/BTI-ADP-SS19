@@ -67,4 +67,12 @@ public class JUnitTestFrameFunctionalityIterative {
             assertEquals(expectedRow[i], actualRow[i]);
         }
     }
+
+
+    @Test(timeout = timelimit)
+    public void resetGetCounter() {
+        PascalTriangleCalculator ptc = new PascalTriangleCalculatorIterative();
+        ptc.resetCounter();
+        assertEquals(0, ptc.getCounter());
+    }
 }

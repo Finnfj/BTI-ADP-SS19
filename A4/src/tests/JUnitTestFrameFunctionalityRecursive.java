@@ -67,4 +67,12 @@ public class JUnitTestFrameFunctionalityRecursive {
             assertEquals(expectedRow[i], actualRow[i]);
         }
     }
+
+
+    @Test(timeout = timelimit)
+    public void resetGetCounter() {
+        PascalTriangleCalculator ptc = new PascalTriangleCalculatorRecursive();
+        ptc.resetCounter();
+        assertEquals(0, ptc.getCounter());
+    }
 }
