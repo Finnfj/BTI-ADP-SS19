@@ -8,7 +8,7 @@ import pascalTriangleCalculator.PascalTriangleCalculator;
 import pascalTriangleCalculator.PascalTriangleCalculatorRecursive;
 
 public class JUnitTestFrameFunctionalityRecursive {
-    final private int timelimit = 1_000; // ms
+    final private int timelimit = 1000_000; // ms
 
     @Test(timeout = timelimit)
     public void rowMinusOne() {

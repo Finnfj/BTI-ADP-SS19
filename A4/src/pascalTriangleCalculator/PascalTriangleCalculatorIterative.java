@@ -14,10 +14,11 @@ public class PascalTriangleCalculatorIterative implements PascalTriangleCalculat
         }
 
         int[] oldRow = null;
+        int[] row = null;
 
         for (int i = 0; i < rowNum; i++) {
             counter++;
-            int[] row = new int[i+1];
+            row = new int[i+1];
 
             for (int j = 0; j < i+1; j++) {
                 counter++;
