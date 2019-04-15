@@ -1,7 +1,7 @@
 package pascalTriangleCalculator;
 
 public class PascalTriangleCalculatorBinoCoeff implements PascalTriangleCalculator {
-    private int counter;
+    private long counter;
 
     public PascalTriangleCalculatorBinoCoeff() {
         counter = 0;
@@ -9,12 +9,38 @@ public class PascalTriangleCalculatorBinoCoeff implements PascalTriangleCalculat
 
     @Override
     public int[] calculateRow(int rowNum) {
-        return new int[0];
+        if (rowNum < 1) {
+            return null;
+        }
+
+        int[] row = new int[rowNum];
+
+        for (int i = 0; i < row.length; i++) {
+            counter++;
+            long top = getFactorial(rowNum-1);
+            long bottom = (getFactorial(i) * getFactorial(rowNum-1-i));
+            if (bottom == 0) {
+                bottom = 1;
+            }
+            row[i] = (int) (top / bottom);
+        }
+        return row;
+    }
+
+    private long getFactorial(int num) {
+        long fact = 1;
+
+        for (int i = 1; i <= num; i++) {
+            counter++;
+            fact *= i;
+        }
+
+        return fact;
     }
 
     @Override
-    public int getCounter() {
-        return 0;
+    public long getCounter() {
+        return counter;
     }
 
     @Override

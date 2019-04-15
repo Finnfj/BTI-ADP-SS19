@@ -1,7 +1,7 @@
 package pascalTriangleCalculator;
 
 public class PascalTriangleCalculatorIterative implements PascalTriangleCalculator {
-    private int counter;
+    private long counter;
 
     public PascalTriangleCalculatorIterative() {
         counter = 0;
@@ -33,7 +33,7 @@ public class PascalTriangleCalculatorIterative implements PascalTriangleCalculat
     }
 
     @Override
-    public int getCounter() {
+    public long getCounter() {
         return counter;
     }
 

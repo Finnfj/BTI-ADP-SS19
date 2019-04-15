@@ -1,7 +1,7 @@
 package pascalTriangleCalculator;
 
 public class PascalTriangleCalculatorRecursive implements PascalTriangleCalculator {
-    private int counter;
+    private long counter;
 
     public PascalTriangleCalculatorRecursive() {
         counter = 0;
@@ -9,12 +9,12 @@ public class PascalTriangleCalculatorRecursive implements PascalTriangleCalculat
 
     @Override
     public int[] calculateRow(int rowNum) {
-        return new int[0];
+        return null;
     }
 
     @Override
-    public int getCounter() {
-        return 0;
+    public long getCounter() {
+        return counter;
     }
 
     @Override

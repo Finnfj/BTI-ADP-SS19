@@ -1,6 +1,8 @@
 package tests;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+
 import org.junit.Test;
 import pascalTriangleCalculator.PascalTriangleCalculator;
 import pascalTriangleCalculator.PascalTriangleCalculatorRecursive;
@@ -11,13 +13,13 @@ public class JUnitTestFrameFunctionalityRecursive {
     @Test(timeout = timelimit)
     public void rowMinusOne() {
         PascalTriangleCalculator ptc = new PascalTriangleCalculatorRecursive();
-        assertEquals(null, ptc.calculateRow(-1));
+        assertNull(ptc.calculateRow(-1));
     }
 
     @Test(timeout = timelimit)
     public void rowZero() {
         PascalTriangleCalculator ptc = new PascalTriangleCalculatorRecursive();
-        assertEquals(null, ptc.calculateRow(0));
+        assertNull(ptc.calculateRow(0));
     }
 
     @Test(timeout = timelimit)

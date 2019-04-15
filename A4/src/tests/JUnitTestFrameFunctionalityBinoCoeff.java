@@ -1,23 +1,25 @@
 package tests;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+
 import org.junit.Test;
 import pascalTriangleCalculator.PascalTriangleCalculator;
 import pascalTriangleCalculator.PascalTriangleCalculatorBinoCoeff;
 
 public class JUnitTestFrameFunctionalityBinoCoeff {
-    final private int timelimit = 1_000; // ms
+    final private int timelimit = 1000_000; // ms
 
     @Test(timeout = timelimit)
     public void rowMinusOne() {
         PascalTriangleCalculator ptc = new PascalTriangleCalculatorBinoCoeff();
-        assertEquals(null, ptc.calculateRow(-1));
+        assertNull(ptc.calculateRow(-1));
     }
 
     @Test(timeout = timelimit)
     public void rowZero() {
         PascalTriangleCalculator ptc = new PascalTriangleCalculatorBinoCoeff();
-        assertEquals(null, ptc.calculateRow(0));
+        assertNull(ptc.calculateRow(0));
     }
 
     @Test(timeout = timelimit)
