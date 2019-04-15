@@ -2,8 +2,8 @@ package pascalTriangleCalculator;
 
 public class PascalTriangleCalculatorRecursive implements PascalTriangleCalculator {
     private long counter;
-    int[][] triangle;
-    boolean[][] triangleCalced;
+    private int[][] triangle;
+    private boolean[][] triangleCalced;
 
     public PascalTriangleCalculatorRecursive() {
         counter = 0;
