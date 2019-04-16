@@ -1,5 +1,5 @@
 package quicksort;
 
-public enum Pivot {
+public enum PivotType {
     RIGHT, MEDIANOFTHREE, RANDOM
 }

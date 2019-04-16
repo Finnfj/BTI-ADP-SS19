@@ -21,13 +21,4 @@ public class Node<T> {
     public T getObject() {
         return object;
     }
-
-    /*
-    @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof Node) {
-            Node obj = (Node[]) obj;
-        }
-        return super.equals(obj);
-    }*/
 }
