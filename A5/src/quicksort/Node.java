@@ -9,6 +9,11 @@ public class Node<T> {
         key = object.hashCode();
     }
 
+    public Node(T object, int key) {
+        this.object = object;
+        this.key = key;
+    }
+
     public int getKey() {
         return key;
     }
@@ -16,4 +21,13 @@ public class Node<T> {
     public T getObject() {
         return object;
     }
+
+    /*
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Node) {
+            Node obj = (Node[]) obj;
+        }
+        return super.equals(obj);
+    }*/
 }

@@ -47,6 +47,7 @@ public class PascalTriangleCalculatorBinoCoeff implements PascalTriangleCalculat
             } else {
                 long top = rowNum - i;
                 for (long j = top+1; j < rowNum; j++) {
+                    counter++;
                     top *= j;
                     counter++;
                 }
