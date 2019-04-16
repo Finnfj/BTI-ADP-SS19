@@ -16,18 +16,18 @@ public class PascalTriangleCalculatorIterative implements PascalTriangleCalculat
         int[] oldRow = null;
         int[] row = null;
 
-        for (int i = 0; i < rowNum; i++) {
+        for (int curRowNum = 0; curRowNum < rowNum; curRowNum++) {
             counter++;
-            row = new int[i+1];
+            row = new int[curRowNum+1];
 
-            for (int j = 0; j < i+1; j++) {
+            for (int curColNum = 0; curColNum < curRowNum+1; curColNum++) {
                 counter++;
-                if (j == 0 || j == i) {
-                    row[j] = 1;
-                } else if (j == 1 || j == i - 1) {
-                    row[j] = i;
+                if (curColNum == 0 || curColNum == curRowNum) {
+                    row[curColNum] = 1;
+                } else if (curColNum == 1 || curColNum == curRowNum - 1) {
+                    row[curColNum] = curRowNum;
                 } else {
-                    row[j] = oldRow[j-1] + oldRow[j];
+                    row[curColNum] = oldRow[curColNum-1] + oldRow[curColNum];
                 }
             }
             oldRow = row;
