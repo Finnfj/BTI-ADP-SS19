@@ -63,6 +63,7 @@ public class PascalTriangleCalculatorBinoCoeff implements PascalTriangleCalculat
      */
     private long getFactorial(int num) {
         long fact = 1;
+        counter++;
 
         for (int i = 1; i <= num; i++) {
             fact *= i;
