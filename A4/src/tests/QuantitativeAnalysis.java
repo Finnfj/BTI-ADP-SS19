@@ -4,9 +4,9 @@ import pascalTriangleCalculator.*;
 
 public class QuantitativeAnalysis {
     public static void  main(String... args) {
-        PascalTriangleCalculator[] ptcArray = {new PascalTriangleCalculatorIterative(), new PascalTriangleCalculatorRecursive(), new PascalTriangleCalculatorBinoCoeff()};
+        PascalTriangleCalculator[] ptcArray = {new PascalTriangleCalculatorIterative(), new PascalTriangleCalculatorRecursive()};
 
-        for (int i = 1; i <= 10000; i *= 10) {
+        for (int i = 1; i <= 100000; i *= 10) {
             System.out.println("Rows: " + i);
             for (PascalTriangleCalculator ptc : ptcArray) {
                 long startTime = System.currentTimeMillis();
