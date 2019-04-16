@@ -1,14 +1,31 @@
 package pascalTriangleCalculator;
 
+/**<br>
+ * Kurs: BTI3-ADP <br>
+ * Aufgabe: 4a Pascal Triagnle Calculator with recursive solution<br>
+ * A Pascal Triangle Calculator that uses recursion<br>
+ * @author Finn Jannsen
+ * @author Philipp Schwarz
+ * @version 1.0, 16.04.19
+ *
+ */
 public class PascalTriangleCalculatorRecursive implements PascalTriangleCalculator {
     private long counter;
     private int[][] triangle;
 
+    /**
+     * Constructor for the recursive Pascal Triangle Calculator
+     */
     public PascalTriangleCalculatorRecursive() {
         counter = 0;
         triangle = null;
     }
 
+    /**
+     * Calculates a specific row of a Pascal Triangle
+     * @param rowNum The row you want to be calculated. The first one is 1.
+     * @return Int Array with the numbers of the row or null if the paramter was not correct
+     */
     @Override
     public int[] calculateRow(int rowNum) {
         if (rowNum < 1) {
@@ -38,6 +55,12 @@ public class PascalTriangleCalculatorRecursive implements PascalTriangleCalculat
         return row;
     }
 
+    /**
+     * Calculates a number in a pascal triangle
+     * @param rowNum The row of the number
+     * @param colNum The column of the number
+     * @return The number as int
+     */
     public int calculateNum(int rowNum, int colNum) {
     	int len = this.triangle.length;
         if (this.triangle != null && len < rowNum) {	// Allocate a bigger array for our needs
