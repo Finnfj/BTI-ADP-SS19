@@ -38,15 +38,15 @@ public class PascalTriangleCalculatorBinoCoeff implements PascalTriangleCalculat
             // long top = getFactorial(rowNum-1);
             // long bottom = (getFactorial(i) * getFactorial(rowNum-1-i));
 
-            if (i == 0 || i == rowNum) {
+            if (i == 0 || i == rowNum - 1) {
                 row[i] = 1;
                 // if we are at the second or second to last column, the answer is always the row size - 1
-            } else if (i == 1 || i == rowNum - 1) {
+            } else if (i == 1 || i == rowNum - 2) {
                 row[i] = rowNum - 1;
             } else {
-                long top = rowNum - 1;
-                for (long j = 1; j <= i; j++) {
-                    top *= rowNum - 1 - j;
+                long top = rowNum - i;
+                for (long j = top+1; j < rowNum; j++) {
+                    top *= j;
                 }
                 long bottom = getFactorial(i);
 

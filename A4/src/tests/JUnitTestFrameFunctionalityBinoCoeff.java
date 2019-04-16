@@ -51,7 +51,7 @@ public class JUnitTestFrameFunctionalityBinoCoeff {
         PascalTriangleCalculator ptc = new PascalTriangleCalculatorBinoCoeff();
         int[] expectedRow = {1, 2, 1};
         int[] actualRow = ptc.calculateRow(3);
-
+        
         assertEquals(expectedRow.length, actualRow.length);
         for (int i = 0; i < actualRow.length; i++) {
             assertEquals(expectedRow[i], actualRow[i]);
@@ -63,7 +63,7 @@ public class JUnitTestFrameFunctionalityBinoCoeff {
         PascalTriangleCalculator ptc = new PascalTriangleCalculatorBinoCoeff();
         int[] expectedRow = {1, 15, 105, 455, 1365, 3003, 5005, 6435, 6435, 5005, 3003, 1365, 455, 105, 15, 1};
         int[] actualRow = ptc.calculateRow(16);
-
+        
         assertEquals(expectedRow.length, actualRow.length);
         for (int i = 0; i < actualRow.length; i++) {
             assertEquals(expectedRow[i], actualRow[i]);
