@@ -35,7 +35,6 @@ public class PascalTriangleCalculatorIterative implements PascalTriangleCalculat
 
         // calculate every row, from the first to the one we want
         for (int curRowNum = 0; curRowNum < rowNum; curRowNum++) {
-            counter++;
             row = new int[curRowNum+1];
 
             // calculate every column of the current row
