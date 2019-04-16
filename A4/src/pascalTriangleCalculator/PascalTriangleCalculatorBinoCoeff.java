@@ -31,7 +31,7 @@ public class PascalTriangleCalculatorBinoCoeff implements PascalTriangleCalculat
         long fact = 1;
 
         for (int i = 1; i <= num; i++) {
-            counter++;
+            //counter++;
             fact *= i;
         }
 

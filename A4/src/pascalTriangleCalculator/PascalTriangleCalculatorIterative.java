@@ -24,6 +24,8 @@ public class PascalTriangleCalculatorIterative implements PascalTriangleCalculat
                 counter++;
                 if (j == 0 || j == i) {
                     row[j] = 1;
+                } else if (j == 1 || j == i - 1) {
+                    row[j] = i;
                 } else {
                     row[j] = oldRow[j-1] + oldRow[j];
                 }
