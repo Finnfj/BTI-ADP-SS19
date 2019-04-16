@@ -37,6 +37,7 @@ public class PascalTriangleCalculatorBinoCoeff implements PascalTriangleCalculat
             // formula: n! / (r! * (n-r)!)
             long top = getFactorial(rowNum-1);
             long bottom = (getFactorial(i) * getFactorial(rowNum-1-i));
+
             row[i] = (int) (top / bottom);
         }
         return row;
@@ -54,6 +55,9 @@ public class PascalTriangleCalculatorBinoCoeff implements PascalTriangleCalculat
             fact *= i;
         }
 
+        if (fact < 1) {
+            fact = 1;
+        }
         return fact;
     }
 
