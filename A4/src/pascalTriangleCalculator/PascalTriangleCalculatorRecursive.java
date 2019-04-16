@@ -34,6 +34,8 @@ public class PascalTriangleCalculatorRecursive implements PascalTriangleCalculat
         counter++;
         if (colNum == 0 || colNum == rowNum - 1) {
             return 1;
+        } else if (colNum == 1 || colNum == rowNum -2){
+        	return rowNum-1;
         } else {
             if (triangle[rowNum-1][colNum] != 0) {
                 return triangle[rowNum-1][colNum];
