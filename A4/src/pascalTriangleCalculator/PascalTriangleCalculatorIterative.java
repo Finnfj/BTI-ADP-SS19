@@ -2,8 +2,8 @@ package pascalTriangleCalculator;
 
 /**<br>
  * Kurs: BTI3-ADP <br>
- * Aufgabe: 4c Pascal Triagnle Calculator with binomical coefficent<br>
- * A Pascal Triangle Calculator that uses the binomical coefficent formula<br>
+ * Aufgabe: 4b Pascal Triagnle Calculator with iterative solution<br>
+ * A Pascal Triangle Calculator that uses an iteratrive approach<br>
  * @author Finn Jannsen
  * @author Philipp Schwarz
  * @version 1.0, 16.04.19

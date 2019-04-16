@@ -10,6 +10,11 @@ package pascalTriangleCalculator;
  *
  */
 public interface PascalTriangleCalculator {
+    /**
+     * Calculates a specific row of a Pascal Triangle
+     * @param rowNum The row you want to be calculated. The first one is 1.
+     * @return Int Array with the numbers of the row or null if the paramter was not correct
+     */
     int[] calculateRow(int rowNum);
     long getCounter();
     void resetCounter();
