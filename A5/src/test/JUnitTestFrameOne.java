@@ -4,16 +4,16 @@ import org.junit.Test;
 import quicksort.Node;
 import quicksort.PivotType;
 import quicksort.Quicksort;
-import quicksort.QuicksortPS;
+import quicksort.QuicksortOne;
 
 import static junit.framework.TestCase.assertEquals;
 
-public class JUnitTestFrame {
+public class JUnitTestFrameOne {
     final private int timelimit = 1_000;
 
     @Test(timeout = timelimit)
     public void testsOneMOT() {
-        Quicksort qs = new QuicksortPS();
+        Quicksort qs = new QuicksortOne();
         Node[] sortedList = {new Node(0, 0)};
         qs.sort(sortedList, 0, sortedList.length-1, PivotType.MEDIANOFTHREE);
 
@@ -25,7 +25,7 @@ public class JUnitTestFrame {
     @Test(timeout = timelimit)
     public void testsThreeMOT() {
         int size = 3;
-        Quicksort qs = new QuicksortPS();
+        Quicksort qs = new QuicksortOne();
         Node[] sortedList = new Node[size];
         for (int i = 0; i < size; i++) {
             sortedList[i] = new Node(size - 1 - i, size - 1 - i);
@@ -40,7 +40,7 @@ public class JUnitTestFrame {
     @Test(timeout = timelimit)
     public void testsTenMOT() {
         int size = 10;
-        Quicksort qs = new QuicksortPS();
+        Quicksort qs = new QuicksortOne();
         Node[] sortedList = new Node[size];
         for (int i = 0; i < size; i++) {
             sortedList[i] = new Node(size - 1 - i, size - 1 - i);
@@ -54,7 +54,7 @@ public class JUnitTestFrame {
 
     @Test(timeout = timelimit)
     public void testsOneRight() {
-        Quicksort qs = new QuicksortPS();
+        Quicksort qs = new QuicksortOne();
         Node[] sortedList = {new Node(0, 0)};
         qs.sort(sortedList, PivotType.RIGHT);
 
@@ -66,7 +66,7 @@ public class JUnitTestFrame {
     @Test(timeout = timelimit)
     public void testsThreeRight() {
         int size = 3;
-        Quicksort qs = new QuicksortPS();
+        Quicksort qs = new QuicksortOne();
         Node[] sortedList = new Node[size];
         for (int i = 0; i < size; i++) {
             sortedList[i] = new Node(size - 1 - i, size - 1 - i);
@@ -81,7 +81,7 @@ public class JUnitTestFrame {
     @Test(timeout = timelimit)
     public void testsTenRight() {
         int size = 10;
-        Quicksort qs = new QuicksortPS();
+        Quicksort qs = new QuicksortOne();
         Node[] sortedList = new Node[size];
         for (int i = 0; i < size; i++) {
             sortedList[i] = new Node(size - 1 - i, size - 1 - i);
@@ -95,7 +95,7 @@ public class JUnitTestFrame {
 
     @Test(timeout = timelimit)
     public void testsOneRandom() {
-        Quicksort qs = new QuicksortPS();
+        Quicksort qs = new QuicksortOne();
         Node[] sortedList = {new Node(0, 0)};
         qs.sort(sortedList, PivotType.RANDOM);
 
@@ -107,7 +107,7 @@ public class JUnitTestFrame {
     @Test(timeout = timelimit)
     public void testsThreeRandom() {
         int size = 3;
-        Quicksort qs = new QuicksortPS();
+        Quicksort qs = new QuicksortOne();
         Node[] sortedList = new Node[size];
         for (int i = 0; i < size; i++) {
             sortedList[i] = new Node(size - 1 - i, size - 1 - i);
@@ -122,7 +122,7 @@ public class JUnitTestFrame {
     @Test(timeout = timelimit)
     public void testsTenRandom() {
         int size = 10;
-        Quicksort qs = new QuicksortPS();
+        Quicksort qs = new QuicksortOne();
         Node[] sortedList = new Node[size];
         for (int i = 0; i < size; i++) {
             sortedList[i] = new Node(size - 1 - i, size - 1 - i);

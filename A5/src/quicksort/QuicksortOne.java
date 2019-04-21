@@ -1,11 +1,8 @@
 package quicksort;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class QuicksortPS implements Quicksort {
+public class QuicksortOne implements Quicksort {
     private long counter;
-    public QuicksortPS() {counter = 0;}
+    public QuicksortOne() {counter = 0;}
 
     public void sort(Node[] list, PivotType pivotType) {
         sort(list, 0, list.length-1, pivotType);
@@ -17,29 +14,33 @@ public class QuicksortPS implements Quicksort {
         if (right > left) {
             int i = left;
             int j = right;
-            int pivot = -1;
+            int pivot = right;
             // select PivotType
             switch (pivotType) {
                 case RIGHT:
-                    pivot = list[list.length-1].getKey();
                     break;
                 case MEDIANOFTHREE:
-                    pivot = (list[0].getKey() + list[list.length/2].getKey() + list[list.length-1].getKey()) / 3;
+                    swap(list, (left + (right-left)/2 + right) / 3, right);
                     break;
                 case RANDOM:
-                    double index = Math.random() * list.length;
-                    pivot = list[(int) index].getKey();
+                    double index = Math.random() * right;
+                    swap(list, (int) index, right);
                     break;
             }
 
             iterationLoop:
             while(true) {
-                while(list[i].getKey() < pivot) {
+                counter++;
+                while(i < right && list[i].getKey() < pivot) {
+                    counter++;
                     i++;
                 }
-                while(list[j].getKey() >= pivot) { // TODO: j causes out of bonds exception
+                counter++;
+                while(j > 0 && list[j].getKey() >= pivot) {
+                    counter++;
                     j--;
                 }
+                counter++;
                 if (i >= j) {
                     break iterationLoop;
                 }
@@ -53,6 +54,7 @@ public class QuicksortPS implements Quicksort {
     }
 
     private void swap(Node[] list, int i, int j) {
+        counter++;
         Node iOld = list[i];
         list[i] = list[j];
         list[j] = iOld;
