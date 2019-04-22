@@ -8,7 +8,7 @@
 \usepackage[automark]{scrpage2}
 \usepackage{pgfplots}
 \usepackage{chngcntr}
-\usepackage[left=2cm, right=2cm, top=2cm]{geometry}
+\usepackage[left=3cm, right=3cm, top=3cm, bottom=3cm]{geometry}
 \counterwithin{figure}{section}
 
 \pagestyle{scrheadings}
@@ -35,24 +35,66 @@
 	\label{sec:implementation}
 	
 	Die drei Varianten wurden in Java als Klassen implementiert. Da alle den gleichen Funktionssatz brauchen implementieren sie alle das gleiche Interface namens PascalTriangleCalculator.\\
-	Da die Klassenstrukturen im wesentlichen nur eine Methode beinhalten, die die gewünschte Reihe berechnet und als Integer-Array zurückgibt, 
-	liegt im Folgenden der Fokus auf der Implementierung der Algorithmen.
+	Da die Klassenstrukturen im wesentlichen nur eine Methode beinhalten (calculateRow(int rowNum)), die die gewünschte Reihe berechnet und als Integer-Array zurückgibt, 
+	liegt im Folgenden der Fokus auf der Implementierung der Algorithmen. Im Folgenden gilt: $n$ bezeichnet die Reihe und $k$ die Stelle in der Reihe
 
+	\begin{figure}
+	\begin{equation*}
+	(n,k) = (n-1, k-1) + (n-1, k)
+	\end{equation*}
+	\caption{Berechnung von (n,k) anhand benachbarter Werte}
+	\label{figure:pairCalc}
+	\end{figure}
 
 	\subsection{Rekursive Strategie}
 		\label{sec:recStrat}
 		
-		Rekursive Strategie beschreiben
+		Die rekursive Strategie wird umgesetzt mit einem rekursiven Aufruf. Um eine Reihe zu berechnen wird die Methode mit dem Argument der Reihe n-1 aufgerufen 
+		und danach mithilfe der Formel aus \ref{figure:pairCalc} die einzelnen Werte der Reihe berechnet, welche als Rückgabewert an die aufrufende Funktion weitergegeben werden.\\
+		In Abbildung \ref{figure:recCode} ist dies ersichtlich.
+
+		\begin{figure}
+		\begin{verbatim}
+if (rowNum > 1) {
+    pre = calculateRow(rowNum - 1);
+} else if (rowNum == 1) {
+    // special case row n=1 only contains 1
+    pre = new int[]{1};		
+}
+
+int[] row = new int[rowNum];
+        
+for (int i = 0; i < rowNum; i++) {
+    if (i == 0 || i == rowNum - 1) {	
+        // special case on row boundaries
+        row[i] = pre[0];
+    } else if (i == 1 || i == rowNum -2) {
+        // special case on row boundaries neighbours
+        row[i] = rowNum - 1;
+    } else {
+        row[i] = pre[i-1] + pre[i];
+    }
+    counter++;
+}
+return row;
+		\end{verbatim}
+		\caption{Code-Ausschnitt rekursive Strategie}
+		\label{figure:recCode}
+		\end{figure}
 	
 	\subsection{Iterative Strategie}
 		\label{sec:iterStrat}
 		
-		Iterative Strategie beschreiben
+		In der iterativen Strategie wird lediglich von Reihe 1 an bis zur gewünschten Reihe mittels der Formel \ref{figure:pairCalc} aufaddiert.
 	
 	\subsection{Binominalkoeffizient Strategie}
 		\label{sec:binoStrat}
 		
-		Binominalkoeffizient Strategie beschreiben
+		Da das Pascalsche Dreieck die Binominalkoeffizienten repräsentiert lassen sich die einzelnen Werte auch wie folgt errechnen:
+		\begin{equation*}
+		\binom{n}{k}
+		\end{equation*}
+		Dies wurde in Java durch die normale Berechnung eines Binominalkoeffizienten umgesetzt und wird im folgenden mit den anderen Lösungen verglichen.
 
 \section{Verifizieren und Testen}
 \label{sec:vertests}
@@ -66,90 +108,119 @@
 	\subsection{Aufwandsanalyse}
 		\label{sec:aufwand}
 		
-		Aufwand Analysieren blabla
+		Für die Aufwandsanalyse wurde zu jedem Algorithmus ein Counter eingeführt, der die reinen Rechenoperationen zählt. 
+		Das heißt, dass der Counter bei der iterativen und rekursiven Strategie bei den Additionen, 
+		bei jeder Multiplikation der Binominalkoeffizient-Strategie 
+		und generell bei der Annahme vom Wert=$1$ an Stelle $k=1$ und $k=n$ oder deren Nachbarn mit dem Wert=$n-1$ hochzählt.
+		Die Beobachtungen sind in Abbildung \ref{figure:operTest} zu sehen.\\
+		
+		Auffällig ist hier erstmal, dass alle Methoden in doppelt-Logarithmischer Darstellung einer Ursprungsgerade ähneln. 
+		Dies sagt aus, dass die Anzahl der Rechenoperationen einer Potenzfunktion gleicht.
+		Auch fällt auf, dass sich iterative und rekursive Strategie gleich verhalten.
+		Das liegt daran, dass sie auf die gleiche Weise funktionieren, jedoch unterschiedliche Herangehensweisen haben.
+		Die Linie der Rechenoperationen beim Binominalkoeffizienten liegt parallel über den anderen, 
+		was heißt dass sie sich bei Werten $\lim\limits_{n \to \infty}$ nur durch einen konstante Faktoren unterscheiden.
+		Um den Asymptotischen Aufwand zu untersuchen wurden die Ergebnisse bei höheren Reihen (z.b. $n=\{2048, 4096, 8192\}$) durch $n$ geteilt.
+		Daraufhin wiesen die Ergebnisse auf, dass sie immer knapp unter $n$ (Bino.) und $\frac{n}{2}$ (Iter./Rek.) lagen.
+		Also wurden die Ergebnisse mit $f(n)=n^{2}$ und $g(n)=\frac{n^{2}}{2}$ verglichen und die obige Prozedur mit der Differenz zu den echten Werten wiederholt.
+		Durch annähern wurden also folgende Formeln zur Begrenzung nach oben herausgearbeitet:\\
 
 		Rechenoperationen bei iterativer und rekursiver Strategie:
 		\begin{equation*}
-		R = \frac{n^2}{2}+\frac{n}{2}
+		f(n) = \frac{n^{2}}{2}+\frac{n}{2}
 		\end{equation*}
 
 		Rechenoperationen bei Binominalkoeffizient-Strategie:
 		\begin{equation*}
-		R = n^2+4n
+		g(n) = n^{2}+4n
 		\end{equation*}
 
+		Mit diesen Formeln ergibt sich nun der Asymptotische Aufwand, indem man die konstanten Faktoren entfernt:
+		\begin{equation*}
+		\Theta(f(n))=\Theta(g(n))=\Theta(n^{2})
+		\end{equation*}
+		Es befinden sich also alle drei Methoden in der gleichen Asymptotischen Klasse.\\
+
+		Weiter untersucht wurde der echte Aufwand auch durch die Laufzeit in ms, zu sehen in Abbildung \ref{figure:timeTest} (hier lineare Darstellung).
+		Grundsätzlich haben hier die rekursive Strategie und der Binominalkoeffizient etwa die gleiche Laufzeit.
+		Im Vergleich dazu dauert die iterative Strategie etwas länger, was evtl. eine hohe Nutzung der Resourcen vom Algorithmus zur Grundlage hat.
+		Es lässt sich anmerken, dass die rekursive Strategie bei hohen Reihen eine Veränderung der Stackgröße der Java VM benötigt, wegen der vielen Methodenaufrufe.
+		Was sich aus diesem Diagramm auch ablesen lässt ist, dass die hohe Anzahl an Rechenoperationen des Binominalkoeffizienten keinen merkbaren Einfluss hat.
+		Dies liegt an der Effizienz von Multiplikation auf Hardware-Ebene.
+		
+
 \begin{figure}
-	\begin{center}
-		\newcommand{\binoCol}{brown}
-		\newcommand{\recCol}{blue}
-		\newcommand{\iterCol}{red}
-		\newcommand{\posMark}{square*}
-		\newcommand{\keyMark}{*}
-		\begin{tikzpicture}
-			\begin{loglogaxis}[
-					title={\large Berechnung Operationen},
-					height=10cm,
-					width=17cm,
-					grid=major,
-					x tick label style={
-					/pgf/number format/1000 sep=},
-					ylabel=Rechenoperationen,
-					xlabel=Reihe,
-					enlargelimits=0.05,
-					legend style={at={(0.5,-0.15)},
-					anchor=north,legend columns=-1},
-				]
-				\addplot[color=\binoCol,mark=\keyMark]
-				    coordinates {(1,1) (2,2) (4,4) (8, 32) (16, 184) (32, 879) (64, 3805) (128, 15835) (256, 64475) (512, 260059) (1024, 1044443) (2048, 4186075) (4096, 16760795) (8192, 67076059)
-					(16384, 268369883)};
-				\addplot[color=\recCol,mark=\keyMark]
-				    coordinates {(1,1) (2,3) (4,10) (8, 36) (16, 136) (32, 528) (64, 2080) (128, 8256) (256, 32896) (512, 131328) (1024, 524800) (2048, 2098176) (4096, 8390656) (8192, 33558528)
-					(16384, 134225920)};
-				\addplot[color=\iterCol,mark=\keyMark]
-				    coordinates {(1,1) (2,3) (4,10) (8, 36) (16, 136) (32, 528) (64, 2080) (128, 8256) (256, 32896) (512, 131328) (1024, 524800) (2048, 2098176) (4096, 8390656) (8192, 33558528)
-					(16384, 134225920)};
-				\legend{Binominalkoeffizient,Rekursiv, Iterativ}
-			\end{loglogaxis}
-		\end{tikzpicture}
-		\caption{Quantitativer Vergleich der Berechnung einer Reihe im Pascalschen Dreieck in loglog-Darstellung}
-	\end{center}
-\label{figure:operTest}
+	\newcommand{\binoCol}{brown}
+	\newcommand{\recCol}{blue}
+	\newcommand{\iterCol}{red}
+	\newcommand{\posMark}{square*}
+	\newcommand{\keyMark}{*}
+	\makebox[\textwidth][c]{
+	\begin{tikzpicture}
+		\begin{loglogaxis}[
+				title={\large Berechnung Operationen},
+				height=10cm,
+				width=17cm,
+				grid=major,
+				x tick label style={
+				/pgf/number format/1000 sep=},
+				ylabel=Rechenoperationen,
+				xlabel=Reihe,
+				enlargelimits=0.05,
+				legend style={at={(0.5,-0.15)},
+				anchor=north,legend columns=-1},
+			]
+			\addplot[color=\binoCol,mark=\keyMark]
+			    coordinates {(1,1) (2,2) (4,4) (8, 32) (16, 184) (32, 879) (64, 3805) (128, 15835) (256, 64475) (512, 260059) (1024, 1044443) (2048, 4186075) (4096, 16760795) (8192, 67076059)
+				(16384, 268369883)};
+			\addplot[color=\recCol,mark=\keyMark]
+			    coordinates {(1,1) (2,3) (4,10) (8, 36) (16, 136) (32, 528) (64, 2080) (128, 8256) (256, 32896) (512, 131328) (1024, 524800) (2048, 2098176) (4096, 8390656) (8192, 33558528)
+				(16384, 134225920)};
+			\addplot[color=\iterCol,mark=\keyMark]
+			    coordinates {(1,1) (2,3) (4,10) (8, 36) (16, 136) (32, 528) (64, 2080) (128, 8256) (256, 32896) (512, 131328) (1024, 524800) (2048, 2098176) (4096, 8390656) (8192, 33558528)
+				(16384, 134225920)};
+			\legend{Binominalkoeffizient,Rekursiv, Iterativ}
+		\end{loglogaxis}
+	\end{tikzpicture}
+	}
+	\caption{Quantitativer Vergleich der Berechnung einer Reihe im Pascalschen Dreieck in loglog-Darstellung}
+	\label{figure:operTest}
 \end{figure}
 
 \begin{figure}
-	\begin{center}
-		\newcommand{\binoCol}{brown}
-		\newcommand{\recCol}{blue}
-		\newcommand{\iterCol}{red}
-		\newcommand{\posMark}{square*}
-		\newcommand{\keyMark}{*}
-		\begin{tikzpicture}
-			\begin{axis}[
-					title={\large Berechnung Zeit},
-					height=10cm,
-					width=17cm,
-					grid=major,
-					ylabel=Zeit in ms,
-					xlabel=Reihe,
-					enlargelimits=0.05,
-					legend style={at={(0.5,-0.15)},
-					anchor=north,legend columns=-1},
-				]
-				\addplot[color=\binoCol,mark=\keyMark]
-				    coordinates {(1,0) (2,0) (4,0) (8, 0) (16, 0) (32, 1) (64, 0) (128, 1) (256, 2) (512, 3) (1024, 1) (2048, 7) (4096, 26) (8192, 105)
-					(16384, 418) (32768,1676) };
-				\addplot[color=\recCol,mark=\keyMark]
-				    coordinates {(1,0) (2,0) (4,0) (8, 0) (16, 0) (32, 0) (64, 0) (128, 0) (256, 0) (512, 2) (1024, 8) (2048, 10) (4096, 38) (8192, 102)
-					(16384, 419) (32768,1688) };
-				\addplot[color=\iterCol,mark=\keyMark]
-				    coordinates {(1,0) (2,0) (4,0) (8, 0) (16, 0) (32, 0) (64, 0) (128, 1) (256, 2) (512, 2) (1024, 6) (2048, 11) (4096, 41) (8192, 129)
-					(16384, 454) (32768,1818) };
-				\legend{Binominalkoeffizient,Rekursiv, Iterativ}
-			\end{axis}
-		\end{tikzpicture}
-		\caption{Quantitativer Zeitvergleich der Berechnung einer Reihe im Pascalschen Dreieck}
-	\end{center}
-\label{figure:timeTest}
+	\newcommand{\binoCol}{brown}
+	\newcommand{\recCol}{blue}
+	\newcommand{\iterCol}{red}
+	\newcommand{\posMark}{square*}
+	\newcommand{\keyMark}{*}
+	\makebox[\textwidth][c]{
+	\begin{tikzpicture}
+		\begin{axis}[
+				title={\large Berechnung Zeit},
+				height=10cm,
+				width=17cm,
+				grid=major,
+				ylabel=Zeit in ms,
+				xlabel=Reihe,
+				enlargelimits=0.05,
+				legend style={at={(0.5,-0.15)},
+				anchor=north,legend columns=-1},
+			]
+			\addplot[color=\binoCol,mark=\keyMark]
+			    coordinates {(1,0) (2,0) (4,0) (8, 0) (16, 0) (32, 1) (64, 0) (128, 1) (256, 2) (512, 3) (1024, 1) (2048, 7) (4096, 26) (8192, 105)
+				(16384, 418) (32768,1676) };
+			\addplot[color=\recCol,mark=\keyMark]
+			    coordinates {(1,0) (2,0) (4,0) (8, 0) (16, 0) (32, 0) (64, 0) (128, 0) (256, 0) (512, 2) (1024, 8) (2048, 10) (4096, 38) (8192, 102)
+				(16384, 419) (32768,1688) };
+			\addplot[color=\iterCol,mark=\keyMark]
+			    coordinates {(1,0) (2,0) (4,0) (8, 0) (16, 0) (32, 0) (64, 0) (128, 1) (256, 2) (512, 2) (1024, 6) (2048, 11) (4096, 41) (8192, 129)
+				(16384, 454) (32768,1818) };
+			\legend{Binominalkoeffizient,Rekursiv, Iterativ}
+		\end{axis}
+	\end{tikzpicture}
+	}
+	\caption{Quantitativer Zeitvergleich der Berechnung einer Reihe im Pascalschen Dreieck}
+	\label{figure:timeTest}
 \end{figure}
 
 \end{document}
