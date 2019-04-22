@@ -4,7 +4,7 @@ import quicksort.*;
 
 public class QuantitativeTest {
     public static void main(String... args) {
-        final int sampleSize = 1;
+        final int sampleSize = 3;
         Quicksort qs = new QuicksortOne();
         PivotType[] pivotTypes = {PivotType.MEDIANOFTHREE, PivotType.RANDOM, PivotType.RIGHT};
 
