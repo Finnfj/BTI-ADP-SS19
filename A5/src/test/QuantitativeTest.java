@@ -9,7 +9,7 @@ public class QuantitativeTest {
         PivotType[] pivotTypes = {PivotType.MEDIANOFTHREE, PivotType.RANDOM, PivotType.RIGHT};
 
         System.out.println("---Best Case/Average Case---------------------------------------");
-        for (int i = 1; i <= 100000; i *= 10) {
+        for (int i = 1; i <= 10; i *= 10) {
             System.out.println("List size: " + i + "-------------");
             for (PivotType p: pivotTypes) {
                 long averageCount = 0;
@@ -30,22 +30,22 @@ public class QuantitativeTest {
                 System.out.println(p + " =\n" + averageCount/sampleSize + "\n" + time/sampleSize + " ns");
             }
         }
-
-        System.out.println("---Worst Case---------------------------------------");
-        for (int i = 1; i <= 100000; i *= 10) {
-            System.out.println("List size: " + i + "-------------");
-            for (PivotType p: pivotTypes) {
-                Node[] unsortedList = new Node[i];
-                for (int j = 0; j < i; j++) {
-                    unsortedList[j] = new Node(j, j);
-                }
-                long startTime = System.nanoTime();
-                qs.sort(unsortedList, p);
-                long endTime = System.nanoTime();
-                long time = endTime - startTime;
-                System.out.println(p + " =\n" + qs.getCounter() + "\n" + time + " ns");
-                qs.resetCounter();
-            }
-        }
+//
+//        System.out.println("---Worst Case---------------------------------------");
+//        for (int i = 1; i <= 10000; i *= 10) {
+//            System.out.println("List size: " + i + "-------------");
+//            for (PivotType p: pivotTypes) {
+//                Node[] unsortedList = new Node[i];
+//                for (int j = 0; j < i; j++) {
+//                    unsortedList[j] = new Node(j, j);
+//                }
+//                long startTime = System.nanoTime();
+//                qs.sort(unsortedList, p);
+//                long endTime = System.nanoTime();
+//                long time = endTime - startTime;
+//                System.out.println(p + " =\n" + qs.getCounter() + "\n" + time + " ns");
+//                qs.resetCounter();
+//            }
+//        }
     }
 }

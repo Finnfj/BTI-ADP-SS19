@@ -33,10 +33,6 @@ public class PascalTriangleCalculatorBinoCoeff implements PascalTriangleCalculat
         int[] row = new int[rowNum];
 
         for (int i = 0; i < row.length; i++) {
-            // formula: n! / (r! * (n-r)!)
-            // long top = getFactorial(rowNum-1);
-            // long bottom = (getFactorial(i) * getFactorial(rowNum-1-i));
-
             if (i == 0 || i == rowNum - 1) {
                 row[i] = 1;
                 counter++;
@@ -45,15 +41,7 @@ public class PascalTriangleCalculatorBinoCoeff implements PascalTriangleCalculat
                 row[i] = rowNum - 1;
                 counter++;
             } else {
-                long top = rowNum - i;
-                for (long j = top+1; j < rowNum; j++) {
-                    counter++;
-                    top *= j;
-                    counter++;
-                }
-                long bottom = getFactorial(i);
-
-                row[i] = (int) (top / bottom);
+                row[i] = row[i-1] * ((rowNum-1) - (i-1)) / i;
                 counter++;
             }
         }

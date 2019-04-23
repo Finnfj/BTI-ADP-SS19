@@ -48,16 +48,19 @@ public class QuicksortOne implements Quicksort {
                     swap(list, (int) index, right);
                     break;
             }
-
+            System.out.println("pivot: " + list[right].getKey());
+            System.out.println("left: " + left + " | right: " + right);
             iterationLoop:
             while(true) {
                 // increase i, which starts as the smallest index, until the Node it indexes is equal or larger than the pivot
-                while(i < right && list[i].getKey() < pivot) {
+                while(list[i].getKey() < pivot) {
+                	counter++;
                     i++;
                 }
 
                 // decrease j, which starts as the largest index, until the Node it indexes is smaller than the pivot
-                while(j > 0 && list[j].getKey() >= pivot) {
+                while(j > i && list[j].getKey() >= pivot) {
+                	counter++;
                     j--;
                 }
 
@@ -69,7 +72,7 @@ public class QuicksortOne implements Quicksort {
                 swap(list, i, j);
             }
 
-            // swap the pivot to the right part
+            // swap the pivot to the middle
             swap(list, i, right);
             // sort everything right and left of the pivot
             sort(list, left, i-1, pivotType);
@@ -78,10 +81,11 @@ public class QuicksortOne implements Quicksort {
     }
 
     private void swap(Node[] list, int i, int j) {
-        counter++;
-        Node iOld = list[i];
-        list[i] = list[j];
-        list[j] = iOld;
+    	if(i != j) {
+            Node iOld = list[i];
+            list[i] = list[j];
+            list[j] = iOld;
+    	}
     }
 
     @Override
