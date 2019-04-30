@@ -34,7 +34,7 @@ public class QuicksortOne implements Quicksort {
     public void sort(Node[] list, int left, int right, PivotType pivotType) {
         if (right > left) {
             int i = left;
-            int j = right;
+            int j = right-1;
             int pivot = right;
             // swap the selected pivot to the last part of the list
             switch (pivotType) {
@@ -48,8 +48,8 @@ public class QuicksortOne implements Quicksort {
                     swap(list, (int) index, right);
                     break;
             }
-            System.out.println("pivot: " + list[right].getKey());
-            System.out.println("left: " + left + " | right: " + right);
+            //System.out.println("pivot: " + list[right].getKey());
+            //System.out.println("left: " + left + " | right: " + right);
             iterationLoop:
             while(true) {
                 // increase i, which starts as the smallest index, until the Node it indexes is equal or larger than the pivot
