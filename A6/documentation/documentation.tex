@@ -1,0 +1,216 @@
+\documentclass[11pt]{scrartcl}
+
+\usepackage{ucs}
+\usepackage[utf8x]{inputenc}
+\usepackage{ngerman}
+\usepackage{amsmath,amssymb,amstext}
+\usepackage{graphicx}
+\usepackage[automark]{scrpage2}
+\usepackage{pgfplots}
+\usepackage{chngcntr}
+\usepackage[left=3cm, right=3cm, top=3cm, bottom=3cm]{geometry}
+\counterwithin{figure}{section}
+
+\pagestyle{scrheadings}
+
+\title{Quicksort}
+\author{Finn Jannsen, Philipp Schwarz}
+\date{\today{}}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\section{Einführung}
+	\label{sec:einfuehrung}
+	
+	Diese Dokumentation beschreibt eine Quicksort-Implementation für Arrays über Integer.
+	Zusätzlich gibt es die Möglichkeit drei verschiedene Pivots zu wählen: Rechtes Element, Median of Three und Zufällig.
+	In Abschnitt \ref{sec:implementation} wird darauf eingegangen, wie der Algorithmus realisiert wurde.
+	Anschließend wird in Abschnitt \ref{sec:veri} geprüft, ob die Implementation korrekt funktioniert und in Abschnitt \ref{sec:aufwand} die Performance der Pivots verglichen.
+
+\section{Implementation}
+	\label{sec:implementation}
+	
+	Der Algorithmus wurde als Kasse realisiert, der ein Interface implementiert, welches es ermöglicht, einfach weitere Implementationen, sofern dies gewünscht wird, zu schreiben.
+
+	\subsection{Pivotauswahl}
+		\label{sec:pivAus}
+		
+		Es gibt drei Verschiedene Pivots zur Auswahl:\\
+		RIGHT: es wird das Rechte Element als Pivot genommen.\\
+		MEDIANOFTHREE: der linke, mittlere und rechte Index werden addiert und durch 3 geteilt und das Ergebnis ist der Index des Pivots.\\
+		RANDOM: ein zufälliges Element ist das Pivot.
+
+		Der Code ist in \ref{figure:pivotCode} dargestellt. Das gewählte Pivot wird in allen drei Fällen mit dem rechtesten Element der Liste getauscht.
+	
+	\subsection{Sortieren}
+		\label{sec:sortAlgo}
+		
+		Der Algorithmus der Sortiert ist im wesentlichen eine Schleife, in der zuerst das erste Element von links, welches gleich oder größer als Pivot ist, gesucht wird.
+		Danach wird das erste Element von rechts, welches kleiner als das Pivot ist, gesucht. Diese werden dann getauscht.
+		Die Schleife wird verlassen, wenn i und j in der Mitte angekommen sind, also entweder gleich sind oder j kleiner als i.
+		Nach der Schleife wird j mit dem Pivot getauscht, damit das Pivot ganz rechts steht und der Algorithmus wird zwei mal rekursiv gestartet,
+		einmal um die Liste von ganz links bis i-1 zu sortieren und nocheinmal um die Liste von i+1 bis rechts zu sortieren.
+
+		Der Code ist in \ref{figure:sortCode} dargestellt.
+
+\section{Testen und Verifikation}
+\label{sec:vertests}
+
+	\subsection{Verifizieren}
+		\label{sec:veri}
+		
+		Der Algorithmus und alle Pivots wurden auf ihre Funktionalität getestet.
+		Alle Tests wurden erfolgreich absolviert.
+	
+	\subsection{Aufwandsanalyse}
+		\label{sec:aufwand}
+		
+		Für die Aufwandsanalyse wurde der Klasse ein Counter eingeführt, der die Tauschoperationen zählt. 
+		Die Beobachtungen sind in Abbildung \ref{figure:operBestAvgTest} und \ref{figure:operWorstTest} zu sehen.\\
+		
+		Es fällt auf, dass die Pivots sich nur durch konstante Faktoren unterscheiden,
+		wobei das Rechte Element als Pivot deutlich weniger Tauschoperationen hat,
+		was sich dadurch erklärt, dass man bei diesem nicht erst das Pivot mit dem rechten Element tauschen muss.
+
+		Zwischen Best- bzw. Average Case und Worst Case sind keine Unterschiede sichtbar.
+
+		Rechenoperationen bei Best- und Average Case:
+		\begin{equation*}
+		f(n) = n*ln(n)
+		\end{equation*}
+
+		Rechenoperationen bei Worst Case:
+		\begin{equation*}
+		g(n) = n^{2}
+		\end{equation*}
+
+\begin{figure}
+    \newcommand{\motCol}{green}
+    \newcommand{\rightCol}{blue}
+    \newcommand{\ranCol}{red}
+    \newcommand{\bestAvgMark}{square*}
+    \newcommand{\transparent}{0.6}
+    \makebox[\textwidth][c]{
+    \begin{tikzpicture}
+        \begin{loglogaxis}[
+                title={\large Berechnung Operationen},
+                height=10cm,
+                width=17cm,
+                grid=major,
+                x tick label style={
+                /pgf/number format/1000 sep=},
+                ylabel=Operationen,
+                xlabel=Anzahl Elemente,
+                enlargelimits=0.05,
+                legend style={at={(0.5,-0.15)},
+                anchor=north,legend columns=1},
+            ]
+            \addplot[color=\motCol,mark=\bestAvgMark,opacity=\transparent]
+                coordinates {(1,0)(10,18)(100,198)(1000,1998)(10000,19998)(100000,200002)};
+            \addplot[color=\ranCol,mark=\bestAvgMark,opacity=\transparent]
+                coordinates {(1,0)(10,18)(100,198)(1000,1998)(10000,19998)(100000,199994)};
+            \addplot[color=\rightCol,mark=\bestAvgMark,opacity=\transparent]
+                coordinates {(1,0)(10,9)(100,99)(1000,999)(10000,9999)(100000,100002)};
+            \legend{Median-of-Three, Random, Right}
+        \end{loglogaxis}
+    \end{tikzpicture}
+    }
+    \caption{Quantitativer Vergleich der Best-/Average-Case Quicksort-Verfahren unterschiedlicher Pivots}
+    \label{figure:operBestAvgTest}
+\end{figure}
+
+\begin{figure}
+    \newcommand{\motCol}{green}
+    \newcommand{\rightCol}{blue}
+    \newcommand{\ranCol}{red}
+    \newcommand{\worstMark}{*}
+    \newcommand{\transparent}{0.6}
+    \makebox[\textwidth][c]{
+    \begin{tikzpicture}
+        \begin{loglogaxis}[
+                title={\large Berechnung Operationen},
+                height=10cm,
+                width=17cm,
+                grid=major,
+                x tick label style={
+                /pgf/number format/1000 sep=},
+                ylabel=Operationen,
+                xlabel=Anzahl Elemente,
+                enlargelimits=0.05,
+                legend style={at={(0.5,-0.15)},
+                anchor=north,legend columns=1},
+            ]
+            \addplot[color=\motCol,mark=\worstMark,opacity=\transparent]
+                coordinates {(1,0)(10,27)(100,297)(1000,2997)(10000,29997)(100000,299997)};
+            \addplot[color=\ranCol,mark=\worstMark,opacity=\transparent]
+                coordinates {(1,0)(10,27)(100,297)(1000,2997)(10000,29997)(100000,299997)};
+            \addplot[color=\rightCol,mark=\worstMark,opacity=\transparent]
+                coordinates {(1,0)(10,9)(100,99)(1000,999)(10000,9999)(100000,99999)};
+            \legend{Median-of-Three, Random, Right}
+        \end{loglogaxis}
+    \end{tikzpicture}
+    }
+    \caption{Quantitativer Vergleich der Worst-Case Quicksort-Verfahren unterschiedlicher Pivots}
+    \label{figure:operWorstTest}
+\end{figure}
+
+\begin{figure}
+\begin{verbatim}
+// swap the selected pivot to the last part of the list
+switch (pivotType) {
+    case RIGHT:
+        break;
+    case MEDIANOFTHREE:
+        swap(list, (left + (right-left)/2 + right) / 3, right);
+        break;
+    case RANDOM:
+        double index = Math.random() * right;
+        swap(list, (int) index, right);
+        break;
+}
+\end{verbatim}
+\caption{Code-Ausschnitt Pivotsuche}
+\label{figure:pivotCode}
+\end{figure}
+
+
+\begin{figure}
+\begin{verbatim}
+iterationLoop:
+while(true) {
+    // increase i, which starts as the smallest index,
+    // until the Node it indexes is equal or larger than the pivot
+    while(i < right && list[i].getKey() < pivot) {
+        i++;
+    }
+
+    // decrease j, which starts as the largest index,
+    // until the Node it indexes is smaller than the pivot
+    while(j > 0 && list[j].getKey() >= pivot) {
+        j--;
+    }
+
+    // break out of the loop when we iterated over every entry
+    if (i >= j) {
+        break iterationLoop;
+    }
+    // swap i, which points at an element larger than the pivot with j,
+    // which points at an element smaller than the pivot
+    swap(list, i, j);
+}
+
+// swap the pivot to the right part
+swap(list, i, right);
+// sort everything right and left of the pivot
+sort(list, left, i-1, pivotType);
+sort(list, i+1, right, pivotType);
+\end{verbatim}
+\caption{Code-Ausschnitt Sortieren}
+\label{figure:sortCode}
+\end{figure}
+
+\end{document}
