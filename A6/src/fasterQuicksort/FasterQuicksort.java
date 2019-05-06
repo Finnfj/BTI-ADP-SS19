@@ -1,18 +1,18 @@
-package quicksort;
+package fasterQuicksort;
 
 
 /**<br>
  * Kurs: BTI3-ADP <br>
- * Aufgabe: 5 QuickersortI Algorithm<br>
- * A QuickersortI Algorithm that with three different Pivots<br>
+ * Aufgabe: 5 FasterQuicksortI Algorithm<br>
+ * A FasterQuicksortI Algorithm that with three different Pivots<br>
  * @author Finn Jannsen
  * @author Philipp Schwarz
  * @version 1.0, 22.04.19
  *
  */
-public class Quickersort implements QuickersortI {
+public class FasterQuicksort implements FasterQuicksortI {
     private long counter;
-    public Quickersort() {counter = 0;}
+    public FasterQuicksort() {counter = 0;}
 
     /**
      * A method that sorts a list of Nodes
@@ -39,11 +39,12 @@ public class Quickersort implements QuickersortI {
                     int j = i;
                     // swap the jth element with the one left and repeat
                     while (j > left && list[j-1].getKey() > list[j].getKey()) {
+                        counter++;
                         swap(list, j, j - 1);
                         j--;
                     }
                 }
-            // quicksort
+            // fasterQuicksort
             } else {
                 int i = left;
                 int j = right - 1;

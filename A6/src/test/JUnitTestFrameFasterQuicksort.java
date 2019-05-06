@@ -1,18 +1,18 @@
 package test;
 
+import fasterQuicksort.FasterQuicksortI;
 import org.junit.Test;
-import quicksort.Node;
-import quicksort.QuickersortI;
-import quicksort.Quickersort;
+import fasterQuicksort.Node;
+import fasterQuicksort.FasterQuicksort;
 
 import static junit.framework.TestCase.assertEquals;
 
-public class JUnitTestFrameQuickersort {
+public class JUnitTestFrameFasterQuicksort {
     final private int timelimit = 1_000_000_000;
 
     @Test(timeout = timelimit)
     public void testOne() {
-        QuickersortI qs = new Quickersort();
+        FasterQuicksortI qs = new FasterQuicksort();
         Node[] sortedList = {new Node(0, 0)};
         qs.sort(sortedList, 0, sortedList.length-1);
 
@@ -24,7 +24,7 @@ public class JUnitTestFrameQuickersort {
     @Test(timeout = timelimit)
     public void testThree() {
         int size = 3;
-        QuickersortI qs = new Quickersort();
+        FasterQuicksortI qs = new FasterQuicksort();
         Node[] sortedList = new Node[size];
         for (int i = 0; i < size; i++) {
             sortedList[i] = new Node(size - 1 - i, size - 1 - i);
@@ -39,7 +39,7 @@ public class JUnitTestFrameQuickersort {
     @Test(timeout = timelimit)
     public void testTen() {
         int size = 10;
-        QuickersortI qs = new Quickersort();
+        FasterQuicksortI qs = new FasterQuicksort();
         Node[] sortedList = new Node[size];
         for (int i = 0; i < size; i++) {
             sortedList[i] = new Node(size - 1 - i, size - 1 - i);
@@ -54,7 +54,7 @@ public class JUnitTestFrameQuickersort {
     @Test(timeout = timelimit)
     public void testEleven() {
         int size = 11;
-        QuickersortI qs = new Quickersort();
+        FasterQuicksortI qs = new FasterQuicksort();
         Node[] sortedList = new Node[size];
         for (int i = 0; i < size; i++) {
             sortedList[i] = new Node(size - 1 - i, size - 1 - i);
@@ -69,7 +69,7 @@ public class JUnitTestFrameQuickersort {
     @Test(timeout = timelimit)
     public void testOnehundred() {
         int size = 100;
-        QuickersortI qs = new Quickersort();
+        FasterQuicksortI qs = new FasterQuicksort();
         Node[] sortedList = new Node[size];
         for (int i = 0; i < size; i++) {
             sortedList[i] = new Node(size - 1 - i, size - 1 - i);

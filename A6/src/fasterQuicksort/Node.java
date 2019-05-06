@@ -1,4 +1,4 @@
-package quicksort;
+package fasterQuicksort;
 
 public class Node<T> {
     private T object;

@@ -1,6 +1,6 @@
-package quicksort;
+package fasterQuicksort;
 
-public interface QuickersortI {
+public interface FasterQuicksortI {
     void sort(Node[] list);
     void sort(Node[] list, int left, int right);
     long getCounter();
