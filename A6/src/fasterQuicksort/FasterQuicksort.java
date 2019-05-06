@@ -1,5 +1,7 @@
 package fasterQuicksort;
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 
 /**<br>
  * Kurs: BTI3-ADP <br>
@@ -12,7 +14,15 @@ package fasterQuicksort;
  */
 public class FasterQuicksort implements FasterQuicksortI {
     private long counter;
-    public FasterQuicksort() {counter = 0;}
+    private ThreadPoolExecutor threadPool; //TODO: also try out forjoinpool
+
+    public FasterQuicksort() {
+        counter = 0;
+        // create thread pool with logical cpu core amount of threads
+        int numThreads = Runtime.getRuntime().availableProcessors();
+        threadPool = (ThreadPoolExecutor) Executors.newFixedThreadPool(numThreads);
+    }
+
 
     /**
      * A method that sorts a list of Nodes
@@ -39,7 +49,7 @@ public class FasterQuicksort implements FasterQuicksortI {
                     int j = i;
                     // swap the jth element with the one left and repeat
                     while (j > left && list[j-1].getKey() > list[j].getKey()) {
-                        counter++;
+                        increaseCounter();
                         swap(list, j, j - 1);
                         j--;
                     }
@@ -55,15 +65,15 @@ public class FasterQuicksort implements FasterQuicksortI {
                 int center = (left + right) / 2;
 
                 if (list[left].getKey() > list[center].getKey()) {
-                    counter++;
+                    increaseCounter();
                     swap(list, left, center);
                 }
                 if (list[left].getKey() > list[right].getKey()) {
-                    counter++;
+                    increaseCounter();
                     swap(list, left, right);
                 }
                 if (list[center].getKey() > list[right].getKey()) {
-                    counter++;
+                    increaseCounter();
                     swap(list, center, right);
                 }
                 swap(list, center, right);
@@ -72,13 +82,13 @@ public class FasterQuicksort implements FasterQuicksortI {
                 while (true) {
                     // increase i, which starts as the smallest index, until the Node it indexes is equal or larger than the pivot
                     while (list[i].getKey() < list[pivot].getKey()) {
-                        counter++;
+                        increaseCounter();
                         i++;
                     }
 
                     // decrease j, which starts as the largest index, until the Node it indexes is smaller than the pivot
                     while (j > i && list[j].getKey() >= list[pivot].getKey()) {
-                        counter++;
+                        increaseCounter();
                         j--;
                     }
 
@@ -93,9 +103,11 @@ public class FasterQuicksort implements FasterQuicksortI {
                 // swap the pivot to the middle
                 swap(list, i, right);
                 // sort everything right and left of the pivot
-                //TODO: create new threads
-                sort(list, left, i - 1);
-                sort(list, i + 1, right);
+                // create new threads
+                final int iMinusOne = i - 1;
+                final int iPlusOne = i + 1;
+                threadPool.submit(() -> sort(list, left, iMinusOne));
+                threadPool.submit(() -> sort(list, iPlusOne, right));
             }
         }
     }
@@ -106,6 +118,10 @@ public class FasterQuicksort implements FasterQuicksortI {
             list[i] = list[j];
             list[j] = iOld;
     	}
+    }
+
+    private synchronized void increaseCounter() {
+        counter++;
     }
 
     @Override
