@@ -1,5 +1,6 @@
 package quicksort;
 
+
 /**<br>
  * Kurs: BTI3-ADP <br>
  * Aufgabe: 5 Quicksort Algorithm<br>
@@ -41,10 +42,24 @@ public class QuicksortOne implements Quicksort {
                 case RIGHT:
                     break;
                 case MEDIANOFTHREE:
-                    swap(list, (left + (right-left)/2 + right) / 3, right);
+                	int center = (left + right) / 2;
+
+	                if (list[left].getKey() > list[center].getKey()) {
+	                	counter++;
+	                	swap(list, left, center);
+	                }
+	                if (list[left].getKey() > list[right].getKey()) {
+	                	counter++;
+	                	swap(list, left, right);
+            		}
+	                if (list[center].getKey() > list[right].getKey()) {
+	                	counter++;
+	                	swap(list, center, right);
+	                }
+                    swap(list, center, right);
                     break;
                 case RANDOM:
-                    double index = Math.random() * right;
+                    double index = left + Math.random() * (right-left);
                     swap(list, (int) index, right);
                     break;
             }
@@ -53,13 +68,13 @@ public class QuicksortOne implements Quicksort {
             iterationLoop:
             while(true) {
                 // increase i, which starts as the smallest index, until the Node it indexes is equal or larger than the pivot
-                while(list[i].getKey() < pivot) {
+                while(list[i].getKey() < list[pivot].getKey()) {
                 	counter++;
                     i++;
                 }
 
                 // decrease j, which starts as the largest index, until the Node it indexes is smaller than the pivot
-                while(j > i && list[j].getKey() >= pivot) {
+                while(j > i && list[j].getKey() >= list[pivot].getKey()) {
                 	counter++;
                     j--;
                 }
@@ -80,7 +95,7 @@ public class QuicksortOne implements Quicksort {
         }
     }
 
-    private void swap(Node[] list, int i, int j) {
+	private void swap(Node[] list, int i, int j) {
     	if(i != j) {
             Node iOld = list[i];
             list[i] = list[j];

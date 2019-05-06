@@ -9,7 +9,7 @@ import quicksort.QuicksortOne;
 import static junit.framework.TestCase.assertEquals;
 
 public class JUnitTestFrameOne {
-    final private int timelimit = 1_000;
+    final private int timelimit = 1_000_000_000;
 
     @Test(timeout = timelimit)
     public void testsOneMOT() {
