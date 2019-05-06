@@ -5,7 +5,7 @@ import quicksort.*;
 public class QuantitativeTest {
     public static void main(String... args) {
         final int sampleSize = 3;
-        QuicksortI qs = new Quicksort();
+        QuickersortI qs = new Quickersort();
 
         System.out.println("---Best Case/Average Case---------------------------------------");
         for (int i = 1; i <= 10000; i *= 10) {
