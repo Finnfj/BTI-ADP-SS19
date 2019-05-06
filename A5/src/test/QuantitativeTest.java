@@ -5,7 +5,7 @@ import quicksort.*;
 public class QuantitativeTest {
     public static void main(String... args) {
         final int sampleSize = 3;
-        Quicksort qs = new QuicksortOne();
+        QuicksortI qs = new Quicksort();
         PivotType[] pivotTypes = {PivotType.MEDIANOFTHREE, PivotType.RANDOM, PivotType.RIGHT};
 
         System.out.println("---Best Case/Average Case---------------------------------------");
