@@ -2,6 +2,9 @@ package fasterQuicksort;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**<br>
  * Kurs: BTI3-ADP <br>
@@ -18,11 +21,7 @@ public class FasterQuicksort implements FasterQuicksortI {
 
     public FasterQuicksort() {
         counter = 0;
-        // create thread pool with logical cpu core amount of threads
-        int numThreads = Runtime.getRuntime().availableProcessors();
-        threadPool = (ThreadPoolExecutor) Executors.newFixedThreadPool(numThreads);
     }
-
 
     /**
      * A method that sorts a list of Nodes
@@ -30,7 +29,17 @@ public class FasterQuicksort implements FasterQuicksortI {
      */
     @Override
     public void sort(Node[] list) {
-        sort(list, 0, list.length-1);
+        int numThreads = Runtime.getRuntime().availableProcessors(); // get amount of cpu cores on pc
+        threadPool = (ThreadPoolExecutor) Executors.newFixedThreadPool(numThreads); // create thread pool with amount of cpu cores threads
+        threadPool.submit(() -> sort(list, 0, list.length-1));
+        threadPool.shutdown(); // shutdown the thread pool, it's threads are still running
+        while (true) {
+            try {
+                if (threadPool.awaitTermination(24L, TimeUnit.HOURS)) break; // only break if every thread is done
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     /**
@@ -39,8 +48,7 @@ public class FasterQuicksort implements FasterQuicksortI {
      * @param left The smallest index of the part that is going to be sorted
      * @param right The highest index of the part that is going to be sorted
      */
-    @Override
-    public void sort(Node[] list, int left, int right) {
+    private void sort(Node[] list, int left, int right) {
         if (right > left) {
             // insertion sort
             if(right - left < 10) {

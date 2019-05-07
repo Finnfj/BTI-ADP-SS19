@@ -14,7 +14,7 @@ public class JUnitTestFrameFasterQuicksort {
     public void testOne() {
         FasterQuicksortI qs = new FasterQuicksort();
         Node[] sortedList = {new Node(0, 0)};
-        qs.sort(sortedList, 0, sortedList.length-1);
+        qs.sort(sortedList);
 
         for (int i = 0; i < sortedList.length; i++) {
             assertEquals(sortedList[i].getKey(), i);
@@ -78,6 +78,40 @@ public class JUnitTestFrameFasterQuicksort {
 
         for (int i = 0; i < sortedList.length; i++) {
             assertEquals(sortedList[i].getKey(), i);
+        }
+    }
+
+    @Test(timeout = timelimit)
+    public void testTenthousand() {
+        int size = 10000;
+        FasterQuicksortI qs = new FasterQuicksort();
+        Node[] sortedList = new Node[size];
+        for (int i = 0; i < size; i++) {
+            sortedList[i] = new Node(size - 1 - i, size - 1 - i);
+        }
+        qs.sort(sortedList);
+
+        for (int i = 0; i < sortedList.length; i++) {
+            assertEquals(sortedList[i].getKey(), i);
+        }
+    }
+
+    @Test(timeout = timelimit)
+    public void testOnehundredTwice() {
+        int size = 100;
+        FasterQuicksortI qs = new FasterQuicksort();
+        Node[] sortedList = new Node[size];
+        Node[] sortedListTwo = new Node[size];
+        for (int i = 0; i < size; i++) {
+            sortedList[i] = new Node(size - 1 - i, size - 1 - i);
+            sortedListTwo[i] = new Node(size - 1 - i, size - 1 - i);
+        }
+        qs.sort(sortedList);
+        qs.sort(sortedListTwo);
+
+        for (int i = 0; i < sortedList.length; i++) {
+            assertEquals(sortedList[i].getKey(), i);
+            assertEquals(sortedListTwo[i].getKey(), i);
         }
     }
 }

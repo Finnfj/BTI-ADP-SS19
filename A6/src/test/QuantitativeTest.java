@@ -7,7 +7,7 @@ import quicksort.QuicksortI;
 
 public class QuantitativeTest {
     public static void main(String... args) {
-        FasterQuicksortI fqs = new FasterQuicksort();
+        FasterQuicksort fqs = new FasterQuicksort();
         QuicksortI qs = new Quicksort();
 
         for (int i = 10; i <= 1_000_000; i *= 10) {
