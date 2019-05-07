@@ -1,6 +1,5 @@
 package quicksort;
 
-
 /**<br>
  * Kurs: BTI3-ADP <br>
  * Aufgabe: 5 QuicksortI Algorithm<br>

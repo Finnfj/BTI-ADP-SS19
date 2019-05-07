@@ -20,14 +20,14 @@ public class QuantitativeTest {
                         double rndNum = Math.random() * Integer.MAX_VALUE;
                         unsortedList[j] = new Node((int) rndNum, (int) rndNum);
                     }
-                    long startTime = System.nanoTime();
+                    long startTime = System.currentTimeMillis();
                     qs.sort(unsortedList, p);
-                    long endTime = System.nanoTime();
+                    long endTime = System.currentTimeMillis();
                     time += endTime - startTime;
                     averageCount += qs.getCounter();
                     qs.resetCounter();
                 }
-                System.out.println(p + " =\n" + averageCount/sampleSize + "\n" + time/sampleSize + " ns");
+                System.out.println(p + " =\n" + averageCount/sampleSize + "\n" + time/sampleSize + " ms");
             }
         }
 

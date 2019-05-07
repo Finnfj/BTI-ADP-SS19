@@ -9,10 +9,10 @@ import java.util.concurrent.locks.ReentrantLock;
 /**<br>
  * Kurs: BTI3-ADP <br>
  * Aufgabe: 5 FasterQuicksortI Algorithm<br>
- * A FasterQuicksortI Algorithm that with three different Pivots<br>
+ * A Quicksort Algorithm that uses InsertionSort for list sizes smaller than 10, multithreading and median of X as Pivot<br>
  * @author Finn Jannsen
  * @author Philipp Schwarz
- * @version 1.0, 22.04.19
+ * @version 1.0, 07.05.19
  *
  */
 public class FasterQuicksort implements FasterQuicksortI {
@@ -62,7 +62,7 @@ public class FasterQuicksort implements FasterQuicksortI {
                         j--;
                     }
                 }
-            // fasterQuicksort
+            // Quicksort
             } else {
                 int i = left;
                 int j = right - 1;

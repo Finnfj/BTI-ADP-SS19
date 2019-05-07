@@ -4,6 +4,9 @@ import fasterQuicksort.FasterQuicksortI;
 import org.junit.Test;
 import fasterQuicksort.Node;
 import fasterQuicksort.FasterQuicksort;
+import quicksort.PivotType;
+import quicksort.Quicksort;
+import quicksort.QuicksortI;
 
 import static junit.framework.TestCase.assertEquals;
 
@@ -82,8 +85,53 @@ public class JUnitTestFrameFasterQuicksort {
     }
 
     @Test(timeout = timelimit)
+    public void testOnehundredthousand() {
+        int size = 100000;
+        FasterQuicksortI qs = new FasterQuicksort();
+        Node[] sortedList = new Node[size];
+        for (int i = 0; i < size; i++) {
+            sortedList[i] = new Node(size - 1 - i, size - 1 - i);
+        }
+        qs.sort(sortedList);
+
+        for (int i = 0; i < sortedList.length; i++) {
+            assertEquals(sortedList[i].getKey(), i);
+        }
+    }
+
+    @Test(timeout = timelimit)
+    public void testOnemillion() {
+        int size = 1_000_000;
+        FasterQuicksortI fqs = new FasterQuicksort();
+        Node[] sortedList = new Node[size];
+        for (int i = 0; i < size; i++) {
+            sortedList[i] = new Node(size - 1 - i, size - 1 - i);
+        }
+        fqs.sort(sortedList);
+
+        for (int i = 0; i < sortedList.length; i++) {
+            assertEquals(sortedList[i].getKey(), i);
+        }
+    }
+
+    @Test(timeout = timelimit)
     public void testTenthousand() {
         int size = 10000;
+        FasterQuicksortI qs = new FasterQuicksort();
+        Node[] sortedList = new Node[size];
+        for (int i = 0; i < size; i++) {
+            sortedList[i] = new Node(size - 1 - i, size - 1 - i);
+        }
+        qs.sort(sortedList);
+
+        for (int i = 0; i < sortedList.length; i++) {
+            assertEquals(sortedList[i].getKey(), i);
+        }
+    }
+
+    @Test(timeout = timelimit)
+    public void testThousand() {
+        int size = 1000;
         FasterQuicksortI qs = new FasterQuicksort();
         Node[] sortedList = new Node[size];
         for (int i = 0; i < size; i++) {

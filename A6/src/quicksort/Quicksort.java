@@ -44,20 +44,20 @@ public class Quicksort implements QuicksortI {
                 case RIGHT:
                     break;
                 case MEDIANOFTHREE:
-                	int center = (left + right) / 2;
+                    int center = (left + right) / 2;
 
-	                if (list[left].getKey() > list[center].getKey()) {
-	                	counter++;
-	                	swap(list, left, center);
-	                }
-	                if (list[left].getKey() > list[right].getKey()) {
-	                	counter++;
-	                	swap(list, left, right);
-            		}
-	                if (list[center].getKey() > list[right].getKey()) {
-	                	counter++;
-	                	swap(list, center, right);
-	                }
+                    if (list[left].getKey() > list[center].getKey()) {
+                        counter++;
+                        swap(list, left, center);
+                    }
+                    if (list[left].getKey() > list[right].getKey()) {
+                        counter++;
+                        swap(list, left, right);
+                    }
+                    if (list[center].getKey() > list[right].getKey()) {
+                        counter++;
+                        swap(list, center, right);
+                    }
                     swap(list, center, right);
                     break;
                 case RANDOM:
@@ -71,13 +71,13 @@ public class Quicksort implements QuicksortI {
             while(true) {
                 // increase i, which starts as the smallest index, until the Node it indexes is equal or larger than the pivot
                 while(list[i].getKey() < list[pivot].getKey()) {
-                	counter++;
+                    counter++;
                     i++;
                 }
 
                 // decrease j, which starts as the largest index, until the Node it indexes is smaller than the pivot
                 while(j > i && list[j].getKey() >= list[pivot].getKey()) {
-                	counter++;
+                    counter++;
                     j--;
                 }
 
@@ -97,12 +97,12 @@ public class Quicksort implements QuicksortI {
         }
     }
 
-	private void swap(Node[] list, int i, int j) {
-    	if(i != j) {
+    private void swap(Node[] list, int i, int j) {
+        if(i != j) {
             Node iOld = list[i];
             list[i] = list[j];
             list[j] = iOld;
-    	}
+        }
     }
 
     @Override
