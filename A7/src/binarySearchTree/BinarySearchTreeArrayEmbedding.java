@@ -1,9 +1,11 @@
 package binarySearchTree;
 
 public class BinarySearchTreeArrayEmbedding implements BinarySearchTreeI {
-    @Override
-    public void addData(Object data) {
+    Node root;
 
+    @Override
+    public Node addData(Object data) {
+        return null;
     }
 
     @Override
