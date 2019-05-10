@@ -1,10 +1,9 @@
 package fasterQuicksort;
 
-import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.concurrent.*;
 
 /**<br>
  * Kurs: BTI3-ADP <br>
@@ -18,9 +17,11 @@ import java.util.concurrent.locks.ReentrantLock;
 public class FasterQuicksort implements FasterQuicksortI {
     private long counter;
     private ThreadPoolExecutor threadPool; //TODO: also try out forjoinpool
+    private BlockingQueue<Future> futureQueue;
 
     public FasterQuicksort() {
         counter = 0;
+        futureQueue = new LinkedBlockingQueue<>();
     }
 
     /**
@@ -31,7 +32,17 @@ public class FasterQuicksort implements FasterQuicksortI {
     public void sort(Node[] list) {
         int numThreads = Runtime.getRuntime().availableProcessors(); // get amount of cpu cores on pc
         threadPool = (ThreadPoolExecutor) Executors.newFixedThreadPool(numThreads); // create thread pool with amount of cpu cores threads
-        threadPool.submit(() -> sort(list, 0, list.length-1));
+        futureQueue.add(threadPool.submit(() -> sort(list, 0, list.length-1)));
+        while (!futureQueue.isEmpty()) {
+            if(futureQueue.peek().isDone()) {
+                futureQueue.poll();
+            }
+            try {
+                Thread.sleep(0, 50);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
         threadPool.shutdown(); // shutdown the thread pool, it's threads are still running
         while (true) {
             try {
@@ -114,8 +125,8 @@ public class FasterQuicksort implements FasterQuicksortI {
                 // create new threads
                 final int iMinusOne = i - 1;
                 final int iPlusOne = i + 1;
-                threadPool.submit(() -> sort(list, left, iMinusOne));
-                threadPool.submit(() -> sort(list, iPlusOne, right));
+                futureQueue.add(threadPool.submit(() -> sort(list, left, iMinusOne)));
+                futureQueue.add(threadPool.submit(() -> sort(list, iPlusOne, right)));
             }
         }
     }
