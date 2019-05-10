@@ -23,11 +23,9 @@ public class QuantitativeTest {
             }
             long startTime = System.currentTimeMillis();
             fqs.sort(unsortedListOne);
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            /*for(Node n : unsortedListOne) {
+                System.out.println(n.getKey());
+            }*/
             long endTime = System.currentTimeMillis();
             long time = endTime - startTime;
             System.out.println("FastQuicksort: " + fqs.getCounter() + "\n" + time + " ms");
@@ -35,6 +33,9 @@ public class QuantitativeTest {
 
             startTime = System.currentTimeMillis();
             qs.sort(unsortedListTwo, PivotType.MEDIANOFTHREE);
+            /*for(Node n : unsortedListTwo) {
+                System.out.println(n.getKey());
+            }*/
             endTime = System.currentTimeMillis();
             time = endTime - startTime;
             System.out.println("Quicksort:     " + qs.getCounter() + "\n" + time + " ms");
