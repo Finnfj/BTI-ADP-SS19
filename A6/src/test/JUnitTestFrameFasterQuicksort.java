@@ -4,9 +4,6 @@ import fasterQuicksort.FasterQuicksortI;
 import org.junit.Test;
 import fasterQuicksort.Node;
 import fasterQuicksort.FasterQuicksort;
-import quicksort.PivotType;
-import quicksort.Quicksort;
-import quicksort.QuicksortI;
 
 import static junit.framework.TestCase.assertEquals;
 

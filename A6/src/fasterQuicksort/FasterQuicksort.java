@@ -15,12 +15,10 @@ import java.util.concurrent.*;
 public class FasterQuicksort implements FasterQuicksortI {
     private long counter;
     private ThreadPoolExecutor threadPool; //TODO: also try out forjoinpool
-    private ConcurrentLinkedQueue<CompletableFuture> completableFutureArrayList;
-    //private CompletableFuture rootCompletableFuture;
+    private CompletableFuture rootCompletableFuture;
 
     public FasterQuicksort() {
         counter = 0;
-        completableFutureArrayList = new ConcurrentLinkedQueue<>();
     }
 
     /**
@@ -31,8 +29,8 @@ public class FasterQuicksort implements FasterQuicksortI {
     public void sort(Node[] list) {
         int numThreads = Runtime.getRuntime().availableProcessors(); // get amount of cpu cores on pc
         threadPool = (ThreadPoolExecutor) Executors.newFixedThreadPool(numThreads); // create thread pool with amount of cpu cores threads
-        completableFutureArrayList.add(CompletableFuture.runAsync(() -> sort(list, 0, list.length-1), threadPool)); // add completablefuture of the runnable to arraylist
-        while(!CompletableFuture.allOf(completableFutureArrayList.toArray(new CompletableFuture[completableFutureArrayList.size()])).isDone()) {  // check if every completablefuture is done
+        rootCompletableFuture = CompletableFuture.allOf(CompletableFuture.runAsync(() -> sort(list, 0, list.length-1), threadPool)); // add completablefuture of the runnable to arraylist
+        while(!rootCompletableFuture.isDone()) {
             try {
                 Thread.sleep(1);
             } catch (InterruptedException e) {
@@ -121,8 +119,8 @@ public class FasterQuicksort implements FasterQuicksortI {
                 // create new threads
                 final int iMinusOne = i - 1;
                 final int iPlusOne = i + 1;
-                completableFutureArrayList.add(CompletableFuture.runAsync(() -> sort(list, left, iMinusOne), threadPool));
-                completableFutureArrayList.add(CompletableFuture.runAsync(() -> sort(list, iPlusOne, right), threadPool));
+                rootCompletableFuture = CompletableFuture.allOf(CompletableFuture.runAsync(() -> sort(list, left, iMinusOne), threadPool));
+                rootCompletableFuture = CompletableFuture.allOf(CompletableFuture.runAsync(() -> sort(list, iPlusOne, right), threadPool));
             }
         }
     }
