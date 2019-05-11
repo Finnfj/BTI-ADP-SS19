@@ -1,8 +1,6 @@
 package fasterQuicksort;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;
 import java.util.concurrent.*;
 
 /**<br>
@@ -17,11 +15,12 @@ import java.util.concurrent.*;
 public class FasterQuicksort implements FasterQuicksortI {
     private long counter;
     private ThreadPoolExecutor threadPool; //TODO: also try out forjoinpool
-    private BlockingQueue<Future> futureQueue;
+    private ConcurrentLinkedQueue<CompletableFuture> completableFutureArrayList;
+    //private CompletableFuture rootCompletableFuture;
 
     public FasterQuicksort() {
         counter = 0;
-        futureQueue = new LinkedBlockingQueue<>();
+        completableFutureArrayList = new ConcurrentLinkedQueue<>();
     }
 
     /**
@@ -32,13 +31,10 @@ public class FasterQuicksort implements FasterQuicksortI {
     public void sort(Node[] list) {
         int numThreads = Runtime.getRuntime().availableProcessors(); // get amount of cpu cores on pc
         threadPool = (ThreadPoolExecutor) Executors.newFixedThreadPool(numThreads); // create thread pool with amount of cpu cores threads
-        futureQueue.add(threadPool.submit(() -> sort(list, 0, list.length-1)));
-        while (!futureQueue.isEmpty()) {
-            if(futureQueue.peek().isDone()) {
-                futureQueue.poll();
-            }
+        completableFutureArrayList.add(CompletableFuture.runAsync(() -> sort(list, 0, list.length-1), threadPool)); // add completablefuture of the runnable to arraylist
+        while(!CompletableFuture.allOf(completableFutureArrayList.toArray(new CompletableFuture[completableFutureArrayList.size()])).isDone()) {  // check if every completablefuture is done
             try {
-                Thread.sleep(0, 50);
+                Thread.sleep(1);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -46,7 +42,7 @@ public class FasterQuicksort implements FasterQuicksortI {
         threadPool.shutdown(); // shutdown the thread pool, it's threads are still running
         while (true) {
             try {
-                if (threadPool.awaitTermination(24L, TimeUnit.HOURS)) break; // only break if every thread is done
+                if (threadPool.awaitTermination(1L, TimeUnit.HOURS)) break; // only break if every thread is done
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -125,8 +121,8 @@ public class FasterQuicksort implements FasterQuicksortI {
                 // create new threads
                 final int iMinusOne = i - 1;
                 final int iPlusOne = i + 1;
-                futureQueue.add(threadPool.submit(() -> sort(list, left, iMinusOne)));
-                futureQueue.add(threadPool.submit(() -> sort(list, iPlusOne, right)));
+                completableFutureArrayList.add(CompletableFuture.runAsync(() -> sort(list, left, iMinusOne), threadPool));
+                completableFutureArrayList.add(CompletableFuture.runAsync(() -> sort(list, iPlusOne, right), threadPool));
             }
         }
     }
