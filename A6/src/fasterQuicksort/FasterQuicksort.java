@@ -30,8 +30,9 @@ public class FasterQuicksort implements FasterQuicksortI {
     @Override
     public void sort(Node[] list) {
         int numThreads = Runtime.getRuntime().availableProcessors(); // get amount of cpu cores on pc
-        threadPool = (ThreadPoolExecutor) Executors.newFixedThreadPool(numThreads); // create thread pool with amount of cpu cores threads
-        threadPool.submit(() -> sort(list, 0, list.length-1));
+        threadPool = (ThreadPoolExecutor) Executors.newCachedThreadPool(); // create thread pool with amount of cpu cores threads
+        threadPool.setMaximumPoolSize(numThreads);
+        threadPool.execute(() -> sort(list, 0, list.length-1));
         threadPool.shutdown(); // shutdown the thread pool, it's threads are still running
         while (true) {
             try {
