@@ -47,15 +47,15 @@ public class Quicksort implements QuicksortI {
                     int center = (left + right) / 2;
 
                     if (list[left].getKey() > list[center].getKey()) {
-                        //counter++;
+                        counter++;
                         swap(list, left, center);
                     }
                     if (list[left].getKey() > list[right].getKey()) {
-                        //counter++;
+                        counter++;
                         swap(list, left, right);
                     }
                     if (list[center].getKey() > list[right].getKey()) {
-                        //counter++;
+                        counter++;
                         swap(list, center, right);
                     }
                     swap(list, center, right);
@@ -71,13 +71,13 @@ public class Quicksort implements QuicksortI {
             while(true) {
                 // increase i, which starts as the smallest index, until the Node it indexes is equal or larger than the pivot
                 while(list[i].getKey() < list[pivot].getKey()) {
-                    //counter++;
+                    counter++;
                     i++;
                 }
 
                 // decrease j, which starts as the largest index, until the Node it indexes is smaller than the pivot
                 while(j > i && list[j].getKey() >= list[pivot].getKey()) {
-                    //counter++;
+                    counter++;
                     j--;
                 }
 

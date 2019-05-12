@@ -14,7 +14,7 @@ import quicksort.PivotType;
  * A Quicksort Algorithm that uses InsertionSort for list sizes smaller than 10, multithreading and median of X as Pivot<br>
  * @author Finn Jannsen
  * @author Philipp Schwarz
- * @version 1.0, 07.05.19
+ * @version 2.0, 12.05.19
  *
  */
 public class FasterQuicksort implements FasterQuicksortI {
@@ -35,7 +35,7 @@ public class FasterQuicksort implements FasterQuicksortI {
      * A method that sorts a part of a list
      * @param list The list that is going to be sorted by the Nodes keys
      * @param left The smallest index of the part that is going to be sorted
-     * @param right The highest index of the part that is going to be sorted
+     * @param right The rightest index of the part that is going to be sorted
      * @param pivotType The pivot that is going to be used
      */
     private void sort(Node[] list, int left, int right) {
@@ -47,91 +47,61 @@ public class FasterQuicksort implements FasterQuicksortI {
                     int j = i;
                     // swap the jth element with the one left and repeat
                     while (j > left && list[j-1].getKey() > list[j].getKey()) {
-                        //Counter++;
+                        Counter++;
                         swap(list, j, j - 1);
                         j--;
                     }
                 }
             // Quicksort
             } else {
-                int i = left;
-                int j = right-1;
-                int pivot = right;
-
-                //find pivot with median of X TODO: change to X
-                //swap the selected pivot to the last part of the list
+                // Calculate Median-of-three
                 int center = (left + right) / 2;
 
-                if (list[left].getKey() > list[center].getKey()) {
-                    //Counter++;
-                    swap(list, left, center);
-                }
                 if (list[left].getKey() > list[right].getKey()) {
-                    //Counter++;
+                    Counter++;
                     swap(list, left, right);
                 }
                 if (list[center].getKey() > list[right].getKey()) {
-                    //Counter++;
+                    Counter++;
                     swap(list, center, right);
                 }
-                //swap pivot to the right
-                swap(list, center, right);
+                if (list[center].getKey() < list[left].getKey()) {
+                    Counter++;
+                    swap(list, center, left);
+                }
+                //swap pivot to the left
+                swap(list, center, left);
+
+                int low = left, high = right;
+                int pivot = list[left].getKey();
+                int i = left;
                 
-                int p = left - 1, q = right;
-	            iterationLoop:
-	            while(true) {
-	                // increase i, which starts as the smallest index, until the Node it indexes is equal or larger than the pivot
-	            	while(list[i].getKey() < list[pivot].getKey()) {
-	                    //Counter++;
-	            		i++;
-	                }
-	
-	                // decrease j, which starts as the largest index, until the Node it indexes is smaller than the pivot
-	                while(list[j].getKey() > list[pivot].getKey()) {
-	                    //Counter++;
-	                	j--;
-	                    if (j == left) {
-	                    	break;
-	                    }
-	                }
-	
-	                // break out of the loop when we iterated over every entry
-	                if (i >= j) {
-	                    break iterationLoop;
-	                }
-	                
-	                // swap i, which points at an element larger than the pivot with j, which points at an element smaller than the pivot
-	                swap(list, i, j);
-	                
-	                if (list[i].getKey() == list[pivot].getKey()) {
-		            	//Counter++;
-	                	p++;
-	                	swap(list, p, i);
-	                }
-	                
-	                if (list[j].getKey() == list[pivot].getKey()) {
-		            	//Counter++;
-	                	q--;
-	                	swap(list, q, j);
-	                }
-	            }
-	
-	            // swap the pivot to the middle
-	            swap(list, i, right);
-	            
-	            j = i-1;
-	            for (int k = left; k < p; k++, j--) {
-	            	//Counter++;
-	            	swap(list, k, j);
-	            }
-	            
-	            i = i+1;
-	            for (int k = right-1; k > q; k--, i++) {
-	            	//Counter++;
-	            	swap(list, i, k);
-	            }
-	            sort(list, left, j);
-	            sort(list, i, right);
+                while (true) {
+                	if (list[i].getKey() < pivot) {
+                		// smaller than pivot, accumulate from the left and eventually shift pivot to i
+                		swap(list, i, low);
+                		i++; 
+                		low++;
+                        Counter++;
+                	} else if (list[i].getKey() > pivot) {
+                		// bigger than pivot, accumulate from the right
+                		swap(list, i, high);
+                		high--;
+                        Counter++;
+                	} else {
+                		// ran over pivot, skip
+                		i++;
+                        Counter++;
+                	}
+                	if (i > high) {
+                		// don't run over already iterated elements
+                		break;
+                	}
+                }
+                
+                
+	            sort(list, left, low-1);
+	            sort(list, high+1, right);
 	        }
     	}
     }
