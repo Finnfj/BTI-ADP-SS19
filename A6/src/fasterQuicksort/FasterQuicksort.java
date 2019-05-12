@@ -6,6 +6,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import quicksort.PivotType;
+
 /**<br>
  * Kurs: BTI3-ADP <br>
  * Aufgabe: 5 FasterQuicksortI Algorithm<br>
@@ -16,31 +18,17 @@ import java.util.concurrent.locks.ReentrantLock;
  *
  */
 public class FasterQuicksort implements FasterQuicksortI {
-    private long counter;
-    private ThreadPoolExecutor threadPool; //TODO: also try out forjoinpool
-
-    public FasterQuicksort() {
-        counter = 0;
-    }
+    private long Counter;
+    public FasterQuicksort() {Counter = 0;}
 
     /**
      * A method that sorts a list of Nodes
      * @param list The list that is going to be sorted by the Nodes keys
+     * @param pivotType The pivot that is going to be used
      */
     @Override
     public void sort(Node[] list) {
-        int numThreads = Runtime.getRuntime().availableProcessors(); // get amount of cpu cores on pc
-        threadPool = (ThreadPoolExecutor) Executors.newCachedThreadPool(); // create thread pool with amount of cpu cores threads
-        threadPool.setMaximumPoolSize(numThreads);
-        threadPool.execute(() -> sort(list, 0, list.length-1));
-        threadPool.shutdown(); // shutdown the thread pool, it's threads are still running
-        while (true) {
-            try {
-                if (threadPool.awaitTermination(24L, TimeUnit.HOURS)) break; // only break if every thread is done
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
+        sort(list, 0, list.length-1);
     }
 
     /**
@@ -48,9 +36,10 @@ public class FasterQuicksort implements FasterQuicksortI {
      * @param list The list that is going to be sorted by the Nodes keys
      * @param left The smallest index of the part that is going to be sorted
      * @param right The highest index of the part that is going to be sorted
+     * @param pivotType The pivot that is going to be used
      */
     private void sort(Node[] list, int left, int right) {
-        if (right > left) {
+    	if (right > left) {
             // insertion sort
             if(right - left < 10) {
                 // start at the second element, since there is no element left to it
@@ -58,7 +47,7 @@ public class FasterQuicksort implements FasterQuicksortI {
                     int j = i;
                     // swap the jth element with the one left and repeat
                     while (j > left && list[j-1].getKey() > list[j].getKey()) {
-                        increaseCounter();
+                        //Counter++;
                         swap(list, j, j - 1);
                         j--;
                     }
@@ -66,7 +55,7 @@ public class FasterQuicksort implements FasterQuicksortI {
             // Quicksort
             } else {
                 int i = left;
-                int j = right - 1;
+                int j = right-1;
                 int pivot = right;
 
                 //find pivot with median of X TODO: change to X
@@ -74,51 +63,77 @@ public class FasterQuicksort implements FasterQuicksortI {
                 int center = (left + right) / 2;
 
                 if (list[left].getKey() > list[center].getKey()) {
-                    increaseCounter();
+                    //Counter++;
                     swap(list, left, center);
                 }
                 if (list[left].getKey() > list[right].getKey()) {
-                    increaseCounter();
+                    //Counter++;
                     swap(list, left, right);
                 }
                 if (list[center].getKey() > list[right].getKey()) {
-                    increaseCounter();
+                    //Counter++;
                     swap(list, center, right);
                 }
+                //swap pivot to the right
                 swap(list, center, right);
-
-                iterationLoop:
-                while (true) {
-                    // increase i, which starts as the smallest index, until the Node it indexes is equal or larger than the pivot
-                    while (list[i].getKey() < list[pivot].getKey()) {
-                        increaseCounter();
-                        i++;
-                    }
-
-                    // decrease j, which starts as the largest index, until the Node it indexes is smaller than the pivot
-                    while (j > i && list[j].getKey() >= list[pivot].getKey()) {
-                        increaseCounter();
-                        j--;
-                    }
-
-                    // break out of the loop when we iterated over every entry
-                    if (i >= j) {
-                        break iterationLoop;
-                    }
-                    // swap i, which points at an element larger than the pivot with j, which points at an element smaller than the pivot
-                    swap(list, i, j);
-                }
-
-                // swap the pivot to the middle
-                swap(list, i, right);
-                // sort everything right and left of the pivot
-                // create new threads
-                final int iMinusOne = i - 1;
-                final int iPlusOne = i + 1;
-                threadPool.submit(() -> sort(list, left, iMinusOne));
-                threadPool.submit(() -> sort(list, iPlusOne, right));
-            }
-        }
+                
+                int p = left - 1, q = right;
+	            iterationLoop:
+	            while(true) {
+	                // increase i, which starts as the smallest index, until the Node it indexes is equal or larger than the pivot
+	            	while(list[i].getKey() < list[pivot].getKey()) {
+	                    //Counter++;
+	            		i++;
+	                }
+	
+	                // decrease j, which starts as the largest index, until the Node it indexes is smaller than the pivot
+	                while(list[j].getKey() > list[pivot].getKey()) {
+	                    //Counter++;
+	                	j--;
+	                    if (j == left) {
+	                    	break;
+	                    }
+	                }
+	
+	                // break out of the loop when we iterated over every entry
+	                if (i >= j) {
+	                    break iterationLoop;
+	                }
+	                
+	                // swap i, which points at an element larger than the pivot with j, which points at an element smaller than the pivot
+	                swap(list, i, j);
+	                
+	                if (list[i].getKey() == list[pivot].getKey()) {
+		            	//Counter++;
+	                	p++;
+	                	swap(list, p, i);
+	                }
+	                
+	                if (list[j].getKey() == list[pivot].getKey()) {
+		            	//Counter++;
+	                	q--;
+	                	swap(list, q, j);
+	                }
+	            }
+	
+	            // swap the pivot to the middle
+	            swap(list, i, right);
+	            
+	            j = i-1;
+	            for (int k = left; k < p; k++, j--) {
+	            	//Counter++;
+	            	swap(list, k, j);
+	            }
+	            
+	            i = i+1;
+	            for (int k = right-1; k > q; k--, i++) {
+	            	//Counter++;
+	            	swap(list, i, k);
+	            }
+	            sort(list, left, j);
+	            sort(list, i, right);
+	        }
+    	}
     }
 
 	private void swap(Node[] list, int i, int j) {
@@ -129,17 +144,13 @@ public class FasterQuicksort implements FasterQuicksortI {
     	}
     }
 
-    private synchronized void increaseCounter() {
-        counter++;
-    }
-
     @Override
     public long getCounter() {
-        return counter;
+        return Counter;
     }
 
     @Override
     public void resetCounter() {
-        counter = 0;
+        Counter = 0;
     }
 }

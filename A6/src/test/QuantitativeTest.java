@@ -45,10 +45,10 @@ public class QuantitativeTest {
 		            }
 		            long startTime = System.currentTimeMillis();
 		            fqs.sort(unsortedListOne);
-		            for (int p=0; p<i; p++) {
-		            	System.out.println(unsortedListOne[p].getKey());
-		            }
 		            long endTime = System.currentTimeMillis();
+//		            for (int p=0; p<i; p++) {
+//		            	System.out.println(unsortedListOne[p].getKey());
+//		            }
 		            long time = endTime - startTime;
 		            System.out.println("FastQuicksort: " + fqs.getCounter() + "\n" + time + " ms");
 		        	// CSV [
