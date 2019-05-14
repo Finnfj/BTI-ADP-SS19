@@ -8,19 +8,21 @@ import fasterQuicksort.*;
 import quicksort.PivotType;
 import quicksort.Quicksort;
 import quicksort.QuicksortI;
+import radixSort.RadixSort;
 
 public class QuantitativeTest {
     public static void main(String... args) {
         FasterQuicksort fqs = new FasterQuicksort();
         QuicksortI qs = new Quicksort();
+        RadixSort rs = new RadixSort();
         
     	try (PrintWriter writer = new PrintWriter(new File("test.csv"))) {
 	  	    StringBuilder sb = new StringBuilder();
 	  	    sb.append("N");
 	  	    sb.append(',');
-	  	    sb.append("Counter fqs");
+	  	    sb.append("Counter rs");
 	  	    sb.append(',');
-	  	    sb.append("T in ms fqs");
+	  	    sb.append("T in ms rs");
 	  	    sb.append(',');
 	  	    sb.append("Counter qs");
 	  	    sb.append(',');
@@ -37,27 +39,25 @@ public class QuantitativeTest {
 		            Node[] unsortedListOne = new Node[i];
 		            Node[] unsortedListTwo = new Node[i];
 		            for (int j = 0; j < i; j++) {
-		                double rnd = Math.random() * 100;
-		                int num = (int) rnd + 700;
-		                int key = num * i;
+		                int key = (int) (700 * i + Math.random() * (100 * i));
 		                unsortedListOne[j] = new Node(key, key);
 		                unsortedListTwo[j] = new Node(key, key);
 		            }
 		            long startTime = System.currentTimeMillis();
-		            fqs.sort(unsortedListOne);
+		            unsortedListOne = rs.sort(unsortedListOne, 800 * i);
 		            long endTime = System.currentTimeMillis();
 //		            for (int p=0; p<i; p++) {
 //		            	System.out.println(unsortedListOne[p].getKey());
 //		            }
 		            long time = endTime - startTime;
-		            System.out.println("FastQuicksort: " + fqs.getCounter() + "\n" + time + " ms");
+		            System.out.println("Radixsort: " + rs.getCounter() + "\n" + time + " ms");
 		        	// CSV [
-		        	sb.append(fqs.getCounter());
+		        	sb.append(rs.getCounter());
 		        	sb.append(',');
 		        	sb.append(time);
 		        	sb.append(',');
 		        	// ] CSV
-		            fqs.resetCounter();
+		            rs.resetCounter();
 	
 		        	
 		            startTime = System.currentTimeMillis();
