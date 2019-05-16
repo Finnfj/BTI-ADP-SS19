@@ -16,14 +16,9 @@ public class BinarySerachTreeNodeLinking implements BinarySearchTreeI {
 
     @Override
     public void printTree(PrintVariant pv) {
-        switch (pv) {
-            case INORDER:
-
-                break;
-            case POSTORDER:
-                break;
-            case PREORDER:
-                break;
+        if(root != null) {
+            root.printData(pv);
+            System.out.println();
         }
     }
 }

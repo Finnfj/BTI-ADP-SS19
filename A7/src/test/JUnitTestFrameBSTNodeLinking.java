@@ -11,16 +11,13 @@ public class JUnitTestFrameBSTNodeLinking {
 
     private static void testOne() {
         BinarySearchTreeI bstnl = new BinarySerachTreeNodeLinking();
-        bstnl.printTree(PrintVariant.INORDER);
         bstnl.addData(1);
-        bstnl.printTree(PrintVariant.INORDER);
         bstnl.addData(2);
-        bstnl.printTree(PrintVariant.INORDER);
         bstnl.addData(1);
-        bstnl.printTree(PrintVariant.INORDER);
         bstnl.addData(0);
-        bstnl.printTree(PrintVariant.INORDER);
         bstnl.addData(3);
         bstnl.printTree(PrintVariant.INORDER);
+        bstnl.printTree(PrintVariant.PREORDER);
+        bstnl.printTree(PrintVariant.POSTORDER);
     }
 }

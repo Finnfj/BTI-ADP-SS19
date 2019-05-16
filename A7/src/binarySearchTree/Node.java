@@ -18,12 +18,18 @@ public class Node<T> implements Comparable {
         if(obj == null) return false;
         if(this == obj) return true;
         if(obj instanceof Node == false) return false;
-        if(((Node) obj).getKey() != this.key) return false;
-        return true;
+        return (data.equals(((Node) obj).getData()));
+        //if(((Node) obj).getKey() != this.key) return false;
+        //return true;
     }
 
     @Override
     public int compareTo(Object obj) {
+        if(data instanceof Comparable && obj instanceof Comparable) {
+            if(data.getClass() == obj.getClass()) {
+                return ((Comparable) data).compareTo(obj);
+            }
+        }
         if(obj == null) return 0;
         if(obj instanceof Node == false) return 0;
         return this.key - ((Node) obj).getKey();
@@ -53,7 +59,7 @@ public class Node<T> implements Comparable {
         if(this.equals(newNode)) {
             return this;
         } else {
-            if(compareTo(newNode) > 0) { // -1 if newNode is smaller, 0 if newNode is equal, 1 if newNode is larger
+            if(compareTo(newNode) > 0) { // -1 if newNode is larger, 0 if newNode is equal, 1 if newNode is smaller
                 if(left == null) {
                     left = newNode;
                     return left;
@@ -68,6 +74,38 @@ public class Node<T> implements Comparable {
                     return right.insert(newNode);
                 }
             }
+        }
+    }
+
+    public void printData(PrintVariant pv) {
+        switch (pv) {
+            case INORDER:
+                if(left != null) {
+                    left.printData(pv);
+                }
+                System.out.println(data.toString() + ", " + key);
+                if(right != null) {
+                    right.printData(pv);
+                }
+                break;
+            case POSTORDER:
+                if(left != null) {
+                    left.printData(pv);
+                }
+                if(right != null) {
+                    right.printData(pv);
+                }
+                System.out.println(data.toString() + ", " + key);
+                break;
+            case PREORDER:
+                System.out.println(data.toString() + ", " + key);
+                if(left != null) {
+                    left.printData(pv);
+                }
+                if(right != null) {
+                    right.printData(pv);
+                }
+                break;
         }
     }
 
