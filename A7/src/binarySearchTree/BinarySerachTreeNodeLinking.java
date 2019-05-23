@@ -1,15 +1,15 @@
 package binarySearchTree;
 
 public class BinarySerachTreeNodeLinking implements BinarySearchTreeI {
-    Node root;
+    NodeNodeLinking root;
 
     @Override
-    public Node addData(Object data) {
-        Node newNode = new Node(data);
+    public NodeNodeLinking addData(Object data) {
+        NodeNodeLinking newNodeNodeLinking = new NodeNodeLinking(data);
         if(root != null) {
-            return root.insert(newNode);
+            return root.insert(newNodeNodeLinking);
         } else {
-            root = newNode;
+            root = newNodeNodeLinking;
             return root;
         }
     }

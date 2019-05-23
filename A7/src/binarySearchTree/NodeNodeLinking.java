@@ -1,11 +1,11 @@
 package binarySearchTree;
 
-public class Node<T> implements Comparable {
+public class NodeNodeLinking<T> implements Comparable, NodeI {
     private T data;
     private int key;
-    private Node left, right, father;
+    private NodeNodeLinking left, right, father;
 
-    public Node(T data) {
+    public NodeNodeLinking(T data) {
         this.data = data;
         key = data.hashCode();
         this.father = null;
@@ -17,9 +17,9 @@ public class Node<T> implements Comparable {
     public boolean equals(Object obj) {
         if(obj == null) return false;
         if(this == obj) return true;
-        if(obj instanceof Node == false) return false;
-        return (data.equals(((Node) obj).getData()));
-        //if(((Node) obj).getKey() != this.key) return false;
+        if(obj instanceof NodeNodeLinking == false) return false;
+        return (data.equals(((NodeNodeLinking) obj).getData()));
+        //if(((NodeNodeLinking) obj).getKey() != this.key) return false;
         //return true;
     }
 
@@ -31,47 +31,47 @@ public class Node<T> implements Comparable {
             }
         }
         if(obj == null) return 0;
-        if(obj instanceof Node == false) return 0;
-        return this.key - ((Node) obj).getKey();
+        if(obj instanceof NodeNodeLinking == false) return 0;
+        return this.key - ((NodeNodeLinking) obj).getKey();
     }
 
-    public boolean exist(Node newNode) {
-        if(this.equals(newNode)) {
+    public boolean exist(NodeNodeLinking newNodeNodeLinking) {
+        if(this.equals(newNodeNodeLinking)) {
             return true;
         } else {
-            if(compareTo(newNode) > 0) { // -1 if newNode is smaller, 0 if newNode is equal, 1 if newNode is larger
+            if(compareTo(newNodeNodeLinking) > 0) { // -1 if newNodeNodeLinking is smaller, 0 if newNodeNodeLinking is equal, 1 if newNodeNodeLinking is larger
                 if(this.left == null) {
                     return false;
                 } else {
-                    return this.left.exist(newNode);
+                    return this.left.exist(newNodeNodeLinking);
                 }
             } else {
                 if(this.right == null) {
                     return false;
                 } else {
-                    return this.right.exist(newNode);
+                    return this.right.exist(newNodeNodeLinking);
                 }
             }
         }
     }
 
-    public Node insert(Node newNode) {
-        if(this.equals(newNode)) {
+    public NodeNodeLinking insert(NodeNodeLinking newNodeNodeLinking) {
+        if(this.equals(newNodeNodeLinking)) {
             return this;
         } else {
-            if(compareTo(newNode) > 0) { // -1 if newNode is larger, 0 if newNode is equal, 1 if newNode is smaller
+            if(compareTo(newNodeNodeLinking) > 0) { // -1 if newNodeNodeLinking is larger, 0 if newNodeNodeLinking is equal, 1 if newNodeNodeLinking is smaller
                 if(left == null) {
-                    left = newNode;
+                    left = newNodeNodeLinking;
                     return left;
                 } else {
-                    return left.insert(newNode);
+                    return left.insert(newNodeNodeLinking);
                 }
             } else {
                 if(right == null) {
-                    right = newNode;
+                    right = newNodeNodeLinking;
                     return right;
                 } else {
-                    return right.insert(newNode);
+                    return right.insert(newNodeNodeLinking);
                 }
             }
         }
@@ -117,27 +117,27 @@ public class Node<T> implements Comparable {
         return key;
     }
 
-    public Node getLeft() {
+    public NodeNodeLinking getLeft() {
         return left;
     }
 
-    public void setLeft(Node left) {
+    public void setLeft(NodeNodeLinking left) {
         this.left = left;
     }
 
-    public Node getRight() {
+    public NodeNodeLinking getRight() {
         return right;
     }
 
-    public void setRight(Node right) {
+    public void setRight(NodeNodeLinking right) {
         this.right = right;
     }
 
-    public Node getFather() {
+    public NodeNodeLinking getFather() {
         return father;
     }
 
-    public void setFather(Node father) {
+    public void setFather(NodeNodeLinking father) {
         this.father = father;
     }
 }
