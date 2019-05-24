@@ -1,11 +1,12 @@
 package binarySearchTree;
 
-public class NodeNodeLinking<T> implements Comparable, NodeI {
-    private T data;
+public class NodeNodeLinking implements Comparable, NodeI {
+    private Integer data;
     private int key;
+    private int sum;
     private NodeNodeLinking left, right, father;
 
-    public NodeNodeLinking(T data) {
+    public NodeNodeLinking(Integer data) {
         this.data = data;
         key = data.hashCode();
         this.father = null;
@@ -109,7 +110,7 @@ public class NodeNodeLinking<T> implements Comparable, NodeI {
         }
     }
 
-    public T getData() {
+    public Integer getData() {
         return data;
     }
 
@@ -139,5 +140,13 @@ public class NodeNodeLinking<T> implements Comparable, NodeI {
 
     public void setFather(NodeNodeLinking father) {
         this.father = father;
+    }
+
+    public int getSum() {
+        return sum;
+    }
+
+    public void setSum(int sum) {
+        this.sum = sum;
     }
 }

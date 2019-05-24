@@ -4,7 +4,7 @@ public class BinarySerachTreeNodeLinking implements BinarySearchTreeI {
     NodeNodeLinking root;
 
     @Override
-    public NodeNodeLinking addData(Object data) {
+    public NodeNodeLinking addData(Integer data) {
         NodeNodeLinking newNodeNodeLinking = new NodeNodeLinking(data);
         if(root != null) {
             return root.insert(newNodeNodeLinking);

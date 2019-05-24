@@ -17,7 +17,7 @@ public class BinarySearchTreeArrayEmbedding implements BinarySearchTreeI {
     }
 
     @Override
-    public NodeArrayEmbedding addData(Object data) {
+    public NodeArrayEmbedding addData(Integer data) {
         if(size < nodes.length - 1) { // since the zeroth place is empty, length is actually one too large
             if (nodes[1] != null) { // check if we already have a root element
                 NodeArrayEmbedding newNode = new NodeArrayEmbedding(data, nodes);

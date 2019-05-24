@@ -1,18 +1,19 @@
 package binarySearchTree;
 
-public class NodeArrayEmbedding<T> implements Comparable, NodeI {
-    private T data;
+public class NodeArrayEmbedding implements Comparable, NodeI {
+    private Integer data;
     private int key;
     private int pos;
+    private int sum;
     private NodeArrayEmbedding[] nodes;
 
-    public NodeArrayEmbedding(T data, NodeArrayEmbedding[] nodes) {
+    public NodeArrayEmbedding(Integer data, NodeArrayEmbedding[] nodes) {
         this.data = data;
         key = data.hashCode();
         this.nodes = nodes;
     }
 
-    public NodeArrayEmbedding(T data, NodeArrayEmbedding[] nodes, int pos) {
+    public NodeArrayEmbedding(Integer data, NodeArrayEmbedding[] nodes, int pos) {
         this.data = data;
         key = data.hashCode();
         this.nodes = nodes;
@@ -95,7 +96,7 @@ public class NodeArrayEmbedding<T> implements Comparable, NodeI {
         }
     }
 
-    public T getData() {
+    public Integer getData() {
         return data;
     }
 
@@ -116,4 +117,12 @@ public class NodeArrayEmbedding<T> implements Comparable, NodeI {
     }
 
     public void setPos(int pos) {this.pos = pos;}
+
+    public int getSum() {
+        return sum;
+    }
+
+    public void setSum(int sum) {
+        this.sum = sum;
+    }
 }
