@@ -17,6 +17,7 @@ public class GraphMatrix extends GraphA implements GraphI {
 
     @Override
     public void addWeight(double weight, Node a, Node b) {
+        // TODO maybe do this only once and smartly detect where to look
         adjacenceMatrix[a.getId()][b.getId()] = weight;
         adjacenceMatrix[b.getId()][a.getId()] = weight;
     }

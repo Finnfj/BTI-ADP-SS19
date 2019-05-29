@@ -3,7 +3,7 @@ package graphDykstra;
 import java.util.Comparator;
 import java.util.HashSet;
 
-public class Node implements Comparator, Comparable {
+public class Node implements Comparable<Node> {
     private int id;
     private Node pred;
     private double cost;
@@ -18,22 +18,8 @@ public class Node implements Comparator, Comparable {
         neighbours = new HashSet<>();
     }
 
-    public Node(int id, HashSet<Node> neighbours) {
-        this.id = id;
-        pred = null;
-        cost = Double.MAX_VALUE;
-        marked = false;
-        this.neighbours = neighbours;
-    }
-
     public void addNeighbour(Node neighbour) {
         neighbours.add(neighbour);
-    }
-
-    @Override
-    public int compare(Object o1, Object o2) {
-        //if(!(o1 instanceof Node) || !(o2 instanceof Node)) return 0;
-        return (int) (((Node) o1).getCost() - ((Node) o2).getCost());
     }
 
     @Override
@@ -76,7 +62,13 @@ public class Node implements Comparator, Comparable {
     }
 
     @Override
-    public int compareTo(Object o) {
-        return (int) (cost - ((Node) o).getCost());
+    public int compareTo(Node o) {
+        if (cost < o.cost) {
+            return -1;
+        } else if (cost > o.cost) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
 }

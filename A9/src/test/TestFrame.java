@@ -5,8 +5,16 @@ import graphDykstra.GraphI;
 import graphDykstra.GraphMatrix;
 import graphDykstra.Node;
 
+import java.util.PriorityQueue;
+import java.util.Queue;
+
 public class TestFrame {
     public static void main(String... args) {
+        testGraphMaxtrix();
+        testPriorityQueueWithNodes();
+    }
+
+    public static void testGraphMaxtrix() {
         GraphI gm = new GraphMatrix(4);
         Node nodeA = new Node(0);
         Node nodeB = new Node(1);
@@ -37,5 +45,21 @@ public class TestFrame {
 
         Dykstra.findRoute(gm, nodeA);
         System.out.println("done");
+    }
+
+    public static void testPriorityQueueWithNodes() {
+        Queue<Node> rand = new PriorityQueue<>();
+
+        Node a = (new Node(0));
+        Node b = (new Node(1));
+        a.setCost(3.0);
+        b.setCost(1.0);
+        rand.add(a);
+        rand.add(b);
+
+        for(int i = 0; i < 2; i++) {
+            System.out.print(rand.poll().getId() + ", ");
+        }
+        System.out.println();
     }
 }

@@ -47,7 +47,6 @@ public class Dykstra {
                     }
                     // 3.3
                     rand.add(k);
-                    System.out.print("");
                 }
             }
         }
