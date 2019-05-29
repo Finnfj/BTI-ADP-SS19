@@ -15,10 +15,6 @@ public class NeighbourListElem {
         return node;
     }
 
-    public void setNode(Node node) {
-        this.node = node;
-    }
-
     public NeighbourListElem getNext() {
         return next;
     }
@@ -29,9 +25,5 @@ public class NeighbourListElem {
 
     public double getCost() {
         return cost;
-    }
-
-    public void setCost(double cost) {
-        this.cost = cost;
     }
 }
