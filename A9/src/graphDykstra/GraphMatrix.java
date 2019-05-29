@@ -16,8 +16,9 @@ public class GraphMatrix extends GraphA implements GraphI {
     }
 
     @Override
-    public double getWeight(Node n1, Node n2) {
-        return adjacenceMatrix[n1.getId()][n2.getId()];
+    public void addNeighbour(Node n1, Node n2, double weight) {
+        adjacenceMatrix[n1.getId()][n2.getId()] = weight;
+        adjacenceMatrix[n2.getId()][n1.getId()] = weight;
     }
 
     @Override
@@ -34,8 +35,7 @@ public class GraphMatrix extends GraphA implements GraphI {
     }
 
     @Override
-    public void addNeighbour(Node n1, Node n2, double weight) {
-        adjacenceMatrix[n1.getId()][n2.getId()] = weight; // TODO: do this smarter by just doing this once
-        adjacenceMatrix[n2.getId()][n1.getId()] = weight;
+    public double getWeight(Node n1, Node n2) {
+        return adjacenceMatrix[n1.getId()][n2.getId()];
     }
 }

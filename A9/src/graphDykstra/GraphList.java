@@ -12,7 +12,7 @@ public class GraphList extends GraphA implements GraphI {
 
     @Override
     public void addNeighbour(Node n1, Node n2, double weight) {
-        addSingleNeighbour(n1, n2, weight); // TODO: do this smarter by just doing this once
+        addSingleNeighbour(n1, n2, weight);
         addSingleNeighbour(n2, n1, weight);
     }
 

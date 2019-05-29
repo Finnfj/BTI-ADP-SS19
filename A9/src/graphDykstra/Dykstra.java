@@ -23,8 +23,8 @@ public class Dykstra {
         // 2
         // fill rand with adjacence nodes of start and init the neighbour nodes of start
         for(Node n : graph.getNeighbours(start)) {
-            n.setCost(graph.getWeight(start, n)); // TODO: maybe there is another way (not in algo description of prof)
-            n.setPred(start); // TODO: maybe there is another way (not in algo description of prof)
+            n.setCost(graph.getWeight(start, n));
+            n.setPred(start);
             rand.add(n);
         }
 
