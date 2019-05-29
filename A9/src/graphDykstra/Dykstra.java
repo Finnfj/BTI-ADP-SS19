@@ -22,7 +22,7 @@ public class Dykstra {
 
         // 2
         // fill rand with adjacence nodes of start and init the neighbour nodes of start
-        for(Node n : start.getNeighbours()) {
+        for(Node n : graph.getNeighbours(start)) {
             n.setCost(graph.getWeight(start, n)); // TODO: maybe there is another way (not in algo description of prof)
             n.setPred(start); // TODO: maybe there is another way (not in algo description of prof)
             rand.add(n);
@@ -35,7 +35,7 @@ public class Dykstra {
             v.setMarked(true);
 
             // process every node in rand that is not marked
-            for(Node k : v.getNeighbours()) {
+            for(Node k : graph.getNeighbours(v)) {
                 // 3.1
                 if (!k.getMarked()) {
                     // 3.2

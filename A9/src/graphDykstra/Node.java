@@ -1,25 +1,16 @@
 package graphDykstra;
 
-import java.util.Comparator;
-import java.util.HashSet;
-
 public class Node implements Comparable<Node> {
     private int id;
     private Node pred;
     private double cost;
     private boolean marked;
-    private HashSet<Node> neighbours;
 
     public Node(int id) {
         this.id = id;
         pred = null;
         cost = Double.MAX_VALUE;
         marked = false;
-        neighbours = new HashSet<>();
-    }
-
-    public void addNeighbour(Node neighbour) {
-        neighbours.add(neighbour);
     }
 
     @Override
@@ -55,10 +46,6 @@ public class Node implements Comparable<Node> {
 
     public void setMarked(boolean marked) {
         this.marked = marked;
-    }
-
-    public HashSet<Node> getNeighbours() {
-        return neighbours;
     }
 
     @Override

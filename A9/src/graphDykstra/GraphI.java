@@ -1,10 +1,11 @@
 package graphDykstra;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 
 public interface GraphI {
     void addNode(Node node);
-    HashSet<Node> getNodes();
-    double getWeight(Node a, Node b);
-    void addWeight(double weight, Node a, Node b);
+    ArrayList<Node> getNodes();
+    double getWeight(Node n1, Node n2);
+    ArrayList<Node> getNeighbours(Node node);
+    void addNeighbour(Node n1, Node n2, double weight);
 }

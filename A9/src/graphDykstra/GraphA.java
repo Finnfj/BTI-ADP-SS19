@@ -1,15 +1,15 @@
 package graphDykstra;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 
 public abstract class GraphA {
-    private HashSet<Node> nodes = new HashSet<>();
+    private ArrayList<Node> nodes = new ArrayList<>();
 
     public void addNode(Node node) {
         nodes.add(node);
     }
 
-    public HashSet<Node> getNodes() {
+    public ArrayList<Node> getNodes() {
         return nodes;
     }
 }

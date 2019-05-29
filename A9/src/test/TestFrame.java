@@ -1,9 +1,6 @@
 package test;
 
-import graphDykstra.Dykstra;
-import graphDykstra.GraphI;
-import graphDykstra.GraphMatrix;
-import graphDykstra.Node;
+import graphDykstra.*;
 
 import java.util.PriorityQueue;
 import java.util.Queue;
@@ -15,28 +12,17 @@ public class TestFrame {
     }
 
     public static void testGraphMaxtrix() {
-        GraphI gm = new GraphMatrix(4);
+        //GraphI gm = new GraphMatrix(4);
+        GraphI gm = new GraphList();
         Node nodeA = new Node(0);
         Node nodeB = new Node(1);
         Node nodeC = new Node(2);
         Node nodeD = new Node(3);
 
-        nodeA.addNeighbour(nodeB);
-        nodeB.addNeighbour(nodeA);
-
-        nodeA.addNeighbour(nodeC);
-        nodeC.addNeighbour(nodeA);
-
-        nodeB.addNeighbour(nodeD);
-        nodeD.addNeighbour(nodeB);
-
-        nodeC.addNeighbour(nodeB);
-        nodeB.addNeighbour(nodeC);
-
-        gm.addWeight(5.0, nodeA, nodeB);
-        gm.addWeight(1.0, nodeA, nodeC);
-        gm.addWeight(1.0, nodeB, nodeD);
-        gm.addWeight(1.0, nodeB, nodeC);
+        gm.addNeighbour(nodeA, nodeB, 5.0);
+        gm.addNeighbour(nodeC, nodeA, 1.0);
+        gm.addNeighbour(nodeD, nodeB, 1.0);
+        gm.addNeighbour(nodeB, nodeC, 1.0);
 
         gm.addNode(nodeA);
         gm.addNode(nodeB);

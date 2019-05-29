@@ -1,9 +1,14 @@
 package graphDykstra;
 
+import java.util.ArrayList;
+
 public class GraphMatrix extends GraphA implements GraphI {
     private double[][] adjacenceMatrix;
+    private int size;
 
     public GraphMatrix(int size) {
+        this.size = size;
+
         adjacenceMatrix = new double[size][];
         for(int i = 0; i < size; i++) {
             adjacenceMatrix[i] = new double[size];
@@ -11,14 +16,26 @@ public class GraphMatrix extends GraphA implements GraphI {
     }
 
     @Override
-    public double getWeight(Node a, Node b) {
-        return adjacenceMatrix[a.getId()][b.getId()];
+    public double getWeight(Node n1, Node n2) {
+        return adjacenceMatrix[n1.getId()][n2.getId()];
     }
 
     @Override
-    public void addWeight(double weight, Node a, Node b) {
-        // TODO maybe do this only once and smartly detect where to look
-        adjacenceMatrix[a.getId()][b.getId()] = weight;
-        adjacenceMatrix[b.getId()][a.getId()] = weight;
+    public ArrayList<Node> getNeighbours(Node node) {
+        ArrayList<Node> ret = new ArrayList<>();
+
+        for(int i = 0; i < size; i++) {
+            // if the weight is over 0, they are neighbours, find them via their unique id in the nodes arraylist
+            if(adjacenceMatrix[node.getId()][i] > 0.0) {
+                ret.add(getNodes().get(getNodes().indexOf(new Node(i))));
+            }
+        }
+        return ret;
+    }
+
+    @Override
+    public void addNeighbour(Node n1, Node n2, double weight) {
+        adjacenceMatrix[n1.getId()][n2.getId()] = weight; // TODO: do this smarter by just doing this once
+        adjacenceMatrix[n2.getId()][n1.getId()] = weight;
     }
 }
