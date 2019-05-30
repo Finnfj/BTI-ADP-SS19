@@ -6,7 +6,8 @@ import java.util.Random;
 
 public class QuantitativeTest {
     public static void main(String... args) {
-        int samplesize = 10;
+        int samplesize = 30;
+
         long counterMatrix = 0;
         long counterList = 0;
         for (int size = 10; size <= 10_000; size *= 10) {
@@ -32,7 +33,7 @@ public class QuantitativeTest {
                 for (int i = 0; i < size; i++) {
                     Random rnd = new Random();
                     int rndNode = rnd.nextInt(size - 1);
-                    double rndWeight = rnd.nextDouble();
+                    double rndWeight = rnd.nextDouble() * size;
 
                     gmtrx.addNeighbour(nodesGmtrx[i], nodesGmtrx[rndNode], rndWeight);
                     glist.addNeighbour(nodesGlist[i], nodesGlist[rndNode], rndWeight);
@@ -43,7 +44,7 @@ public class QuantitativeTest {
                     Random rnd = new Random();
                     int rndNode1 = rnd.nextInt(size - 1);
                     int rndNode2 = rnd.nextInt(size - 1);
-                    double rndWeight = rnd.nextDouble();
+                    double rndWeight = rnd.nextDouble() * size;
 
                     gmtrx.addNeighbour(nodesGmtrx[rndNode1], nodesGmtrx[rndNode2], rndWeight);
                     glist.addNeighbour(nodesGlist[rndNode1], nodesGlist[rndNode2], rndWeight);
