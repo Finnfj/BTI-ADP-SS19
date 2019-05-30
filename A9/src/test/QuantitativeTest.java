@@ -50,13 +50,15 @@ public class QuantitativeTest {
                     glist.addNeighbour(nodesGlist[rndNode1], nodesGlist[rndNode2], rndWeight);
                 }
 
-                Dykstra.findRoute(gmtrx, nodesGmtrx[0], true);
-                counterMatrix += Dykstra.getCounter();
-                Dykstra.resetCounter();
+                Counter counter = new Counter();
 
-                Dykstra.findRoute(glist, nodesGlist[0], true);
-                counterList += Dykstra.getCounter();
-                Dykstra.resetCounter();
+                Dykstra.findRoute(gmtrx, nodesGmtrx[0], counter);
+                counterMatrix += counter.getCount();
+                counter.resetCount();
+
+                Dykstra.findRoute(glist, nodesGlist[0], counter);
+                counterList += counter.getCount();
+                counter.resetCount();
             }
             System.out.println("Size = " + size);
             System.out.println("CounterMatrix = " + (counterMatrix/samplesize));

@@ -29,7 +29,7 @@ public class TestFrame {
         gm.addNeighbour(nodeD, nodeB, 1.0);
         gm.addNeighbour(nodeB, nodeC, 1.0);
 
-        Dykstra.findRoute(gm, nodeA, true);
+        Dykstra.findRoute(gm, nodeA, null);
         System.out.println("done");
     }
 
