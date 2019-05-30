@@ -8,7 +8,7 @@ import java.util.Queue;
 public class TestFrame {
     public static void main(String... args) {
         testGraphMaxtrix();
-        testPriorityQueueWithNodes();
+        //testPriorityQueueWithNodes();
     }
 
     public static void testGraphMaxtrix() {
@@ -19,17 +19,17 @@ public class TestFrame {
         Node nodeC = new Node(2);
         Node nodeD = new Node(3);
 
-        gm.addNeighbour(nodeA, nodeB, 5.0);
-        gm.addNeighbour(nodeC, nodeA, 1.0);
-        gm.addNeighbour(nodeD, nodeB, 1.0);
-        gm.addNeighbour(nodeB, nodeC, 1.0);
-
         gm.addNode(nodeA);
         gm.addNode(nodeB);
         gm.addNode(nodeC);
         gm.addNode(nodeD);
 
-        Dykstra.findRoute(gm, nodeA);
+        gm.addNeighbour(nodeA, nodeB, 5.0);
+        gm.addNeighbour(nodeC, nodeA, 1.0);
+        gm.addNeighbour(nodeD, nodeB, 1.0);
+        gm.addNeighbour(nodeB, nodeC, 1.0);
+
+        Dykstra.findRoute(gm, nodeA, true);
         System.out.println("done");
     }
 
