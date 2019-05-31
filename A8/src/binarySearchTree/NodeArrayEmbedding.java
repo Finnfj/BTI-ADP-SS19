@@ -5,12 +5,14 @@ public class NodeArrayEmbedding implements Comparable, NodeI {
     private int key;
     private int pos;
     private int sum;
+    private int bSum;
     private NodeArrayEmbedding[] nodes;
 
     public NodeArrayEmbedding(Integer data, NodeArrayEmbedding[] nodes) {
         this.data = data;
         key = data.hashCode();
         this.nodes = nodes;
+        this.bSum = 0;
     }
 
     public NodeArrayEmbedding(Integer data, NodeArrayEmbedding[] nodes, int pos) {
@@ -18,6 +20,7 @@ public class NodeArrayEmbedding implements Comparable, NodeI {
         key = data.hashCode();
         this.nodes = nodes;
         this.pos = pos;
+        this.bSum = 0;
     }
 
     public boolean equals(Object obj) {
@@ -45,20 +48,22 @@ public class NodeArrayEmbedding implements Comparable, NodeI {
             return pos;
         } else { // else compare with childs
             if(compareTo(newNodeArrayEmbedding) > 0) { // -1 if newNodeNodeLinking is larger, 0 if newNodeNodeLinking is equal, 1 if newNodeNodeLinking is smaller
-                if(nodes[getLeft()] == null) { // if this node has no left child
-                    newNodeArrayEmbedding.setPos(getLeft());
-                    nodes[getLeft()] = newNodeArrayEmbedding;
-                    return getLeft();
+                if(getLeft() == null) { // if this node has no left child
+                    newNodeArrayEmbedding.setPos(pos*2);
+                    nodes[pos*2] = newNodeArrayEmbedding;
+                    newNodeArrayEmbedding.updatebSum();
+                    return pos*2;
                 } else { //if this node has a left child, give the new node to them
-                    return nodes[getLeft()].insert(newNodeArrayEmbedding);
+                    return getLeft().insert(newNodeArrayEmbedding);
                 }
             } else { // if this node has no right child
-                if(nodes[getRight()] == null) {
-                    newNodeArrayEmbedding.setPos(getRight());
-                    nodes[getRight()] = newNodeArrayEmbedding;
-                    return getRight();
+                if(getRight() == null) {
+                    newNodeArrayEmbedding.setPos(pos*2+1);
+                    nodes[pos*2+1] = newNodeArrayEmbedding;
+                    newNodeArrayEmbedding.updatebSum();
+                    return pos*2+1;
                 } else { // if this node has a right child, give the new node to them
-                    return nodes[getRight()].insert(newNodeArrayEmbedding);
+                    return getRight().insert(newNodeArrayEmbedding);
                 }
             }
         }
@@ -67,30 +72,30 @@ public class NodeArrayEmbedding implements Comparable, NodeI {
     public void printData(PrintVariant pv) {
         switch (pv) {
             case INORDER:
-                if(nodes[getLeft()] != null) {
-                    nodes[getLeft()].printData(pv);
+                if(getLeft() != null) {
+                    getLeft().printData(pv);
                 }
                 System.out.println(data.toString() + ", " + key);
-                if(nodes[getRight()] != null) {
-                    nodes[getRight()].printData(pv);
+                if(getRight() != null) {
+                    getRight().printData(pv);
                 }
                 break;
             case POSTORDER:
-                if(nodes[getLeft()] != null) {
-                    nodes[getLeft()].printData(pv);
+                if(getLeft() != null) {
+                    getLeft().printData(pv);
                 }
-                if(nodes[getRight()] != null) {
-                    nodes[getRight()].printData(pv);
+                if(getRight() != null) {
+                    getRight().printData(pv);
                 }
                 System.out.println(data.toString() + ", " + key);
                 break;
             case PREORDER:
                 System.out.println(data.toString() + ", " + key);
-                if(nodes[getLeft()] != null) {
-                    nodes[getLeft()].printData(pv);
+                if(getLeft() != null) {
+                    getLeft().printData(pv);
                 }
-                if(nodes[getRight()] != null) {
-                    nodes[getRight()].printData(pv);
+                if(getRight() != null) {
+                    getRight().printData(pv);
                 }
                 break;
         }
@@ -104,16 +109,16 @@ public class NodeArrayEmbedding implements Comparable, NodeI {
         return key;
     }
 
-    public int getLeft() {
-        return pos*2;
+    public NodeArrayEmbedding getLeft() {
+        return nodes[pos*2];
     }
 
-    public int getRight() {
-        return pos*2+1;
+    public NodeArrayEmbedding getRight() {
+        return nodes[pos*2+1];
     }
 
-    public int getFather() {
-        return pos/2;
+    public NodeArrayEmbedding getFather() {
+        return nodes[pos/2];
     }
 
     public void setPos(int pos) {this.pos = pos;}
@@ -125,4 +130,99 @@ public class NodeArrayEmbedding implements Comparable, NodeI {
     public void setSum(int sum) {
         this.sum = sum;
     }
+    
+    public void updateSum() {
+    	NodeArrayEmbedding left = getLeft();
+    	NodeArrayEmbedding right = getRight();
+    	NodeArrayEmbedding father = getFather();
+    	if (left != null && father != null) {
+    		left.updateSum();
+    		setSum(left.getbSum() + getSmallerFatherSum(getKey()) + getKey());
+    	} else if (left == null && father != null) {
+    		setSum(getSmallerFatherSum(getKey()) + getKey());
+    	} else if (left != null && father == null) {
+    		left.updateSum();
+    		setSum(left.getbSum() + getKey());
+    	} else {
+    		setSum(getKey());
+    	}
+    	
+    	// update right branch
+    	if (right != null) {
+    		getRight().updateSum();
+    	}
+    }
+    
+    public void updatebSum() {
+    	int thisval = getKey();
+    	NodeArrayEmbedding father = getFather();
+    	
+    	setbSum(getbSum() + getKey());
+    	
+    	while(father != null) {
+    		father.setbSum(father.getbSum() + thisval);
+    		father = father.getFather();
+    	}
+    }
+    
+    public int getSmallerFatherSum(int pivot) {
+    	if (getFather() != null) {
+    		if (getFather().getKey() > pivot) {
+    			// Bigger father, move forward
+    			return getFather().getSmallerFatherSum(pivot);
+    		} else {
+    			// Found smaller father
+    			return getFather().getSum();
+    		}
+    	} else {
+    		return 0;
+    	}
+    }
+    
+    public NodeArrayEmbedding findClosest(Boolean highlow, int startValue) {
+    	NodeArrayEmbedding result = null;
+    	if (highlow) {
+    		// Get higher or equal to startValue's closest node
+    		if (getKey() >= startValue) {
+    			// Try and find a closer value
+    			if (getLeft() != null && getLeft().getKey() >= startValue) {
+    				// There is a closer value, recurse
+    				result = getLeft().findClosest(highlow, startValue);
+    			} else {
+    				// There is either no left (smaller) child or it's smaller than startValue
+    				result = this;
+    			}
+    		} else {
+    			if (getRight() != null) {
+    				result = getRight().findClosest(highlow, startValue);
+    			}
+    		}
+    	} else {
+    		// Get smaller or equal to startValue's closest node
+    		if (getKey() <= startValue) {
+    			// Try and find a closer value
+    			if (getRight() != null && getRight().getKey() <= startValue) {
+    				// There is a closer value, recurse
+    				result = getRight().findClosest(highlow, startValue);
+    			} else {
+    				// There is either no right (bigger) child or it's higher than startValue
+    				result = this;
+    			}
+    		} else {
+				if (getLeft() != null) {
+					result = getLeft().findClosest(highlow, startValue);
+				}
+			}
+    	}
+		return result;
+    }
+
+	public int getbSum() {
+		return bSum;
+	}
+
+	public void setbSum(int bSum) {
+		this.bSum = bSum;
+	}
+	
 }

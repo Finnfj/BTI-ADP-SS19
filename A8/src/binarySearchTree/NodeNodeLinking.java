@@ -4,6 +4,7 @@ public class NodeNodeLinking implements Comparable, NodeI {
     private Integer data;
     private int key;
     private int sum;
+    private int bSum;
     private NodeNodeLinking left, right, father;
 
     public NodeNodeLinking(Integer data) {
@@ -63,6 +64,8 @@ public class NodeNodeLinking implements Comparable, NodeI {
             if(compareTo(newNodeNodeLinking) > 0) { // -1 if newNodeNodeLinking is larger, 0 if newNodeNodeLinking is equal, 1 if newNodeNodeLinking is smaller
                 if(left == null) { // if this node has no left child
                     left = newNodeNodeLinking;
+                    left.setFather(this);
+                    newNodeNodeLinking.updatebSum();
                     return left;
                 } else { //if this node has a left child, give the new node to them
                     return left.insert(newNodeNodeLinking);
@@ -70,6 +73,8 @@ public class NodeNodeLinking implements Comparable, NodeI {
             } else { // if this node has no right child
                 if(right == null) {
                     right = newNodeNodeLinking;
+                    right.setFather(this);
+                    newNodeNodeLinking.updatebSum();
                     return right;
                 } else { // if this node has a right child, give the new node to them
                     return right.insert(newNodeNodeLinking);
@@ -149,4 +154,97 @@ public class NodeNodeLinking implements Comparable, NodeI {
     public void setSum(int sum) {
         this.sum = sum;
     }
+    public void updateSum() {
+    	NodeNodeLinking left = getLeft();
+    	NodeNodeLinking right = getRight();
+    	NodeNodeLinking father = getFather();
+    	if (left != null && father != null) {
+    		left.updateSum();
+    		setSum(left.getbSum() + getSmallerFatherSum(getKey()) + getKey());
+    	} else if (left == null && father != null) {
+    		setSum(getSmallerFatherSum(getKey()) + getKey());
+    	} else if (left != null && father == null) {
+    		left.updateSum();
+    		setSum(left.getbSum() + getKey());
+    	} else {
+    		setSum(getKey());
+    	}
+    	
+    	// update right branch
+    	if (right != null) {
+    		getRight().updateSum();
+    	}
+    }
+    
+    public void updatebSum() {
+    	int thisval = getKey();
+    	NodeNodeLinking father = getFather();
+    	
+    	setbSum(getbSum() + getKey());
+    	
+    	while(father != null) {
+    		father.setbSum(father.getbSum() + thisval);
+    		father = father.getFather();
+    	}
+    }
+    
+    public int getSmallerFatherSum(int pivot) {
+    	if (getFather() != null) {
+    		if (getFather().getKey() > pivot) {
+    			// Bigger father, move forward
+    			return getFather().getSmallerFatherSum(pivot);
+    		} else {
+    			// Found smaller father
+    			return getFather().getSum();
+    		}
+    	} else {
+    		return 0;
+    	}
+    }
+    
+    public NodeNodeLinking findClosest(Boolean highlow, int startValue) {
+    	NodeNodeLinking result = null;
+    	if (highlow) {
+    		// Get higher or equal to startValue's closest node
+    		if (getKey() >= startValue) {
+    			// Try and find a closer value
+    			if (getLeft() != null && getLeft().getKey() >= startValue) {
+    				// There is a closer value, recurse
+    				result = getLeft().findClosest(highlow, startValue);
+    			} else {
+    				// There is either no left (smaller) child or it's smaller than startValue
+    				result = this;
+    			}
+    		} else {
+    			if (getRight() != null) {
+    				result = getRight().findClosest(highlow, startValue);
+    			}
+    		}
+    	} else {
+    		// Get smaller or equal to startValue's closest node
+    		if (getKey() <= startValue) {
+    			// Try and find a closer value
+    			if (getRight() != null && getRight().getKey() <= startValue) {
+    				// There is a closer value, recurse
+    				result = getRight().findClosest(highlow, startValue);
+    			} else {
+    				// There is either no right (bigger) child or it's higher than startValue
+    				result = this;
+    			}
+    		} else {
+				if (getLeft() != null) {
+					result = getLeft().findClosest(highlow, startValue);
+				}
+			}
+    	}
+		return result;
+    }
+
+	public int getbSum() {
+		return bSum;
+	}
+
+	public void setbSum(int bSum) {
+		this.bSum = bSum;
+	}
 }

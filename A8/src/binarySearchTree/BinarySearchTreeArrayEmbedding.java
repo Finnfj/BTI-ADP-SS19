@@ -21,10 +21,12 @@ public class BinarySearchTreeArrayEmbedding implements BinarySearchTreeI {
         if(size < nodes.length - 1) { // since the zeroth place is empty, length is actually one too large
             if (nodes[1] != null) { // check if we already have a root element
                 NodeArrayEmbedding newNode = new NodeArrayEmbedding(data, nodes);
+                int newI = nodes[1].insert(newNode);
                 size++;
-                return nodes[nodes[1].insert(newNode)];
+                return nodes[newI];
             } else {
                 nodes[1] = new NodeArrayEmbedding(data, nodes, 1);
+                nodes[1].updatebSum();
                 size++;
                 return nodes[1];
             }
@@ -39,4 +41,18 @@ public class BinarySearchTreeArrayEmbedding implements BinarySearchTreeI {
             System.out.println();
         }
     }
+    
+    @Override
+    public void updateSum() {
+    	nodes[1].updateSum();
+    }
+
+	@Override
+	public int getSum(int m, int M) {
+		NodeArrayEmbedding leftnode = nodes[1].findClosest(true, m);
+		NodeArrayEmbedding rightnode = nodes[1].findClosest(false, M);
+		int leftval = leftnode.getSum() - leftnode.getKey();
+		int rightval = rightnode.getSum();
+		return rightval - leftval;
+	}
 }
