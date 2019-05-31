@@ -24,11 +24,11 @@ public class  UnsymmetricProcedure {
         // 4
         BigInteger d = multInverseExtendedEuclidean(e, phi);
 
-        return new RSAKeys(e, d);
+        return new RSAKeys(e, d, N);
     }
 
     // calculates the multiplicative inverse of a to b with the extended euclidean algorithm
-    private static BigInteger multInverseExtendedEuclidean(BigInteger a, BigInteger b) {
+    private static BigInteger multInverseExtendedEuclidean(BigInteger a, BigInteger b) { //TODO: is sometimes negative
         BigInteger b0 = b;
         BigInteger y = BigInteger.ZERO;
         BigInteger x = BigInteger.ONE;
@@ -45,7 +45,7 @@ public class  UnsymmetricProcedure {
         }
 
         if (x.compareTo(BigInteger.ZERO) < 0) { // if x is smaller than 0
-            x.add(b0);
+            x = x.add(b0);
         }
 
         return x;
