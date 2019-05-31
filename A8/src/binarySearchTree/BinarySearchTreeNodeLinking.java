@@ -1,6 +1,6 @@
 package binarySearchTree;
 
-public class BinarySerachTreeNodeLinking implements BinarySearchTreeI {
+public class BinarySearchTreeNodeLinking implements BinarySearchTreeI {
     NodeNodeLinking root;
 
     @Override
@@ -10,6 +10,7 @@ public class BinarySerachTreeNodeLinking implements BinarySearchTreeI {
             return root.insert(newNodeNodeLinking);
         } else {
             root = newNodeNodeLinking;
+            root.updatebSum();
             return root;
         }
     }
@@ -21,4 +22,18 @@ public class BinarySerachTreeNodeLinking implements BinarySearchTreeI {
             System.out.println();
         }
     }
+
+	@Override
+	public void updateSum() {
+		root.updateSum();
+	}
+
+	@Override
+	public int getSum(int m, int M) {
+		NodeNodeLinking leftnode = root.findClosest(true, m);
+		NodeNodeLinking rightnode = root.findClosest(false, M);
+		int leftval = leftnode.getSum() - leftnode.getKey();
+		int rightval = rightnode.getSum();
+		return rightval - leftval;
+	}
 }
