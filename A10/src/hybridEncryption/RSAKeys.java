@@ -21,21 +21,22 @@ public class RSAKeys {
         return privateKey;
     }
 
-    public BigInteger[] encryptMessage(char[] message) {
-        BigInteger[] encryptedMessage = new BigInteger[message.length];
+    public BigInteger[] encryptMessage(String message) {
+        byte[] messageBytes = message.getBytes();
+        BigInteger[] encryptedMessage = new BigInteger[messageBytes.length];
 
-        for (int i = 0; i < message.length; i++) {
-            encryptedMessage[i] = BigInteger.valueOf(message[i]).modPow(publicKey, N);
+        for (int i = 0; i < messageBytes.length; i++) {
+            encryptedMessage[i] = BigInteger.valueOf(messageBytes[i]).modPow(publicKey, N);
         }
         return encryptedMessage;
     }
 
-    public char[] decryptMessage(BigInteger[] message) {
-        char[] decryptedMessage = new char[message.length];
+    public String decryptMessage(BigInteger[] message) {
+        byte[] decryptedMessageBytes = new byte[message.length];
 
         for (int i = 0; i < message.length; i++) {
-            decryptedMessage[i] = (char) message[i].modPow(privateKey, N).intValue();
+            decryptedMessageBytes[i] = (byte) message[i].modPow(privateKey, N).intValue();
         }
-        return decryptedMessage;
+        return new String(decryptedMessageBytes);
     }
 }

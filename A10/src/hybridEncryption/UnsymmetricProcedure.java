@@ -3,7 +3,7 @@ package hybridEncryption;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 
-public class  UnsymmetricProcedure {
+public class UnsymmetricProcedure {
     public static RSAKeys generateKeys(int numBits) {
         // 1
         SecureRandom sr = new SecureRandom();
@@ -22,13 +22,13 @@ public class  UnsymmetricProcedure {
         }
 
         // 4
-        BigInteger d = multInverseExtendedEuclidean(e, phi);
+        BigInteger d = multiplicativeInverseExtendedEuclidean(e, phi);
 
         return new RSAKeys(e, d, N);
     }
 
     // calculates the multiplicative inverse of a to b with the extended euclidean algorithm
-    private static BigInteger multInverseExtendedEuclidean(BigInteger a, BigInteger b) { //TODO: is sometimes negative
+    private static BigInteger multiplicativeInverseExtendedEuclidean(BigInteger a, BigInteger b) {
         BigInteger b0 = b;
         BigInteger y = BigInteger.ZERO;
         BigInteger x = BigInteger.ONE;
