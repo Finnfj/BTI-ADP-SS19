@@ -26,7 +26,7 @@ public class BinarySearchTreeArrayEmbedding implements BinarySearchTreeI {
                 return nodes[newI];
             } else {
                 nodes[1] = new NodeArrayEmbedding(data, nodes, 1);
-                nodes[1].updatebSum();
+                nodes[1].updatebSum(data);
                 size++;
                 return nodes[1];
             }
@@ -48,11 +48,11 @@ public class BinarySearchTreeArrayEmbedding implements BinarySearchTreeI {
     }
 
 	@Override
-	public int getSum(int m, int M) {
+	public long getSum(int m, int M) {
 		NodeArrayEmbedding leftnode = nodes[1].findClosest(true, m);
 		NodeArrayEmbedding rightnode = nodes[1].findClosest(false, M);
-		int leftval = leftnode.getSum() - leftnode.getKey();
-		int rightval = rightnode.getSum();
+		long leftval = leftnode.getSum() - leftnode.getKey();
+		long rightval = rightnode.getSum();
 		return rightval - leftval;
 	}
 }

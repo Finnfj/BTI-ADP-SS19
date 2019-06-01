@@ -1,12 +1,19 @@
 package test;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import binarySearchTree.BinarySearchTreeArrayEmbedding;
 import binarySearchTree.BinarySearchTreeI;
+import binarySearchTree.BinarySearchTreeNodeLinking;
 import binarySearchTree.PrintVariant;
 
 public class JUnitTestFrameBSTArrayEmbedding {
     public static void main(String... args) {
-        testOne();
+        testTwo();
     }
 
     private static void testOne() {
@@ -28,15 +35,23 @@ public class JUnitTestFrameBSTArrayEmbedding {
     }
 
     private static void testTwo() {
-        BinarySearchTreeI bstae = new BinarySearchTreeArrayEmbedding(10);
-//        bstae.addData("Hallo");
-//        bstae.addData("Welto");
-//        bstae.addData("Hanso");
-//        bstae.addData("Peter");
-//        bstae.addData("Bratw");
-        bstae.printTree(PrintVariant.INORDER);
-        bstae.printTree(PrintVariant.PREORDER);
-        bstae.printTree(PrintVariant.POSTORDER);
+        for (int i = 10; i <= 1_000_000; i *= 10) {
+            BinarySearchTreeI bstae = new BinarySearchTreeArrayEmbedding(28);
+            long testSum = 0;
+            List<Integer> keymap = IntStream.range(0, i).boxed().collect(Collectors.toCollection(ArrayList<Integer>::new));
+            Collections.shuffle(keymap);
+            System.out.println("List size: " + i + "-------------");
+            for (int key : keymap) {
+            	bstae.addData(key);
+                testSum += key;
+            }
+            long startTime = System.currentTimeMillis();
+            bstae.updateSum();
+            long sum = bstae.getSum(0, 10 * i);
+            long endTime = System.currentTimeMillis();
+            long time = endTime - startTime;
+            System.out.println("testSum = " + testSum + "\nsum = " + sum + "\ntime = " + time + " ms");
+        }
     }
 
     private static void testThree() {
