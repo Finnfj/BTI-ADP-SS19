@@ -38,8 +38,8 @@ public class BlockCipherFistel {
         Random rnd = new SecureRandom();
         byte[] sessionKey = new byte[BLOCKSIZE/2];
         rnd.nextBytes(sessionKey);
-        for(int i = 0; i < BLOCKSIZE/2; i++) {
-            messageBytesOffsetPadding[i] = sessionKey[i];
+        if (BLOCKSIZE / 2 >= 0) {
+            System.arraycopy(sessionKey, 0, messageBytesOffsetPadding, 0, BLOCKSIZE / 2);
         }
 
         // extract the left and right part of a block into arrays and swap them ROUND times with the feistelblock
@@ -60,14 +60,14 @@ public class BlockCipherFistel {
         return messageBytesOffsetPadding;
     }
 
-    public void swap(byte[] left, byte[] right, byte[] sessionkey) {
+    private void swap(byte[] left, byte[] right, byte[] sessionkey) {
         // swap left and right
         byte[] temp = left;
         left = right;
         right = temp;
 
-        BigInteger rightBI = new BigInteger(1, right);
-        BigInteger sessionkeyBI = new BigInteger(1, sessionkey);
+        BigInteger rightBI = BigIntHelper.Byte2BigInt(right);
+        BigInteger sessionkeyBI = BigIntHelper.Byte2BigInt(sessionkey);
 
         // apply feistel algo to right side: F(R,K) = (R^2 + K) mod (2^blockSizeBits - 1)
         BigInteger newRight = rightBI.pow(2).add(sessionkeyBI).mod(BigInteger.TWO.pow(BLOCKSIZE*8).subtract(BigInteger.ONE));

@@ -1,6 +1,7 @@
 package test;
 
 import hybridEncryption.BlockCipherFistel;
+import hybridEncryption.HybridProcedure;
 import hybridEncryption.RSA;
 
 import java.math.BigInteger;
@@ -10,17 +11,18 @@ public class TestFrame {
     private static final int ROUNDS = 12;
 
     public static void main(String... args) {
-        testRSAMessageEncryption();
+        testRSAMessageEncryptionDecryption();
         //testRSAKeysNegative();
         //testFeistelEncryption();
+        //testHybridMessageEncprytionDecryption();
     }
 
-    public static void testRSAMessageEncryption() {
+    public static void testRSAMessageEncryptionDecryption() {
         RSA rsa = new RSA(BLOCKSIZE);
 
-        BigInteger[] encryptedMessage = rsa.encryptMessage("Hello", rsa.getPublicKey(), rsa.getModulus());
-        String decrpytedMessage = rsa.decryptMessage(encryptedMessage, rsa.getPrivateKey(), rsa.getModulus());
-        System.out.println(decrpytedMessage);
+        BigInteger encryptedMessage = RSA.encryptMessage("Hello".getBytes(), rsa.getPublicKey(), rsa.getModulus());
+        byte[] decrpytedMessage = RSA.decryptMessage(encryptedMessage, rsa.getPrivateKey(), rsa.getModulus());
+        System.out.println(new String(decrpytedMessage));
     }
 
     public static void testRSAKeysNegative() {
@@ -50,5 +52,13 @@ public class TestFrame {
         BlockCipherFistel sm = new BlockCipherFistel(BLOCKSIZE, ROUNDS);
         byte[] result = sm.encryptMessage("Hallo");
         System.out.println(new String(result));
+    }
+
+    public static void testHybridMessageEncprytionDecryption() {
+        RSA rsa = new RSA(BLOCKSIZE);
+        HybridProcedure hp = new HybridProcedure(rsa.getPublicKeyModulusBase64(), BLOCKSIZE, ROUNDS);
+        String encryptedMessage = hp.encryptMessage("Hallo");
+        String decryptedMessage = hp.decryptMessage(encryptedMessage);
+        System.out.println(decryptedMessage);
     }
 }

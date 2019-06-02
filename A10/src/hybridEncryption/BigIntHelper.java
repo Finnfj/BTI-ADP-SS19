@@ -19,4 +19,8 @@ public class BigIntHelper {
         }
         return out;
     }
+
+    static BigInteger Byte2BigInt(byte[] b){
+        return new BigInteger ( 1 , b );
+    }
 }

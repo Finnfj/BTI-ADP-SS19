@@ -4,15 +4,17 @@ import java.math.BigInteger;
 import java.util.Base64;
 
 public class HybridProcedure {
-    private final int BLOCKSIZE = 16;
-    private final int ROUNDS = 12;
+    private final int BLOCKSIZE;
+    private final int ROUNDS;
     private String publicKeyModulusBase64; // string in base64
 
-    public HybridProcedure(String publicKeyModulusBase64) {
+    public HybridProcedure(String publicKeyModulusBase64, final int BLOCKSIZE, final int ROUNDS) {
+        this.BLOCKSIZE = BLOCKSIZE;
+        this.ROUNDS = ROUNDS;
         this.publicKeyModulusBase64 = publicKeyModulusBase64;
     }
 
-    public Base64 encryptMessage(String message) {
+    public String encryptMessage(String message) {
         // encrypt the message with BlockCipherFistel, the sessionkey is not encrypted
         BlockCipherFistel bcf = new BlockCipherFistel(BLOCKSIZE, ROUNDS);
         byte[] bcfEncryptedMessage = bcf.encryptMessage(message);
@@ -27,9 +29,15 @@ public class HybridProcedure {
         // encrypt the sessionkey with the public key and modulo with RSA and put it into the array
         byte[] sessionKey = new byte[BLOCKSIZE];
         System.arraycopy(bcfEncryptedMessage, 0, sessionKey, 0, sessionKey.length);
-        BigInteger[] encryptedSessionkey = RSA.encryptMessage(sessionKey, new BigInteger(1, publicKey), new BigInteger(1, modulus));
+        BigInteger encryptedSessionkey = RSA.encryptMessage(sessionKey, BigIntHelper.Byte2BigInt(publicKey), BigIntHelper.Byte2BigInt(modulus));
         byte[] encryptedSessionkeyBytes = BigIntHelper.BigInt2Byte(encryptedSessionkey, BLOCKSIZE);
+        System.arraycopy(encryptedSessionkeyBytes, 0, bcfEncryptedMessage, 0, BLOCKSIZE);
 
-        return null;
+        // encode the byte array to base 64 and return it
+        return Base64.getEncoder().encodeToString(bcfEncryptedMessage);
+    }
+
+    public String decryptMessage(String encryptedMessage) {
+        return encryptedMessage;
     }
 }
