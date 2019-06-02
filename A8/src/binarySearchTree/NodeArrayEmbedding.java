@@ -51,7 +51,7 @@ public class NodeArrayEmbedding implements Comparable, NodeI {
                 if(getLeft() == null) { // if this node has no left child
                     newNodeArrayEmbedding.setPos(pos*2);
                     nodes[pos*2] = newNodeArrayEmbedding;
-                    newNodeArrayEmbedding.updatebSum();
+                    newNodeArrayEmbedding.updatebSum(newNodeArrayEmbedding.getKey());
                     return pos*2;
                 } else { //if this node has a left child, give the new node to them
                     return getLeft().insert(newNodeArrayEmbedding);
@@ -60,7 +60,7 @@ public class NodeArrayEmbedding implements Comparable, NodeI {
                 if(getRight() == null) {
                     newNodeArrayEmbedding.setPos(pos*2+1);
                     nodes[pos*2+1] = newNodeArrayEmbedding;
-                    newNodeArrayEmbedding.updatebSum();
+                    newNodeArrayEmbedding.updatebSum(newNodeArrayEmbedding.getKey());
                     return pos*2+1;
                 } else { // if this node has a right child, give the new node to them
                     return getRight().insert(newNodeArrayEmbedding);
@@ -153,15 +153,12 @@ public class NodeArrayEmbedding implements Comparable, NodeI {
     	}
     }
     
-    public void updatebSum() {
-    	int thisval = getKey();
+    public void updatebSum(int addition) {
     	NodeArrayEmbedding father = getFather();
     	
-    	setbSum(getbSum() + getKey());
-    	
-    	while(father != null) {
-    		father.setbSum(father.getbSum() + thisval);
-    		father = father.getFather();
+    	setbSum(getbSum() + addition);
+    	if (father != null) {
+    		father.updatebSum(addition);
     	}
     }
     
@@ -224,5 +221,4 @@ public class NodeArrayEmbedding implements Comparable, NodeI {
 	public void setbSum(int bSum) {
 		this.bSum = bSum;
 	}
-	
 }

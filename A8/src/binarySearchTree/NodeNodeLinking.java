@@ -3,8 +3,8 @@ package binarySearchTree;
 public class NodeNodeLinking implements Comparable, NodeI {
     private Integer data;
     private int key;
-    private int sum;
-    private int bSum;
+    private long sum;
+    private long bSum;
     private NodeNodeLinking left, right, father;
 
     public NodeNodeLinking(Integer data) {
@@ -65,7 +65,7 @@ public class NodeNodeLinking implements Comparable, NodeI {
                 if(left == null) { // if this node has no left child
                     left = newNodeNodeLinking;
                     left.setFather(this);
-                    newNodeNodeLinking.updatebSum();
+                    newNodeNodeLinking.updatebSum(newNodeNodeLinking.getKey());
                     return left;
                 } else { //if this node has a left child, give the new node to them
                     return left.insert(newNodeNodeLinking);
@@ -74,7 +74,7 @@ public class NodeNodeLinking implements Comparable, NodeI {
                 if(right == null) {
                     right = newNodeNodeLinking;
                     right.setFather(this);
-                    newNodeNodeLinking.updatebSum();
+                    newNodeNodeLinking.updatebSum(newNodeNodeLinking.getKey());
                     return right;
                 } else { // if this node has a right child, give the new node to them
                     return right.insert(newNodeNodeLinking);
@@ -147,12 +147,12 @@ public class NodeNodeLinking implements Comparable, NodeI {
         this.father = father;
     }
 
-    public int getSum() {
+    public long getSum() {
         return sum;
     }
 
-    public void setSum(int sum) {
-        this.sum = sum;
+    public void setSum(long l) {
+        this.sum = l;
     }
     public void updateSum() {
     	NodeNodeLinking left = getLeft();
@@ -169,26 +169,23 @@ public class NodeNodeLinking implements Comparable, NodeI {
     	} else {
     		setSum(getKey());
     	}
-    	
+
     	// update right branch
     	if (right != null) {
     		getRight().updateSum();
     	}
     }
     
-    public void updatebSum() {
-    	int thisval = getKey();
+    public void updatebSum(int addition) {
     	NodeNodeLinking father = getFather();
     	
-    	setbSum(getbSum() + getKey());
-    	
-    	while(father != null) {
-    		father.setbSum(father.getbSum() + thisval);
-    		father = father.getFather();
+    	setbSum(getbSum() + addition);
+    	if (father != null) {
+    		father.updatebSum(addition);
     	}
     }
     
-    public int getSmallerFatherSum(int pivot) {
+    public long getSmallerFatherSum(int pivot) {
     	if (getFather() != null) {
     		if (getFather().getKey() > pivot) {
     			// Bigger father, move forward
@@ -240,11 +237,11 @@ public class NodeNodeLinking implements Comparable, NodeI {
 		return result;
     }
 
-	public int getbSum() {
+	public long getbSum() {
 		return bSum;
 	}
 
-	public void setbSum(int bSum) {
+	public void setbSum(long bSum) {
 		this.bSum = bSum;
 	}
 }

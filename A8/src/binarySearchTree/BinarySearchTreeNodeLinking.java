@@ -10,7 +10,7 @@ public class BinarySearchTreeNodeLinking implements BinarySearchTreeI {
             return root.insert(newNodeNodeLinking);
         } else {
             root = newNodeNodeLinking;
-            root.updatebSum();
+            root.updatebSum(data);
             return root;
         }
     }
@@ -29,11 +29,11 @@ public class BinarySearchTreeNodeLinking implements BinarySearchTreeI {
 	}
 
 	@Override
-	public int getSum(int m, int M) {
+	public long getSum(int m, int M) {
 		NodeNodeLinking leftnode = root.findClosest(true, m);
 		NodeNodeLinking rightnode = root.findClosest(false, M);
-		int leftval = leftnode.getSum() - leftnode.getKey();
-		int rightval = rightnode.getSum();
+		long leftval = leftnode.getSum() - leftnode.getKey();
+		long rightval = rightnode.getSum();
 		return rightval - leftval;
 	}
 }
