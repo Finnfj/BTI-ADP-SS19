@@ -4,20 +4,22 @@ import java.math.BigInteger;
 import java.util.Base64;
 
 public class HybridProcedure {
+    private String publicKeyModulusBase64; // string in base64
     private final int BLOCKSIZE;
     private final int ROUNDS;
-    private String publicKeyModulusBase64; // string in base64
+    private final byte PADDING;
 
-    public HybridProcedure(String publicKeyModulusBase64, final int BLOCKSIZE, final int ROUNDS) {
+    public HybridProcedure(String publicKeyModulusBase64, final int BLOCKSIZE, final int ROUNDS, final byte PADDING) {
+        this.publicKeyModulusBase64 = publicKeyModulusBase64;
         this.BLOCKSIZE = BLOCKSIZE;
         this.ROUNDS = ROUNDS;
-        this.publicKeyModulusBase64 = publicKeyModulusBase64;
+        this.PADDING = PADDING;
     }
 
     public String encryptMessage(String message) {
-        // encrypt the message with BlockCipherFistel, the sessionkey is not encrypted
-        BlockCipherFistel bcf = new BlockCipherFistel(BLOCKSIZE, ROUNDS);
-        byte[] bcfEncryptedMessage = bcf.encryptMessage(message);
+        // encrypt the message with BlockCipherFeistel, the sessionkey is not encrypted
+        BlockCipherFeistel bcf = new BlockCipherFeistel(BLOCKSIZE, ROUNDS, PADDING, null);
+        byte[] bcfEncryptedMessage = bcf.encryptMessage(message.getBytes());
 
         // decode the base64 encoded publicKeyModulo String and put the publicKey and the Modulo each into an array
         byte[] publicKeyModulusBytes = Base64.getDecoder().decode(publicKeyModulusBase64);
@@ -37,7 +39,29 @@ public class HybridProcedure {
         return Base64.getEncoder().encodeToString(bcfEncryptedMessage);
     }
 
-    public String decryptMessage(String encryptedMessage) {
-        return encryptedMessage;
+    public String decryptMessage(String encryptedMessageBase64, BigInteger privateKey, BigInteger modulus) {
+        byte[] encryptedMessage = Base64.getDecoder().decode(encryptedMessageBase64);
+
+        // get session key from encryptedMessage
+        byte[] sessionkey = new byte[BLOCKSIZE];
+        System.arraycopy(RSA.decryptMessage(encryptedMessage, privateKey, modulus), 0, sessionkey, 0, BLOCKSIZE);
+
+        // decrypt the message with the sessionkey
+        BlockCipherFeistel bcf = new BlockCipherFeistel(BLOCKSIZE, ROUNDS, PADDING, sessionkey);
+        byte[] decryptedMessage = bcf.decryptMessage(encryptedMessage);
+
+        // remove the sessionkey and the padding from the decrypted message and turn it into a string
+        int cleanedDecryptedMessageSize = decryptedMessage.length;
+
+        // count how often the padding occurs at the end and decrease cleanedDecryptedMessageSize by that
+        while (decryptedMessage[cleanedDecryptedMessageSize-1] == PADDING) {
+            cleanedDecryptedMessageSize--;
+        }
+
+        // copy the decrpyted message to the array
+        byte[] cleanedDecryptedMessage = new byte[cleanedDecryptedMessageSize];
+        System.arraycopy(decryptedMessage, 0, cleanedDecryptedMessage, 0, cleanedDecryptedMessageSize);
+
+        return new String(cleanedDecryptedMessage);
     }
 }
