@@ -40,7 +40,7 @@
 		\label{sec:codeStruc}
 		
 		Die zu Grunde liegende Aufgabe bestand aus 2 Teilen. Im ersten ging es darum, einen binären Suchbaum zu implementieren, welcher Als Elemente Generics entgegen nimmt.
-		Unter anderem sollte der Baum einmal aus Nodes (dt. Knoten) bestehen und einmal in einen Array eingebettet sein. Letzteres unterstützt nur geringe Baumgrößen, da die Indexe von Childs (dt. Kinder) $2*i$ aufwärts sind, wobei $i$ der Index von dem Father-Node ist. 
+		Unter anderem sollte der Baum einmal aus verlinkten Nodes (dt. Knoten) bestehen und einmal in einen Array eingebettet sein. Letzteres unterstützt nur geringe Baumgrößen, da die Indexe von Childs (dt. Kinder) $2*i$ aufwärts sind, wobei $i$ der Index von dem Father-Node ist. 
 		Das sorgt relativ schnell für interne Integer-Overflows, wobei das Java-Framework auch nur Integer-Größen als Array-Größen akzeptiert.
 		Diese Implementation wurde erfolgreich durchgeführt mit Generics, die "Comparable" implementieren, denn um den Baum sortiert zu erstellen müssen die Elemente miteinander verglichen werden.
 		Der Baum sollte im zweiten Teil so umgebaut werden, dass er Integer als Elemente akzeptiert. Außerdem sollte folgende Funktionalität hinzugefügt werden:\\\\
@@ -52,7 +52,7 @@
 		Um die gefordete Funktionalität zu erfüllen wurden im zweiten Aufgabenteil außerdem 2 zusätzliche Integer beigefügt: \\
 		\textbf{bSum}, die Summe des Branch (dt. Zweig) inkl. aller Child-Nodes und \textbf{sum}, die Summe aller kleineren Elemente einschließlich des Nodes selbst.
 		\textbf{bSum} wird beim hinzufügen eines Nodes geupdatet. Dafür ruft der hinzugefügte Node eine Methode auf, die rekursiv über die Father-Nodes bishin zum Root-Node die Werte aktualisiert. Der Code ist unter \ref{figure:bSum} zu sehen.
-		\textbf{sum} wird nach dem Hinzufügen einer oder mehrerer Nodes geupdated. Die dazugehörige Methode läuft rekursiv vom Root-Node über alle Child-Nodes und aktualisiert sum. Dabei wird wie in \ref{figure:sum} zu sehen bSum zur Hilfe genommen.
+		\textbf{sum} wird nach dem Hinzufügen einer oder mehrerer Nodes geupdated. Die dazugehörige Methode läuft rekursiv vom Root-Node über alle Child-Nodes und aktualisiert \textbf{sum}. Dabei wird wie in \ref{figure:sum} zu sehen \textbf{bSum} zur Hilfe genommen.
 
 	\subsection{Algorithmus}
 		\label{sec:algo}
@@ -73,70 +73,44 @@
 		\label{sec:veri}
 		
 		Der Algorithmus wurde auf seine korrekte Funktionalität getestet.
-		Hierzu zählt natürlich das Vorliegen des Ergebnisses in der korrekten Reihenfolge.
+		Hierzu zählt das Hinzufügen mittels randomisierter Sequenzen, mit Überprüfung auf richtige Sortierung und stichprobenweise Berechnung von Summen zwischen zwei Zahlen.
 		Alle Tests wurden erfolgreich mit unterschiedlichen Eingabewerten absolviert.
 	
 	\subsection{Aufwandsanalyse}
 		\label{sec:aufwand}
 		
-		Für die Aufwandsanalyse wurde der Klasse ein Counter eingeführt, der die Tauschoperationen zählt, als auch die Ausführungszeit beobachtet. 
-		
-		Bisherige Untersuchungen von Quicksort haben bereits einen Asymptotischen Aufwand wie folgt ergeben:
-
-		Rechenoperationen bei Best- und Average Case:
-		\begin{equation*}
-		T(n) = \mathcal{O}(n*ln(n))
-		\end{equation*}
-		Rechenoperationen bei Worst Case:
-		\begin{equation*}
-		T(n) = \mathcal{O}(n^{2})
-		\end{equation*}
-
-		Bei der Radixsort-Implementation ist der Asymptotische Aufwand konstant wie folgt (l ist die Länge des Keys):
-		\begin{equation*}
-		T(n) = \mathcal{O}(l*n)
-		\end{equation*}
-        
-		Außerdem wurden dieses mal statt komplett zufälligen Key-Werten welche mit folgender Beschränkung ausgewählt: 
-		\begin{equation*}
-		700*N \leq key \leq 800*N
-		\end{equation*}
-        
-		Es wurden 10 Durchläufe des Tests mit den Größen $N=10^k, k=1,...,6$ durchgeführt, um einen angemessenen Mittelwert zu ermitteln.
-
-		Die Ergebnisse für die Rechenoperationen sind in Abbildung \ref{figure:ranOperTest} zu sehen.
-		Es ist ersichtlich, dass das Radixsort weniger Rechenoperationen verursacht.
+		Für die Aufwandsanalyse wurden die beiden Bäume mit $10^n$ Werten gefüllt, wobei die Reihenfolge randomisiert und $n=1,...,7$ war. Für Durchschnittswerte wurde dies 10 mal durchgeführt.
+		Beobachtet wurde hierbei die Ausführungszeit von updateSum(), zu sehen unter \ref{figure:sum}, da die Berechnung der Summe alleine mit den Zusatzinformationen zu schnell für aussagekräftige Messwerte stattfindet.
+		Das gleiche galt für die Array-Einbettung, welche aufgrund mangelndem Arbeitsspeicher nur bis zu einer Größe von $10^3$ funktionierte und nicht in messbare Bereiche gekommen ist. Die verlinkten Nodes brauchen lediglich einen großen Stack, um zuverlässig zu funktionieren.
+		Die Ergebnisse der verlinkten Nodes sind unter \ref{figure:quanTest} zu sehen.
 
 \begin{figure}
-    \newcommand{\rsCol}{blue}
     \newcommand{\qsCol}{red}
     \newcommand{\bestAvgMark}{square*}
     \newcommand{\transparent}{0.8}
     \makebox[\textwidth][c]{
     \begin{tikzpicture}
-        \begin{loglogaxis}[
+        \begin{axis}[
                 title={\large Berechnung Operationen},
                 height=10cm,
                 width=17cm,
                 grid=major,
                 x tick label style={
                 /pgf/number format/1000 sep=},
-                ylabel=Operationen,
+                ylabel=Laufzeit in ms,
                 xlabel=Anzahl Elemente,
                 enlargelimits=0.05,
                 legend style={at={(0.5,-0.15)},
                 anchor=north,legend columns=1},
             ]
-            \addplot[color=\rsCol,mark=\bestAvgMark,opacity=\transparent]
-                coordinates {(1,0)(10,116)(100,1045)(1000,12054)(10000,140063)(100000,1600072)(1000000,18000081)};
             \addplot[color=\qsCol,mark=\bestAvgMark,opacity=\transparent]
-                coordinates {(1,0)(10,21.05)(100,562.34)(1000,9445.31)(10000,133652.47)(100000,1731953.94)(1000000,21272971.31)};
-            \legend{Radixsort, Quicksort}
-        \end{loglogaxis}
+                coordinates {(1,0)(10,0)(100,0)(1000,0)(10000,0)(100000,4)(1000000,62)(10000000,370)};
+            \legend{Node-linking}
+        \end{axis}
     \end{tikzpicture}
     }
     \caption{Quantitativer Vergleich zu Quicksort anhand Rechenoperationen}
-    \label{figure:ranOperTest}
+    \label{figure:quanTest}
 \end{figure}
 
 \begin{figure}
