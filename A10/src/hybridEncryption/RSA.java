@@ -3,8 +3,16 @@ package hybridEncryption;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 
-public class UnsymmetricProcedure {
-    public static RSAKeys generateKeys(int blocksize) {
+public class RSA {
+    private BigInteger publicKey;
+    private BigInteger privateKey;
+    private BigInteger modulus;
+
+    public RSA(int blocksize) {
+        generateKeys(blocksize);
+    }
+
+    public void generateKeys(int blocksize) {
         // 1
         SecureRandom sr = new SecureRandom();
         BigInteger p1 = BigInteger.probablePrime(blocksize/2*8, sr); // generates a prime
@@ -24,9 +32,36 @@ public class UnsymmetricProcedure {
         // 4
         Triple extEuklidRes = multiplicativeInverseExtendedEuclidean(e, phi);
         BigInteger d = extEuklidRes.d;
-        System.out.println(e.multiply(d).mod(phi));
 
-        return new RSAKeys(e, d, modulus);
+        publicKey = e;
+        privateKey = d;
+        this.modulus = modulus;
+    }
+
+    public static BigInteger[] encryptMessage(byte[] message, BigInteger publicKey, BigInteger modulus) {
+        BigInteger[] encryptedMessage = new BigInteger[message.length];
+
+        for (int i = 0; i < message.length; i++) {
+            encryptedMessage[i] = BigInteger.valueOf(message[i]).modPow(publicKey, modulus);
+        }
+        return encryptedMessage;
+    }
+
+    public static byte[] decryptMessage(BigInteger[] message, BigInteger privateKey, BigInteger modulus) {
+        byte[] decryptedMessageBytes = new byte[message.length];
+
+        for (int i = 0; i < message.length; i++) {
+            decryptedMessageBytes[i] = (byte) message[i].modPow(privateKey, modulus).intValue();
+        }
+        return decryptedMessageBytes;
+    }
+
+    public BigInteger getPublicKey() {
+        return publicKey;
+    }
+
+    public BigInteger getPrivateKey() {
+        return privateKey;
     }
 
     // calculates the multiplicative inverse of a to b with the extended euclidean algorithm
@@ -62,6 +97,10 @@ public class UnsymmetricProcedure {
             final Triple extension = extEuklid(b, a.mod(b));
             return new Triple(extension.d, extension.t, extension.s.subtract(a.divide(b).multiply(extension.t)));
         }
+    }
+
+    public BigInteger getModulus() {
+        return modulus;
     }
 
     // code from Stephan Pareigis

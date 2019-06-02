@@ -1,12 +1,14 @@
 package test;
 
-import hybridEncryption.RSAKeys;
-import hybridEncryption.SymmetricProcedure;
-import hybridEncryption.UnsymmetricProcedure;
+import hybridEncryption.BlockCipherFistel;
+import hybridEncryption.RSA;
 
 import java.math.BigInteger;
 
 public class TestFrame {
+    private static final int BLOCKSIZE = 16;
+    private static final int ROUNDS = 12;
+
     public static void main(String... args) {
         testRSAMessageEncryption();
         //testRSAKeysNegative();
@@ -14,10 +16,10 @@ public class TestFrame {
     }
 
     public static void testRSAMessageEncryption() {
-        RSAKeys rsaKeys = UnsymmetricProcedure.generateKeys(16);
+        RSA rsa = new RSA(BLOCKSIZE);
 
-        BigInteger[] encryptedMessage = rsaKeys.encryptMessage("Hello");
-        String decrpytedMessage = rsaKeys.decryptMessage(encryptedMessage);
+        BigInteger[] encryptedMessage = rsa.encryptMessage("Hello", rsa.getPublicKey(), rsa.getModulus());
+        String decrpytedMessage = rsa.decryptMessage(encryptedMessage, rsa.getPrivateKey(), rsa.getModulus());
         System.out.println(decrpytedMessage);
     }
 
@@ -25,11 +27,11 @@ public class TestFrame {
         boolean pubkeyNegative = false;
         boolean privKeyNegative = false;
         for(int i = 0; i < 1000; i++) {
-            RSAKeys keys = UnsymmetricProcedure.generateKeys(16);
-            if(keys.getPublicKey().compareTo(BigInteger.ZERO) < 0) {
+            RSA rsa = new RSA(BLOCKSIZE);
+            if(rsa.getPublicKey().compareTo(BigInteger.ZERO) < 0) {
                 pubkeyNegative = true;
             }
-            if(keys.getPrivateKey().compareTo(BigInteger.ZERO) < 0) {
+            if(rsa.getPrivateKey().compareTo(BigInteger.ZERO) < 0) {
                 privKeyNegative = true;
             }
         }
@@ -45,7 +47,7 @@ public class TestFrame {
     }
 
     public static void testFeistelEncryption() {
-        SymmetricProcedure sm = new SymmetricProcedure();
+        BlockCipherFistel sm = new BlockCipherFistel(BLOCKSIZE, ROUNDS);
         byte[] result = sm.encryptMessage("Hallo");
         System.out.println(new String(result));
     }

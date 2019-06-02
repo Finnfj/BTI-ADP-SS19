@@ -4,10 +4,15 @@ import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.Random;
 
-public class SymmetricProcedure {
-    private final int BLOCKSIZE = 16;
-    private final int ROUNDS = 12;
+public class BlockCipherFistel {
+    private final int BLOCKSIZE;
+    private final int ROUNDS;
     private final byte PADDING = 0x20;
+
+    public BlockCipherFistel(final int BLOCKSIZE, final int ROUNDS) {
+        this.BLOCKSIZE = BLOCKSIZE;
+        this.ROUNDS = ROUNDS;
+    }
 
     public byte[] encryptMessage(String message) {
         // put the message as bytes into an array with an offset at the beginning
@@ -44,16 +49,31 @@ public class SymmetricProcedure {
             byte[] right = new byte[BLOCKSIZE/2];
             System.arraycopy(messageBytesOffsetPadding, i*BLOCKSIZE, left, 0, left.length);
             System.arraycopy(messageBytesOffsetPadding, i*BLOCKSIZE+BLOCKSIZE/2, right, 0, right.length);
-            Feistelblock fb = new Feistelblock(left, right, sessionKey, BLOCKSIZE);
             for (int j = 0; j < ROUNDS; j++) {
-                fb.swap();
+                swap(left, right, sessionKey);
             }
             // copy the feistel swapped arrays back into the main array
-            System.arraycopy(fb.getLeft(), 0, messageBytesOffsetPadding, i*BLOCKSIZE+BLOCKSIZE, left.length);
-            System.arraycopy(fb.getRight(), 0, messageBytesOffsetPadding, i*BLOCKSIZE+BLOCKSIZE/2+BLOCKSIZE, right.length);
+            System.arraycopy(left, 0, messageBytesOffsetPadding, i*BLOCKSIZE+BLOCKSIZE, left.length);
+            System.arraycopy(right, 0, messageBytesOffsetPadding, i*BLOCKSIZE+BLOCKSIZE/2+BLOCKSIZE, right.length);
         }
 
         return messageBytesOffsetPadding;
     }
 
+    public void swap(byte[] left, byte[] right, byte[] sessionkey) {
+        // swap left and right
+        byte[] temp = left;
+        left = right;
+        right = temp;
+
+        BigInteger rightBI = new BigInteger(1, right);
+        BigInteger sessionkeyBI = new BigInteger(1, sessionkey);
+
+        // apply feistel algo to right side: F(R,K) = (R^2 + K) mod (2^blockSizeBits - 1)
+        BigInteger newRight = rightBI.pow(2).add(sessionkeyBI).mod(BigInteger.TWO.pow(BLOCKSIZE*8).subtract(BigInteger.ONE));
+        right = BigIntHelper.BigInt2Byte(newRight, BLOCKSIZE);
+        for(int i = 0; i < left.length; i++) {
+            right[i] ^= left[i];
+        }
+    }
 }
