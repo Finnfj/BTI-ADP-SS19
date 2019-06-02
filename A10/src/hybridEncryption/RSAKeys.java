@@ -5,12 +5,12 @@ import java.math.BigInteger;
 public class RSAKeys {
     private BigInteger publicKey;
     private BigInteger privateKey;
-    private BigInteger N;
+    private BigInteger modulus;
 
-    public RSAKeys(BigInteger publicKey, BigInteger privateKey, BigInteger N) {
+    public RSAKeys(BigInteger publicKey, BigInteger privateKey, BigInteger modulus) {
         this.publicKey = publicKey;
         this.privateKey = privateKey;
-        this.N = N;
+        this.modulus = modulus;
     }
 
     public BigInteger getPublicKey() {
@@ -26,7 +26,7 @@ public class RSAKeys {
         BigInteger[] encryptedMessage = new BigInteger[messageBytes.length];
 
         for (int i = 0; i < messageBytes.length; i++) {
-            encryptedMessage[i] = BigInteger.valueOf(messageBytes[i]).modPow(publicKey, N);
+            encryptedMessage[i] = BigInteger.valueOf(messageBytes[i]).modPow(publicKey, modulus);
         }
         return encryptedMessage;
     }
@@ -35,7 +35,7 @@ public class RSAKeys {
         byte[] decryptedMessageBytes = new byte[message.length];
 
         for (int i = 0; i < message.length; i++) {
-            decryptedMessageBytes[i] = (byte) message[i].modPow(privateKey, N).intValue();
+            decryptedMessageBytes[i] = (byte) message[i].modPow(privateKey, modulus).intValue();
         }
         return new String(decryptedMessageBytes);
     }

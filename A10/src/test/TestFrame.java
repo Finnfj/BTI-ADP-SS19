@@ -8,13 +8,13 @@ import java.math.BigInteger;
 
 public class TestFrame {
     public static void main(String... args) {
-        //testRSAMessageEncryption();
+        testRSAMessageEncryption();
         //testRSAKeysNegative();
-        testFeistelEncryption();
+        //testFeistelEncryption();
     }
 
     public static void testRSAMessageEncryption() {
-        RSAKeys rsaKeys = UnsymmetricProcedure.generateKeys(64);
+        RSAKeys rsaKeys = UnsymmetricProcedure.generateKeys(16);
 
         BigInteger[] encryptedMessage = rsaKeys.encryptMessage("Hello");
         String decrpytedMessage = rsaKeys.decryptMessage(encryptedMessage);
@@ -25,7 +25,7 @@ public class TestFrame {
         boolean pubkeyNegative = false;
         boolean privKeyNegative = false;
         for(int i = 0; i < 1000; i++) {
-            RSAKeys keys = UnsymmetricProcedure.generateKeys(64);
+            RSAKeys keys = UnsymmetricProcedure.generateKeys(16);
             if(keys.getPublicKey().compareTo(BigInteger.ZERO) < 0) {
                 pubkeyNegative = true;
             }

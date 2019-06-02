@@ -40,6 +40,7 @@ public class Feistelblock {
         return left;
     }
 
+    // code from Stephan Pareigis
     static byte[] BigInt2Byte (BigInteger src, int bytesize){
         byte[] out = new byte[bytesize];
         BigInteger mod = new BigInteger("2");
