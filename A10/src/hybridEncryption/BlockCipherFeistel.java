@@ -49,7 +49,7 @@ public class BlockCipherFeistel {
         }
         System.out.println();
 
-        // extract the left and right part of a block into arrays and feistel them ROUND times with the feistelblock
+        // extract the left and right part of a block into arrays and feistelround them ROUND times with the feistelblock
         final int amountOfMessageBlocks = (messageBytesOffsetPaddingSize-BLOCKSIZE)/BLOCKSIZE;
         for(int i = 0; i < amountOfMessageBlocks; i++) {
             byte[] left = new byte[BLOCKSIZE/2];
@@ -58,10 +58,10 @@ public class BlockCipherFeistel {
             System.arraycopy(messageBytesOffsetPadding, i*BLOCKSIZE+BLOCKSIZE/2+BLOCKSIZE, right, 0, right.length);
 
             for (int j = 0; j < ROUNDS; j++) {
-                feistel(left, right);
+                feistelround(left, right);
             }
 
-            // copy the feistel swapped arrays back into the main array
+            // copy the feistelround swapped arrays back into the main array
             System.arraycopy(left, 0, messageBytesOffsetPadding, i*BLOCKSIZE+BLOCKSIZE, left.length);
             System.arraycopy(right, 0, messageBytesOffsetPadding, i*BLOCKSIZE+BLOCKSIZE/2+BLOCKSIZE, right.length);
 
@@ -89,11 +89,11 @@ public class BlockCipherFeistel {
 
             swap(left, right);
             for (int j = 0; j < ROUNDS; j++) {
-                feistel(left, right);
+                feistelround(left, right);
             }
             swap(left, right);
 
-            // copy the feistel swapped arrays back into the main array
+            // copy the feistelround swapped arrays back into the main array
             System.arraycopy(left, 0, decryptedMessage, i*BLOCKSIZE+BLOCKSIZE, left.length);
             System.arraycopy(right, 0, decryptedMessage, i*BLOCKSIZE+BLOCKSIZE/2+BLOCKSIZE, right.length);
 
@@ -106,6 +106,32 @@ public class BlockCipherFeistel {
         return decryptedMessage;
     }
 
+    public void feistelround(byte[] left, byte[] right) {
+        byte[] FRK = F(right, sessionkey);
+
+        for(int i = 0; i < left.length; i++) {
+            FRK[i] ^= left[i];
+        }
+        System.arraycopy(right, 0, left, 0, left.length);
+        System.arraycopy(FRK, 0, right, 0, right.length);
+    }
+
+    // F(R,K) = (R^2 + K) mod (2^blockSizeBits - 1)
+    private byte[] F(byte[] R, byte[] K) {
+        BigInteger KBI = BigIntHelper.Byte2BigInt(K);
+
+        BigInteger modulo = BigInteger.TWO;
+        modulo = modulo.pow(BLOCKSIZE*8); // *8 because BLOCKSIZE needs to be converted from bytes to bits
+        modulo = modulo.subtract(BigInteger.ONE);
+
+        BigInteger newR = BigIntHelper.Byte2BigInt(R);
+        newR = newR.pow(2);
+        newR = newR.add(KBI);
+        newR = newR.mod(modulo);
+
+        return BigIntHelper.BigInt2Byte(newR, BLOCKSIZE/2);
+    }
+
     public static void swap(byte[] a, byte[] b) {
         if (a.length != b.length) {
             throw new IllegalArgumentException();
@@ -114,27 +140,5 @@ public class BlockCipherFeistel {
         System.arraycopy(a, 0, temp, 0, a.length);
         System.arraycopy(b, 0, a, 0, a.length);
         System.arraycopy(temp, 0, b, 0, a.length);
-    }
-
-    public void feistel(byte[] left, byte[] right) {
-        swap(left, right);
-
-        BigInteger sessionkeyBI = BigIntHelper.Byte2BigInt(sessionkey);
-
-        BigInteger modulo = BigInteger.TWO;
-        modulo = modulo.pow(BLOCKSIZE*8); // convert BLOCKSIZE from byte to bit
-        modulo = modulo.subtract(BigInteger.ONE);
-
-        // apply feistel algo to right side: F(R,K) = (R^2 + K) mod (2^blockSizeBits - 1)
-        BigInteger newRight = BigIntHelper.Byte2BigInt(right);
-        newRight = newRight.pow(2);
-        newRight = newRight.add(sessionkeyBI);
-        newRight = newRight.mod(modulo);
-
-        byte[] newRightBytes = BigIntHelper.BigInt2Byte(newRight, BLOCKSIZE/2);
-        for(int k = 0; k < left.length; k++) {
-            newRightBytes[k] ^= left[k];
-        }
-        System.arraycopy(newRightBytes, 0, right, 0, newRightBytes.length);
     }
 }

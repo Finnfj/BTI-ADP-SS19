@@ -15,8 +15,8 @@ public class TestFrame {
         //testRSAMessageEncryptionDecryption();
         //testRSAKeysNegative();
         //testFeistel();
-        testFeistelEncryptionDecryption();
-        //testHybridMessageEncryptionDecryption();
+        //testFeistelEncryptionDecryption();
+        testHybridMessageEncryptionDecryption();
     }
 
     public static void testRSAMessageEncryptionDecryption() {
@@ -54,14 +54,14 @@ public class TestFrame {
     public static void testFeistel() {
         byte[] sessionkey = {1, 1, 1, 1, 1, 1, 1, 1};
         BlockCipherFeistel bcf = new BlockCipherFeistel(BLOCKSIZE, ROUNDS, PADDING, sessionkey);
-        byte[] left  = {1, 1, 1, 1, 1, 1, 1, 1};
-        byte[] right  = {2, 2, 2, 2, 2, 2, 2, 2};
+        byte[] left  = {'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a'};
+        byte[] right  = {'b', 'b', 'b','b', 'b', 'b', 'b', 'b'};
         for(int i = 0; i < 2; i++) {
-            bcf.feistel(left, right); // encrypt
+            bcf.feistelround(left, right); // encrypt
         }
         for(int i = 0; i < 2; i++) {
             BlockCipherFeistel.swap(left, right);
-            bcf.feistel(left, right); // decrypt
+            bcf.feistelround(left, right); // decrypt
             BlockCipherFeistel.swap(left, right);
         }
         System.out.println(new String(left));
