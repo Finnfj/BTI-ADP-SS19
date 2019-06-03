@@ -14,15 +14,16 @@ public class TestFrame {
     public static void main(String... args) {
         //testRSAMessageEncryptionDecryption();
         //testRSAKeysNegative();
-        //testFeistelEncryption();
-        testHybridMessageEncprytionDecryption();
+        testFeistelEncryptionDecryption();
+        //testHybridMessageEncprytionDecryption();
     }
 
     public static void testRSAMessageEncryptionDecryption() {
         RSA rsa = new RSA(BLOCKSIZE);
 
-        BigInteger encryptedMessage = RSA.encryptMessage("Hallo".getBytes(), rsa.getPublicKey(), rsa.getModulus());
+        BigInteger encryptedMessage = RSA.encryptMessage("HalloA".getBytes(), rsa.getPublicKey(), rsa.getModulus());
         byte[] decrpytedMessage = RSA.decryptMessage(encryptedMessage.toByteArray(), rsa.getPrivateKey(), rsa.getModulus());
+        System.out.println(new String(encryptedMessage.toByteArray()));
         System.out.println(new String(decrpytedMessage));
     }
 
@@ -49,16 +50,19 @@ public class TestFrame {
         }
     }
 
-    public static void testFeistelEncryption() {
-        BlockCipherFeistel sm = new BlockCipherFeistel(BLOCKSIZE, ROUNDS, PADDING, null);
-        byte[] result = sm.encryptMessage("Hallo".getBytes());
-        System.out.println(new String(result));
+    public static void testFeistelEncryptionDecryption() {
+        BlockCipherFeistel bcf = new BlockCipherFeistel(BLOCKSIZE, ROUNDS, PADDING, null);
+        byte[] encryptedMessage = bcf.encryptMessage("HalloB".getBytes());
+        System.out.println(new String(encryptedMessage));
+        byte[] decryptedMessage = bcf.decryptMessage(encryptedMessage);
+        System.out.println(new String(decryptedMessage));
     }
 
     public static void testHybridMessageEncprytionDecryption() {
         RSA rsa = new RSA(BLOCKSIZE);
         HybridProcedure hp = new HybridProcedure(rsa.getPublicKeyModulusBase64(), BLOCKSIZE, ROUNDS, PADDING);
-        String encryptedMessage = hp.encryptMessage("Hallo");
+        String encryptedMessage = hp.encryptMessage("HalloC");
+        System.out.println(encryptedMessage);
         String decryptedMessage = hp.decryptMessage(encryptedMessage, rsa.getPrivateKey(), rsa.getModulus());
         System.out.println(decryptedMessage);
     }

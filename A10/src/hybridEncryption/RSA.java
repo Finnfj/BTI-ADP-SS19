@@ -42,7 +42,6 @@ public class RSA {
     }
 
     public String getPublicKeyModulusBase64() {
-        // TODO: example says BLOCKSIZE/2 for modulo at one point
         byte[] publicKeyModulusBase64 = new byte[BLOCKSIZE+BLOCKSIZE/2];
 
         System.arraycopy(BigIntHelper.BigInt2Byte(publicKey, BLOCKSIZE/2), 0, publicKeyModulusBase64, 0, BLOCKSIZE/2);

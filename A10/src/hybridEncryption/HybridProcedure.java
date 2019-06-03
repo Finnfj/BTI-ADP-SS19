@@ -17,6 +17,10 @@ public class HybridProcedure {
     }
 
     public String encryptMessage(String message) {
+        if (message.length() == 0) {
+            return "";
+        }
+
         // encrypt the message with BlockCipherFeistel, the sessionkey is not encrypted
         BlockCipherFeistel bcf = new BlockCipherFeistel(BLOCKSIZE, ROUNDS, PADDING, null);
         byte[] bcfEncryptedMessage = bcf.encryptMessage(message.getBytes());
@@ -40,6 +44,10 @@ public class HybridProcedure {
     }
 
     public String decryptMessage(String encryptedMessageBase64, BigInteger privateKey, BigInteger modulus) {
+        if (encryptedMessageBase64.length() == 0) {
+            return "";
+        }
+
         byte[] encryptedMessage = Base64.getDecoder().decode(encryptedMessageBase64);
 
         // get session key from encryptedMessage
