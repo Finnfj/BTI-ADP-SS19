@@ -33,8 +33,7 @@ public class RSA {
         }
 
         // 4
-        Triple extEuklidRes = multiplicativeInverseExtendedEuclidean(e, phi);
-        BigInteger d = extEuklidRes.d;
+        BigInteger d = extEuklid(e, phi).s;
 
         publicKey = e;
         privateKey = d;
@@ -69,32 +68,7 @@ public class RSA {
         return messageBigInteger.modPow(privateKey, modulus).toByteArray();
     }
 
-    // calculates the multiplicative inverse of a to b with the extended euclidean algorithm
-    private static Triple multiplicativeInverseExtendedEuclidean(BigInteger a, BigInteger b) {
-        BigInteger b0 = b;
-        BigInteger y = BigInteger.ZERO;
-        BigInteger d = BigInteger.ONE;
-
-        while(a.compareTo(BigInteger.ONE) > 0) { // while a greater 1
-            BigInteger q = a.divide(b);
-            BigInteger t = b;
-            b = a.mod(b);
-            a = t;
-            t = y;
-
-            y = d.subtract(q.multiply(y));
-            d = t;
-        }
-
-        if (d.compareTo(BigInteger.ZERO) < 0) { // if d is smaller than 0
-            d = d.add(b0);
-        }
-
-        return new Triple(d, BigInteger.ONE, BigInteger.ZERO);
-    }
-
     // code from Stephan Pareigis
-    // TODO: doesn't work
     public static Triple extEuklid(final BigInteger a, final BigInteger b) {
         if (b.equals(BigInteger.ZERO)) {
             return new Triple(a, BigInteger.ONE, BigInteger.ZERO);
@@ -102,10 +76,6 @@ public class RSA {
             final Triple extension = extEuklid(b, a.mod(b));
             return new Triple(extension.d, extension.t, extension.s.subtract(a.divide(b).multiply(extension.t)));
         }
-    }
-
-    public BigInteger getModulus() {
-        return modulus;
     }
 
     // code from Stephan Pareigis
@@ -116,5 +86,9 @@ public class RSA {
         private Triple(final BigInteger d, final BigInteger s, final BigInteger t) {
             this.d = d; this.s = s; this.t = t;
         }
+    }
+
+    public BigInteger getModulus() {
+        return modulus;
     }
 }

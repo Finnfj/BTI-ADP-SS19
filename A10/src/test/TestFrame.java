@@ -70,7 +70,7 @@ public class TestFrame {
 
     public static void testFeistelEncryptionDecryption() {
         BlockCipherFeistel bcf = new BlockCipherFeistel(BLOCKSIZE, ROUNDS, PADDING, null);
-        byte[] encryptedMessage = bcf.encryptMessage("HalloBHalloBHallHalloBHalloBHall".getBytes());
+        byte[] encryptedMessage = bcf.encryptMessage("AAAAAAAAAAAAAAAA".getBytes());
         System.out.println(new String(encryptedMessage));
         byte[] decryptedMessage = bcf.decryptMessage(encryptedMessage);
         System.out.println(new String(decryptedMessage));

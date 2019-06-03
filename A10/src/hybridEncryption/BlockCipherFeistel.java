@@ -56,12 +56,15 @@ public class BlockCipherFeistel {
             byte[] right = new byte[BLOCKSIZE/2];
             System.arraycopy(messageBytesOffsetPadding, i*BLOCKSIZE+BLOCKSIZE, left, 0, left.length);
             System.arraycopy(messageBytesOffsetPadding, i*BLOCKSIZE+BLOCKSIZE/2+BLOCKSIZE, right, 0, right.length);
+
             for (int j = 0; j < ROUNDS; j++) {
                 feistel(left, right);
             }
+
             // copy the feistel swapped arrays back into the main array
             System.arraycopy(left, 0, messageBytesOffsetPadding, i*BLOCKSIZE+BLOCKSIZE, left.length);
             System.arraycopy(right, 0, messageBytesOffsetPadding, i*BLOCKSIZE+BLOCKSIZE/2+BLOCKSIZE, right.length);
+
             System.out.print("Block: " + i + " = ");
             for(byte b : messageBytesOffsetPadding) {
                 System.out.print(b + ", ");
@@ -83,14 +86,17 @@ public class BlockCipherFeistel {
             byte[] right = new byte[BLOCKSIZE/2];
             System.arraycopy(encryptedMessage, i*BLOCKSIZE+BLOCKSIZE, left, 0, left.length);
             System.arraycopy(encryptedMessage, i*BLOCKSIZE+BLOCKSIZE/2+BLOCKSIZE, right, 0, right.length);
+
             swap(left, right);
             for (int j = 0; j < ROUNDS; j++) {
                 feistel(left, right);
             }
             swap(left, right);
+
             // copy the feistel swapped arrays back into the main array
             System.arraycopy(left, 0, decryptedMessage, i*BLOCKSIZE+BLOCKSIZE, left.length);
             System.arraycopy(right, 0, decryptedMessage, i*BLOCKSIZE+BLOCKSIZE/2+BLOCKSIZE, right.length);
+
             System.out.print("Block: " + i + " = ");
             for(byte b : decryptedMessage) {
                 System.out.print(b + ", ");
@@ -110,30 +116,24 @@ public class BlockCipherFeistel {
         System.arraycopy(temp, 0, b, 0, a.length);
     }
 
-    // TODO: check this
     public void feistel(byte[] left, byte[] right) {
         swap(left, right);
 
-        BigInteger rightBI = BigIntHelper.Byte2BigInt(right);
         BigInteger sessionkeyBI = BigIntHelper.Byte2BigInt(sessionkey);
 
-        // apply feistel algo to right side: F(R,K) = (R^2 + K) mod (2^blockSizeBits - 1)
-        BigInteger newRight = rightBI.pow(2);
-        newRight = newRight.add(sessionkeyBI);
-
         BigInteger modulo = BigInteger.TWO;
-        modulo = modulo.pow(BLOCKSIZE*8);
+        modulo = modulo.pow(BLOCKSIZE*8); // convert BLOCKSIZE from byte to bit
         modulo = modulo.subtract(BigInteger.ONE);
 
+        // apply feistel algo to right side: F(R,K) = (R^2 + K) mod (2^blockSizeBits - 1)
+        BigInteger newRight = BigIntHelper.Byte2BigInt(right);
+        newRight = newRight.pow(2);
+        newRight = newRight.add(sessionkeyBI);
         newRight = newRight.mod(modulo);
-
-        /*newRight = newRight.xor(BigIntHelper.Byte2BigInt(left));
-        byte[] newRightBytes = BigIntHelper.BigInt2Byte(newRight, BLOCKSIZE/2);*/
 
         byte[] newRightBytes = BigIntHelper.BigInt2Byte(newRight, BLOCKSIZE/2);
         for(int k = 0; k < left.length; k++) {
             newRightBytes[k] ^= left[k];
-            //left[k] = (byte) (newRightBytes[k] ^ left[k]);
         }
         System.arraycopy(newRightBytes, 0, right, 0, newRightBytes.length);
     }
