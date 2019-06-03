@@ -51,19 +51,7 @@ public class BlockCipherFeistel {
             System.arraycopy(messageBytesOffsetPadding, i*BLOCKSIZE+BLOCKSIZE, left, 0, left.length);
             System.arraycopy(messageBytesOffsetPadding, i*BLOCKSIZE+BLOCKSIZE/2+BLOCKSIZE, right, 0, right.length);
             for (int j = 0; j < ROUNDS; j++) {
-                byte[] temp = left;
-                left = right;
-                right = temp;
-
-                BigInteger rightBI = BigIntHelper.Byte2BigInt(right);
-                BigInteger sessionkeyBI = BigIntHelper.Byte2BigInt(sessionkey);
-
-                // apply feistel algo to right side: F(R,K) = (R^2 + K) mod (2^blockSizeBits - 1)
-                BigInteger newRight = rightBI.pow(2).add(sessionkeyBI).mod(BigInteger.TWO.pow(BLOCKSIZE*8).subtract(BigInteger.ONE));
-                right = BigIntHelper.BigInt2Byte(newRight, BLOCKSIZE/2);
-                for(int k = 0; k < left.length; k++) {
-                    right[k] ^= left[k];
-                }
+                feistel(left, right);
             }
             // copy the feistel swapped arrays back into the main array
             System.arraycopy(left, 0, messageBytesOffsetPadding, i*BLOCKSIZE+BLOCKSIZE, left.length);
@@ -83,32 +71,41 @@ public class BlockCipherFeistel {
             byte[] right = new byte[BLOCKSIZE/2];
             System.arraycopy(encryptedMessage, i*BLOCKSIZE+BLOCKSIZE, left, 0, left.length);
             System.arraycopy(encryptedMessage, i*BLOCKSIZE+BLOCKSIZE/2+BLOCKSIZE, right, 0, right.length);
-            byte[] temp = left;
-            left = right;
-            right = temp;
+            swap(left, right);
             for (int j = 0; j < ROUNDS; j++) {
-                temp = left;
-                left = right;
-                right = temp;
-
-                BigInteger rightBI = BigIntHelper.Byte2BigInt(right);
-                BigInteger sessionkeyBI = BigIntHelper.Byte2BigInt(sessionkey);
-
-                // apply feistel algo to right side: F(R,K) = (R^2 + K) mod (2^blockSizeBits - 1)
-                BigInteger newRight = rightBI.pow(2).add(sessionkeyBI).mod(BigInteger.TWO.pow(BLOCKSIZE*8).subtract(BigInteger.ONE));
-                right = BigIntHelper.BigInt2Byte(newRight, BLOCKSIZE/2);
-                for(int k = 0; k < left.length; k++) {
-                    right[k] ^= left[k];
-                }
+                feistel(left, right);
             }
-            temp = left;
-            left = right;
-            right = temp;
+            swap(left, right);
             // copy the feistel swapped arrays back into the main array
             System.arraycopy(left, 0, decryptedMessage, i*BLOCKSIZE, left.length);
             System.arraycopy(right, 0, decryptedMessage, i*BLOCKSIZE+BLOCKSIZE/2, right.length);
         }
 
         return decryptedMessage;
+    }
+
+    private static void swap(byte[] a, byte[] b) {
+        if (a.length != b.length) {
+            throw new IllegalArgumentException();
+        }
+        byte[] temp = new byte[a.length];
+        System.arraycopy(a, 0, temp, 0, a.length);
+        System.arraycopy(b, 0, a, 0, a.length);
+        System.arraycopy(temp, 0, b, 0, a.length);
+    }
+
+    private void feistel(byte[] left, byte[] right) {
+        swap(left, right);
+
+        BigInteger rightBI = BigIntHelper.Byte2BigInt(right);
+        BigInteger sessionkeyBI = BigIntHelper.Byte2BigInt(sessionkey);
+
+        // apply feistel algo to right side: F(R,K) = (R^2 + K) mod (2^blockSizeBits - 1)
+        BigInteger newRight = rightBI.pow(2).add(sessionkeyBI).mod(BigInteger.TWO.pow(BLOCKSIZE*8).subtract(BigInteger.ONE));
+        byte[] newRightBytes = BigIntHelper.BigInt2Byte(newRight, BLOCKSIZE/2);
+        for(int k = 0; k < left.length; k++) {
+            newRightBytes[k] ^= left[k];
+        }
+        System.arraycopy(newRightBytes, 0, right, 0, newRightBytes.length);
     }
 }
