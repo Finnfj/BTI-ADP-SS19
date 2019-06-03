@@ -14,8 +14,9 @@ public class TestFrame {
     public static void main(String... args) {
         //testRSAMessageEncryptionDecryption();
         //testRSAKeysNegative();
-        testFeistelEncryptionDecryption();
-        //testHybridMessageEncprytionDecryption();
+        testFeistel();
+        //testFeistelEncryptionDecryption();
+        //testHybridMessageEncryptionDecryption();
     }
 
     public static void testRSAMessageEncryptionDecryption() {
@@ -50,15 +51,32 @@ public class TestFrame {
         }
     }
 
+    public static void testFeistel() {
+        byte[] sessionkey = {1, 1, 1, 1, 1, 1, 1, 1};
+        BlockCipherFeistel bcf = new BlockCipherFeistel(BLOCKSIZE, ROUNDS, PADDING, sessionkey);
+        byte[] left  = {1, 1, 1, 1, 1, 1, 1, 1};
+        byte[] right  = {2, 2, 2, 2, 2, 2, 2, 2};
+        for(int i = 0; i < 2; i++) {
+            bcf.feistel(left, right); // encrypt
+        }
+        for(int i = 0; i < 2; i++) {
+            BlockCipherFeistel.swap(left, right);
+            bcf.feistel(left, right); // decrypt
+            BlockCipherFeistel.swap(left, right);
+        }
+        System.out.println(new String(left));
+        System.out.println(new String(right));
+    }
+
     public static void testFeistelEncryptionDecryption() {
         BlockCipherFeistel bcf = new BlockCipherFeistel(BLOCKSIZE, ROUNDS, PADDING, null);
-        byte[] encryptedMessage = bcf.encryptMessage("HalloB".getBytes());
+        byte[] encryptedMessage = bcf.encryptMessage("HalloBHalloBHall".getBytes());
         System.out.println(new String(encryptedMessage));
         byte[] decryptedMessage = bcf.decryptMessage(encryptedMessage);
         System.out.println(new String(decryptedMessage));
     }
 
-    public static void testHybridMessageEncprytionDecryption() {
+    public static void testHybridMessageEncryptionDecryption() {
         RSA rsa = new RSA(BLOCKSIZE);
         HybridProcedure hp = new HybridProcedure(rsa.getPublicKeyModulusBase64(), BLOCKSIZE, ROUNDS, PADDING);
         String encryptedMessage = hp.encryptMessage("HalloC");

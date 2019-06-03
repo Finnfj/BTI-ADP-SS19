@@ -59,7 +59,7 @@ public class HybridProcedure {
         byte[] decryptedMessage = bcf.decryptMessage(encryptedMessage);
 
         // remove the sessionkey and the padding from the decrypted message and turn it into a string
-        int cleanedDecryptedMessageSize = decryptedMessage.length;
+        int cleanedDecryptedMessageSize = decryptedMessage.length-BLOCKSIZE;
 
         // count how often the padding occurs at the end and decrease cleanedDecryptedMessageSize by that
         while (decryptedMessage[cleanedDecryptedMessageSize-1] == PADDING) {
@@ -68,7 +68,7 @@ public class HybridProcedure {
 
         // copy the decrpyted message to the array
         byte[] cleanedDecryptedMessage = new byte[cleanedDecryptedMessageSize];
-        System.arraycopy(decryptedMessage, 0, cleanedDecryptedMessage, 0, cleanedDecryptedMessageSize);
+        System.arraycopy(decryptedMessage, BLOCKSIZE, cleanedDecryptedMessage, 0, cleanedDecryptedMessageSize);
 
         return new String(cleanedDecryptedMessage);
     }
