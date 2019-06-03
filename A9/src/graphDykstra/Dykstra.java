@@ -27,7 +27,7 @@ public class Dykstra {
         start.setMarked(true);
 
         // 2
-        // fill rand with adjacence nodes of start and init the neighbour nodes of start //TODO:
+        // fill rand with adjacence nodes of start and init the neighbour nodes of start
         for(Node n : graph.getNeighbours(start)) {
             if (counter != null) {
                 counter.increaseCount();

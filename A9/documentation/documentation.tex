@@ -56,7 +56,7 @@
 		\label{sec:algo}
 
 		Der eigentliche Algorithmus zum Berechnen der schnellsten Pfade mit Dijkstra ist unter \ref{figure:dykstra} zu sehen.
-		%%TODO
+		Bei diesem werden zuerst alle Nodes des Graphen initialisiert und anschließend alle Nachbarn des Startknoten in eine PriorityQueue, die nach den Kosten um zu dem Knoten zu kommen, priorisiert ist. Danach wird die PriorityQueue durchgearbeitet, jeder Nachbar des aktuellen Knoten hinzugefügt der noch nicht makiert ist und bei jedem Nachbarn geprüft, ob der Weg über den aktuellen Knoten schneller ist, als bisher bekannt. Wenn dies der Fall ist, wird sich das neue Gewicht und der aktuelle Knoten im Nachbar gemerkt. In jedem Fall wird der aktuelle Knoten als abgearbeitet makiert. Am Ende, wenn die PriorityQueue leer ist, steht sicher, dass der kürzeste Weg vom Endknoten der ist, der herauskommt, wenn den gespeicherten vorherigen Knoten gefolgt wird.
 
 		
 \section{Testen und Verifikation}

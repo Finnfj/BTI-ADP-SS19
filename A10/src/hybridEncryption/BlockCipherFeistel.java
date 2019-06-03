@@ -43,6 +43,7 @@ public class BlockCipherFeistel {
         }
         System.arraycopy(sessionkey, 0, messageBytesOffsetPadding, 0, BLOCKSIZE / 2);
 
+        System.out.print("Message:   ");
         for(byte b : messageBytesOffsetPadding) {
             System.out.print(b + ", ");
         }
@@ -61,7 +62,7 @@ public class BlockCipherFeistel {
             // copy the feistel swapped arrays back into the main array
             System.arraycopy(left, 0, messageBytesOffsetPadding, i*BLOCKSIZE+BLOCKSIZE, left.length);
             System.arraycopy(right, 0, messageBytesOffsetPadding, i*BLOCKSIZE+BLOCKSIZE/2+BLOCKSIZE, right.length);
-            System.out.print("Round: " + i + " = ");
+            System.out.print("Block: " + i + " = ");
             for(byte b : messageBytesOffsetPadding) {
                 System.out.print(b + ", ");
             }
@@ -90,7 +91,7 @@ public class BlockCipherFeistel {
             // copy the feistel swapped arrays back into the main array
             System.arraycopy(left, 0, decryptedMessage, i*BLOCKSIZE+BLOCKSIZE, left.length);
             System.arraycopy(right, 0, decryptedMessage, i*BLOCKSIZE+BLOCKSIZE/2+BLOCKSIZE, right.length);
-            System.out.print("Round: " + i + " = ");
+            System.out.print("Block: " + i + " = ");
             for(byte b : decryptedMessage) {
                 System.out.print(b + ", ");
             }
@@ -125,6 +126,9 @@ public class BlockCipherFeistel {
         modulo = modulo.subtract(BigInteger.ONE);
 
         newRight = newRight.mod(modulo);
+
+        /*newRight = newRight.xor(BigIntHelper.Byte2BigInt(left));
+        byte[] newRightBytes = BigIntHelper.BigInt2Byte(newRight, BLOCKSIZE/2);*/
 
         byte[] newRightBytes = BigIntHelper.BigInt2Byte(newRight, BLOCKSIZE/2);
         for(int k = 0; k < left.length; k++) {

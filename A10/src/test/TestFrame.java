@@ -14,8 +14,8 @@ public class TestFrame {
     public static void main(String... args) {
         //testRSAMessageEncryptionDecryption();
         //testRSAKeysNegative();
-        testFeistel();
-        //testFeistelEncryptionDecryption();
+        //testFeistel();
+        testFeistelEncryptionDecryption();
         //testHybridMessageEncryptionDecryption();
     }
 
@@ -70,7 +70,7 @@ public class TestFrame {
 
     public static void testFeistelEncryptionDecryption() {
         BlockCipherFeistel bcf = new BlockCipherFeistel(BLOCKSIZE, ROUNDS, PADDING, null);
-        byte[] encryptedMessage = bcf.encryptMessage("HalloBHalloBHall".getBytes());
+        byte[] encryptedMessage = bcf.encryptMessage("HalloBHalloBHallHalloBHalloBHall".getBytes());
         System.out.println(new String(encryptedMessage));
         byte[] decryptedMessage = bcf.decryptMessage(encryptedMessage);
         System.out.println(new String(decryptedMessage));
