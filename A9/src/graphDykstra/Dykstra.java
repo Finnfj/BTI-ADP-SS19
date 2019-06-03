@@ -14,6 +14,7 @@ public class Dykstra {
         for(Node n : graph.getNodes()) {
             if (counter != null) {
                 counter.increaseCount();
+                counter.increaseCount();
             }
             n.setPred(null);
             n.setCost(Double.MAX_VALUE);
@@ -29,6 +30,7 @@ public class Dykstra {
         // fill rand with adjacence nodes of start and init the neighbour nodes of start //TODO:
         for(Node n : graph.getNeighbours(start)) {
             if (counter != null) {
+                counter.increaseCount();
                 counter.increaseCount();
             }
             n.setCost(graph.getWeight(start, n));
@@ -47,9 +49,6 @@ public class Dykstra {
 
             // process every node in rand that is not marked
             for(Node k : graph.getNeighbours(v)) {
-                if (counter != null) {
-                    counter.increaseCount();
-                }
                 // 3.1
                 if (!k.getMarked()) {
                     if (counter != null) {
@@ -58,9 +57,6 @@ public class Dykstra {
                     // 3.2
                     double VKCost = v.getCost() + graph.getWeight(v, k);
                     if(k.getCost() > VKCost) { // check if the cost to go to this node via the previous node is faster than currently known
-                        if (counter != null) {
-                            counter.increaseCount();
-                        }
                         k.setCost(VKCost);
                         k.setPred(v);
                     }

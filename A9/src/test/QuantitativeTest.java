@@ -6,7 +6,7 @@ import java.util.Random;
 
 public class QuantitativeTest {
     public static void main(String... args) {
-        int samplesize = 30;
+        int samplesize = 10;
 
         long counterMatrix = 0;
         long counterList = 0;

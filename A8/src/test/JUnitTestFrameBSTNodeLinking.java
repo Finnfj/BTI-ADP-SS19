@@ -55,7 +55,7 @@ public class JUnitTestFrameBSTNodeLinking {
 	            long sum = bstnl.getSum(0, 10 * i);
 	            long endTime = System.currentTimeMillis();
 	            long time = endTime - startTime;
-	            System.out.println("testSum = " + testSum + "\nsum = " + sum + "\ntime = " + time + " ms");
+	            //System.out.println("testSum = " + testSum + "\nsum = " + sum + "\ntime = " + time + " ms");
 	            timeA[z] += time;
 	            z++;
 	        }

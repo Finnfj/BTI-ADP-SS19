@@ -1,0 +1,88 @@
+@startuml
+  package graphDykstra {
+    class Dykstra {
+        + findRoute(GraphI, Node)
+    }
+  }
+  
+
+  package graphDykstra {
+    abstract class GraphA {
+        - nodes : ArrayList<Node>
+        + addNode(Node)
+        + getNodes() : ArrayList<Node>
+    }
+  }
+  
+
+  package graphDykstra {
+    interface GraphI {
+        + addNode(Node)
+        + getNodes() : ArrayList<Node>
+        + addNeighbour(Node, Node, double)
+        + getNeighbours(Node) : ArrayList<Node>
+        + getWeight(Node, Node) : double
+    }
+  }
+  
+
+  package graphDykstra {
+    class GraphList {
+        - neighbourList : HashMap<Node, NeighbourListElem>
+    }
+  }
+  
+
+  package graphDykstra {
+    class GraphMatrix {
+        - adjacenceMatrix : double[][]
+        - size : int
+    }
+  }
+  
+
+  package graphDykstra {
+    class NeighbourListElem {
+        - node : Node
+        - next : NeighbourListElem
+        - cost : double
+        + getNode() : Node
+        + getNext() : NeighbourListElem
+        + setNext(NeighbourListElem)
+        + getCost() : double
+    }
+  }
+  
+
+  package graphDykstra {
+    class Node {
+        - id : int
+        - pred : Node
+        - cost : double
+        - marked : bool
+        + getId() : int
+        + getPred() : Node
+        + setPred(Node)
+        + getCost() : double
+        + setCost(double)
+        + getMarked() : bool
+        + setMarked(bool)
+    }
+  }
+  
+
+  GraphList -up-|> GraphI
+  GraphList -up-|> GraphA
+  GraphMatrix -up-|> GraphI
+  GraphMatrix -up-|> GraphA
+  Node -up-|> GraphA
+  Node -up-|> GraphI
+  GraphList o-- NeighbourListElem
+  Dykstra -- GraphI
+  NeighbourListElem o-- Node : node
+  NeighbourListElem o-- NeighbourListElem : next
+  Node o-- Node : pred
+
+
+
+@enduml

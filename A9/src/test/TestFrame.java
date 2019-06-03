@@ -8,7 +8,7 @@ import java.util.Queue;
 public class TestFrame {
     public static void main(String... args) {
         testGraphMaxtrix();
-        //testPriorityQueueWithNodes();
+        testPriorityQueueWithNodes();
     }
 
     public static void testGraphMaxtrix() {
@@ -24,7 +24,7 @@ public class TestFrame {
         gm.addNode(nodeC);
         gm.addNode(nodeD);
 
-        gm.addNeighbour(nodeA, nodeB, 5.0);
+        gm.addNeighbour(nodeA, nodeB, 0.5);
         gm.addNeighbour(nodeC, nodeA, 1.0);
         gm.addNeighbour(nodeD, nodeB, 1.0);
         gm.addNeighbour(nodeB, nodeC, 1.0);

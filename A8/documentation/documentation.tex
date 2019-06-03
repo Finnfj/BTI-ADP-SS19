@@ -29,12 +29,12 @@
 	Diese Dokumentation beschreibt Implementationen für binäre Suchbäume.
 	In Abschnitt \ref{sec:implementation} wird darauf eingegangen, wie der Algorithmus realisiert wurde.
 	Anschließend wird in Abschnitt \ref{sec:veri} geprüft, ob die Implementation korrekt funktioniert 
-	und in Abschnitt \ref{sec:aufwand} die Performance mit dem zu Grunde liegenden Quicksort verglichen.
+	und in Abschnitt \ref{sec:aufwand} die Performance veranschaulicht.
 
 \section{Implementation}
 	\label{sec:implementation}
 	
-	Der Algorithmus wurde als Klasse realisiert, der ein Interface implementiert, welches es ermöglicht, einfach weitere Implementationen, sofern dies gewünscht wird, zu schreiben.
+	Der Algorithmus wurde als Klasse realisiert, die ein Interface implementiert, welches es ermöglicht, einfach weitere Implementationen, sofern dies gewünscht wird, zu schreiben.
 	
 	\subsection{Aufbau}
 		\label{sec:codeStruc}
@@ -80,7 +80,8 @@
 		\label{sec:aufwand}
 		
 		Für die Aufwandsanalyse wurden die beiden Bäume mit $10^n$ Werten gefüllt, wobei die Reihenfolge randomisiert und $n=1,...,7$ war. Für Durchschnittswerte wurde dies 10 mal durchgeführt.
-		Beobachtet wurde hierbei die Ausführungszeit von updateSum(), zu sehen unter \ref{figure:sum}, da die Berechnung der Summe alleine mit den Zusatzinformationen zu schnell für aussagekräftige Messwerte stattfindet.
+		Beobachtet wurde hierbei die Ausführungszeit von updateSum(), zu sehen unter \ref{figure:sum}, die Methode hat einen Aufwand von $T(n) = \mathcal{O}(n)$. 
+		Es wird diese Methode betrachtet, da sie vor der Berechnung der Summe stattfinden muss und letzteres alleine mit den Zusatzinformationen zu schnell für aussagekräftige Messwerte stattfindet. 
 		Das gleiche galt für die Array-Einbettung, welche aufgrund mangelndem Arbeitsspeicher nur bis zu einer Größe von $10^3$ funktionierte und nicht in messbare Bereiche gekommen ist. Die verlinkten Nodes brauchen lediglich einen großen Stack, um zuverlässig zu funktionieren.
 		Die Ergebnisse der verlinkten Nodes sind unter \ref{figure:quanTest} zu sehen.
 
@@ -104,7 +105,7 @@
                 anchor=north,legend columns=1},
             ]
             \addplot[color=\qsCol,mark=\bestAvgMark,opacity=\transparent]
-                coordinates {(1,0)(10,0)(100,0)(1000,0)(10000,0)(100000,4)(1000000,62)(10000000,370)};
+                coordinates {(1,0)(10,0)(100,0)(1000,0)(10000,1)(100000,3)(1000000,58)(10000000,398)};
             \legend{Node-linking}
         \end{axis}
     \end{tikzpicture}
@@ -212,11 +213,5 @@ public NodeNodeLinking findClosest(Boolean highlow, int startValue) {
 \end{verbatim}
 \caption{Code-Ausschnitt findClosest}
 \label{figure:findClosest}
-\end{figure}
-
-\begin{figure}
-\includegraphics[width=\linewidth]{insertiontable.png}
-\caption{Durchschnittswerte unterschiedlicher Insertionsorts von 100 Durchführungen bei vielen und wenigen Duplikaten}
-\label{figure:table}
 \end{figure}
 \end{document}
