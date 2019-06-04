@@ -32,7 +32,7 @@ public class TestFrame {
     public static void testRSAKeysNegative() {
         boolean pubkeyNegative = false;
         boolean privKeyNegative = false;
-        for(int i = 0; i < 1000; i++) {
+        for(int i = 0; i < 100000; i++) {
             RSA rsa = new RSA(BLOCKSIZE);
             if(rsa.getPublicKey().compareTo(BigInteger.ZERO) < 0) {
                 pubkeyNegative = true;
@@ -70,11 +70,11 @@ public class TestFrame {
     }
 
     public static void testFeistelEncryptionDecryption() {
-        BlockCipherFeistel bcf = new BlockCipherFeistel(BLOCKSIZE, ROUNDS, PADDING, null);
-        byte[] encryptedMessage = bcf.encryptMessage("AAAAAAAAAAAAAAAA".getBytes());
-        System.out.println(new String(encryptedMessage));
-        byte[] decryptedMessage = bcf.decryptMessage(encryptedMessage);
-        System.out.println(new String(decryptedMessage));
+            BlockCipherFeistel bcf = new BlockCipherFeistel(BLOCKSIZE, ROUNDS, PADDING, null);
+            byte[] encryptedMessage = bcf.encryptMessage("AAAAAAAAAAAAAAAA".getBytes());
+            System.out.println(new String(encryptedMessage));
+            byte[] decryptedMessage = bcf.decryptMessage(encryptedMessage);
+            System.out.println(new String(decryptedMessage));
     }
 
     public static void testHybridMessageEncryptionDecryption() {

@@ -24,9 +24,9 @@ public class BlockCipherFeistel {
     private void generateSessionkey() {
         Random rnd = new SecureRandom();
         sessionkey = new byte[BLOCKSIZE];
-        byte[] sessionkeyHalf = new byte[BLOCKSIZE/2];
-        rnd.nextBytes(sessionkeyHalf);
-        System.arraycopy(sessionkeyHalf, 0, sessionkey, 0, BLOCKSIZE/2);
+        byte[] sessionkeyActual = new byte[BLOCKSIZE/2];
+        rnd.nextBytes(sessionkeyActual);
+        System.arraycopy(sessionkeyActual, 0, sessionkey, 0, BLOCKSIZE/2);
     }
 
     public byte[] encryptMessage(byte[] message) {
