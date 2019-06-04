@@ -1,5 +1,6 @@
 package test;
 
+import hybridEncryption.BigIntHelper;
 import hybridEncryption.BlockCipherFeistel;
 import hybridEncryption.HybridProcedure;
 import hybridEncryption.RSA;
@@ -14,7 +15,7 @@ public class TestFrame {
     public static void main(String... args) {
         //testRSAMessageEncryptionDecryption();
         //testRSAKeysNegative();
-        //testFeistel();
+        //testFeistelround();
         //testFeistelEncryptionDecryption();
         testHybridMessageEncryptionDecryption();
     }
@@ -51,7 +52,7 @@ public class TestFrame {
         }
     }
 
-    public static void testFeistel() {
+    public static void testFeistelround() {
         byte[] sessionkey = {1, 1, 1, 1, 1, 1, 1, 1};
         BlockCipherFeistel bcf = new BlockCipherFeistel(BLOCKSIZE, ROUNDS, PADDING, sessionkey);
         byte[] left  = {'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a'};

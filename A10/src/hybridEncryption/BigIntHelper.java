@@ -4,7 +4,7 @@ import java.math.BigInteger;
 
 public class BigIntHelper {
     // code from Stephan Pareigis
-    static byte[] BigInt2Byte (BigInteger src, int bytesize) {
+    public static byte[] BigInt2Byte (BigInteger src, int bytesize) {
         byte[] out = new byte[bytesize];
         BigInteger mod = new BigInteger("2");
         mod = mod.pow(bytesize*8);
@@ -20,7 +20,7 @@ public class BigIntHelper {
         return out;
     }
 
-    static BigInteger Byte2BigInt(byte[] b){
+    public static BigInteger Byte2BigInt(byte[] b){
         return new BigInteger ( 1 , b );
     }
 }
