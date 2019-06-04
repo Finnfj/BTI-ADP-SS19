@@ -17,15 +17,16 @@ public class BlockCipherFeistel {
         this.sessionkey = sessionkey;
         if(sessionkey == null) {
             generateSessionkey();
-            System.out.println("Generated Sessionkey: " + BigIntHelper.Byte2BigInt(this.sessionkey));
         }
     }
 
     // create a random session key by filling a byte array with half the blocksize as length and the put it into the beginning of the byte array with the message
     private void generateSessionkey() {
         Random rnd = new SecureRandom();
-        sessionkey = new byte[BLOCKSIZE/2];
-        rnd.nextBytes(sessionkey);
+        sessionkey = new byte[BLOCKSIZE];
+        byte[] sessionkeyActual = new byte[BLOCKSIZE/2];
+        rnd.nextBytes(sessionkeyActual);
+        System.arraycopy(sessionkeyActual, 0, sessionkey, 0, BLOCKSIZE/2);
     }
 
     public byte[] encryptMessage(byte[] message) {
@@ -52,16 +53,16 @@ public class BlockCipherFeistel {
         for(int i = 0; i < amountOfMessageBlocks; i++) {
             byte[] left = new byte[BLOCKSIZE/2];
             byte[] right = new byte[BLOCKSIZE/2];
-            System.arraycopy(messageBytesOffsetPadding, i*BLOCKSIZE+BLOCKSIZE, left, 0, BLOCKSIZE/2);
-            System.arraycopy(messageBytesOffsetPadding, i*BLOCKSIZE+BLOCKSIZE/2+BLOCKSIZE, right, 0, BLOCKSIZE/2);
+            System.arraycopy(messageBytesOffsetPadding, i*BLOCKSIZE+BLOCKSIZE, left, 0, left.length);
+            System.arraycopy(messageBytesOffsetPadding, i*BLOCKSIZE+BLOCKSIZE/2+BLOCKSIZE, right, 0, right.length);
 
             for (int j = 0; j < ROUNDS; j++) {
                 feistelround(left, right);
             }
 
             // copy the feistelround swapped arrays back into the main array
-            System.arraycopy(left, 0, messageBytesOffsetPadding, i*BLOCKSIZE+BLOCKSIZE, BLOCKSIZE/2);
-            System.arraycopy(right, 0, messageBytesOffsetPadding, i*BLOCKSIZE+BLOCKSIZE/2+BLOCKSIZE, BLOCKSIZE/2);
+            System.arraycopy(left, 0, messageBytesOffsetPadding, i*BLOCKSIZE+BLOCKSIZE, left.length);
+            System.arraycopy(right, 0, messageBytesOffsetPadding, i*BLOCKSIZE+BLOCKSIZE/2+BLOCKSIZE, right.length);
         }
 
         return messageBytesOffsetPadding;
@@ -69,14 +70,14 @@ public class BlockCipherFeistel {
 
     public byte[] decryptMessage(byte[] encryptedMessage) {
         byte[] decryptedMessage = new byte[encryptedMessage.length];
-        System.arraycopy(sessionkey, 0, decryptedMessage, 0, BLOCKSIZE/2); // copy the session key over
+        System.arraycopy(sessionkey, 0, decryptedMessage, 0, BLOCKSIZE); // copy the session key over
 
         int amountOfMessageBlocks = (decryptedMessage.length-BLOCKSIZE)/BLOCKSIZE;
         for(int i = 0; i < amountOfMessageBlocks; i++) {
             byte[] left = new byte[BLOCKSIZE/2];
             byte[] right = new byte[BLOCKSIZE/2];
-            System.arraycopy(encryptedMessage, i*BLOCKSIZE+BLOCKSIZE, left, 0, BLOCKSIZE/2);
-            System.arraycopy(encryptedMessage, i*BLOCKSIZE+BLOCKSIZE/2+BLOCKSIZE, right, 0, BLOCKSIZE/2);
+            System.arraycopy(encryptedMessage, i*BLOCKSIZE+BLOCKSIZE, left, 0, left.length);
+            System.arraycopy(encryptedMessage, i*BLOCKSIZE+BLOCKSIZE/2+BLOCKSIZE, right, 0, right.length);
 
             swap(left, right);
             for (int j = 0; j < ROUNDS; j++) {

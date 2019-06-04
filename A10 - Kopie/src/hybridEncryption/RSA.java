@@ -34,9 +34,9 @@ public class RSA {
 
         // 4
         BigInteger d = extEuklid(e, phi).s;
-        /*if (d.compareTo(BigInteger.ZERO) < 0) { // if d is smaller than 0
+        if (d.compareTo(BigInteger.ZERO) < 0) { // if d is smaller than 0
             d = d.add(phi);
-        }*/
+        }
 
         publicKey = e;
         privateKey = d;
@@ -60,12 +60,15 @@ public class RSA {
         return privateKey;
     }
 
-    public static BigInteger encryptMessage(BigInteger message, BigInteger publicKey, BigInteger modulus) {
-        return message.modPow(publicKey, modulus);
+    public static BigInteger encryptMessage(byte[] message, BigInteger publicKey, BigInteger modulus) {
+        BigInteger encryptedMessage = BigIntHelper.Byte2BigInt(message);
+        encryptedMessage = encryptedMessage.modPow(publicKey, modulus);
+        return encryptedMessage;
     }
 
-    public static BigInteger decryptMessage(BigInteger message, BigInteger privateKey, BigInteger modulus) {
-        return message.modPow(privateKey, modulus);
+    public static byte[] decryptMessage(byte[] message, BigInteger privateKey, BigInteger modulus) {
+        BigInteger messageBigInteger = BigIntHelper.Byte2BigInt(message);
+        return messageBigInteger.modPow(privateKey, modulus).toByteArray();
     }
 
     // code from Stephan Pareigis

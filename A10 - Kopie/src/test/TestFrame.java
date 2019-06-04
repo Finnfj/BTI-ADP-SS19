@@ -16,17 +16,17 @@ public class TestFrame {
         //testRSAMessageEncryptionDecryption();
         //testRSAKeysNegative();
         //testFeistelround();
-        testFeistelEncryptionDecryption();
-        //testHybridMessageEncryptionDecryption();
+        //testFeistelEncryptionDecryption();
+        testHybridMessageEncryptionDecryption();
     }
 
     public static void testRSAMessageEncryptionDecryption() {
         RSA rsa = new RSA(BLOCKSIZE);
 
-        BigInteger encryptedMessage = RSA.encryptMessage(BigIntHelper.Byte2BigInt("HalloA".getBytes()), rsa.getPublicKey(), rsa.getModulus());
-        BigInteger decrpytedMessage = RSA.decryptMessage(encryptedMessage, rsa.getPrivateKey(), rsa.getModulus());
+        BigInteger encryptedMessage = RSA.encryptMessage("HalloA".getBytes(), rsa.getPublicKey(), rsa.getModulus());
+        byte[] decrpytedMessage = RSA.decryptMessage(encryptedMessage.toByteArray(), rsa.getPrivateKey(), rsa.getModulus());
         System.out.println(new String(encryptedMessage.toByteArray()));
-        System.out.println(new String(decrpytedMessage.toByteArray()));
+        System.out.println(new String(decrpytedMessage));
     }
 
     public static void testRSAKeysNegative() {

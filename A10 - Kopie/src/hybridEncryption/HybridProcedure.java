@@ -3,7 +3,7 @@ package hybridEncryption;
 import java.math.BigInteger;
 import java.util.Base64;
 
-public class HybridProcedure {
+public class HybridProcedure { //TODO: sessionkey only sometimes gets decoded correctly
     private final int BLOCKSIZE;
     private final int ROUNDS;
     private final byte PADDING;
@@ -26,7 +26,7 @@ public class HybridProcedure {
         System.arraycopy(publicKeyModulusBytes, BLOCKSIZE/2, modulus, 0, modulus.length); // modulus is in the following 16 bytes
     }
 
-    public String encryptMessage(String message) { //TODO: sessionkey works, but encryption fails anyways
+    public String encryptMessage(String message) {
         if (message.length() == 0) {
             return "";
         }
@@ -41,7 +41,7 @@ public class HybridProcedure {
         System.out.println(new String(sessionkey));
 
         // encrypt the sessionkey with the public key and modulo with RSA and put at the beginning of bcfEncryptedMessage, overwriting the plain text sessionkey
-        BigInteger encryptedSessionkey = RSA.encryptMessage(BigIntHelper.Byte2BigInt(sessionkey), BigIntHelper.Byte2BigInt(publicKey), BigIntHelper.Byte2BigInt(modulus));
+        BigInteger encryptedSessionkey = RSA.encryptMessage(sessionkey, BigIntHelper.Byte2BigInt(publicKey), BigIntHelper.Byte2BigInt(modulus));
         byte[] encryptedSessionkeyBytes = BigIntHelper.BigInt2Byte(encryptedSessionkey, BLOCKSIZE);
         System.arraycopy(encryptedSessionkeyBytes, 0, bcfEncryptedMessage, 0, BLOCKSIZE);
 
@@ -50,7 +50,7 @@ public class HybridProcedure {
         return Base64.getEncoder().encodeToString(bcfEncryptedMessage);
     }
 
-    public String decryptMessage(String encryptedMessageBase64, BigInteger privateKey, BigInteger modulus) { //TODO: session key doesnt seem to be right
+    public String decryptMessage(String encryptedMessageBase64, BigInteger privateKey, BigInteger modulus) {
         if (encryptedMessageBase64.length() == 0) {
             return "";
         }
@@ -60,14 +60,14 @@ public class HybridProcedure {
         // get sessionkey from encryptedMessage
         byte[] encryptedSessionkey = new byte[BLOCKSIZE];
         System.arraycopy(encryptedMessage, 0, encryptedSessionkey, 0, BLOCKSIZE); // copy the encrypted session key to the array
-        BigInteger encryptedSessionkeBI = BigIntHelper.Byte2BigInt(encryptedSessionkey);
-
-        BigInteger sessionkey = RSA.decryptMessage(encryptedSessionkeBI, privateKey, modulus);
-        System.out.println("decrypted session key " + sessionkey);
+        System.out.println(new String(encryptedSessionkey));
+        byte[] sessionkey = RSA.decryptMessage(encryptedSessionkey, privateKey, modulus);
+        System.out.println(new String(sessionkey));
 
         // decrypt the message with the decrypted sessionkey
-        BlockCipherFeistel bcf = new BlockCipherFeistel(BLOCKSIZE, ROUNDS, PADDING, BigIntHelper.BigInt2Byte(sessionkey, BLOCKSIZE));
+        BlockCipherFeistel bcf = new BlockCipherFeistel(BLOCKSIZE, ROUNDS, PADDING, sessionkey);
         byte[] decryptedMessage = bcf.decryptMessage(encryptedMessage);
+        System.out.println(new String(decryptedMessage));
 
         // remove the sessionkey and the padding from the decrypted message and turn it into a string
         int cleanedDecryptedMessageSize = decryptedMessage.length-BLOCKSIZE;

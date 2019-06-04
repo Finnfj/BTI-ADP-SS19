@@ -38,7 +38,7 @@ public class JUnitTestFrameBSTNodeLinking {
     
     private static void testTwo() {
     	long timeA[] = {0,0,0,0,0,0,0};
-    	for (int j = 0; j < 10; j++) {
+    	for (int j = 0; j < 1; j++) {
     		int z = 0;
 	        for (int i = 10; i <= 1_000_0000; i *= 10) {
 	            BinarySearchTreeI bstnl = new BinarySearchTreeNodeLinking();
@@ -61,7 +61,7 @@ public class JUnitTestFrameBSTNodeLinking {
 	        }
     	}
     	for (int j = 0; j < 7; j++) {
-    		timeA[j] = timeA[j] / 10;
+    		timeA[j] = timeA[j] / 1;
         	System.out.println(timeA[j] + "ms");
     	}
     }
