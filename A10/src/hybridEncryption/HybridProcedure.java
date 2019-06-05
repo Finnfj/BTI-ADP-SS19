@@ -75,7 +75,7 @@ public class HybridProcedure {
         int cleanedDecryptedMessageSize = decryptedMessage.length-BLOCKSIZE;
 
         // count how often the padding occurs at the end and decrease cleanedDecryptedMessageSize by that
-        while (decryptedMessage[cleanedDecryptedMessageSize-1] == PADDING) {
+        while (decryptedMessage[cleanedDecryptedMessageSize+BLOCKSIZE-1] == PADDING) {
             cleanedDecryptedMessageSize--;
         }
 
