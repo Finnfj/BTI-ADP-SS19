@@ -17,7 +17,6 @@ public class BlockCipherFeistel {
         this.sessionkey = sessionkey;
         if(sessionkey == null) {
             generateSessionkey();
-            System.out.println("Generated Sessionkey: " + BigIntHelper.Byte2BigInt(this.sessionkey));
         }
     }
 

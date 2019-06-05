@@ -7,26 +7,29 @@ public class HybridProcedure {
     private final int BLOCKSIZE;
     private final int ROUNDS;
     private final byte PADDING;
-    private byte[] publicKey;
-    private byte[] modulus;
+    private byte[] partnerPublicKey;
+    private byte[] partnerModulus;
 
     public HybridProcedure(String publicKeyModulusBase64, final int BLOCKSIZE, final int ROUNDS, final byte PADDING) {
         this.BLOCKSIZE = BLOCKSIZE;
         this.ROUNDS = ROUNDS;
         this.PADDING = PADDING;
-        this.publicKey = new byte[BLOCKSIZE/2];
-        this.modulus = new byte[BLOCKSIZE];
-        setPublicKeyAndModulo(publicKeyModulusBase64);
+        this.partnerPublicKey = new byte[BLOCKSIZE/2];
+        this.partnerModulus = new byte[BLOCKSIZE];
+        setPartnerPublicKeyAndPartnerModulo(publicKeyModulusBase64);
     }
 
-    private void setPublicKeyAndModulo(String publicKeyModulusBase64) {
-        // decode the base64 encoded publicKeyModulo String and put the publicKey and the Modulo each into an array
+    private void setPartnerPublicKeyAndPartnerModulo(String publicKeyModulusBase64) {
+        // decode the base64 encoded publicKeyModulo String and put the partnerPublicKey and the Modulo each into an array
         byte[] publicKeyModulusBytes = Base64.getDecoder().decode(publicKeyModulusBase64);
-        System.arraycopy(publicKeyModulusBytes, 0, publicKey, 0, publicKey.length); // publicKey is in the first 8 bytes
-        System.arraycopy(publicKeyModulusBytes, BLOCKSIZE/2, modulus, 0, modulus.length); // modulus is in the following 16 bytes
+        System.arraycopy(publicKeyModulusBytes, 0, partnerPublicKey, 0, partnerPublicKey.length); // partnerPublicKey is in the first 8 bytes
+        System.arraycopy(publicKeyModulusBytes, BLOCKSIZE/2, partnerModulus, 0, partnerModulus.length); // partnerModulus is in the following 16 bytes
+        System.out.println("Partner Data:");
+        System.out.println("Public Key: " + BigIntHelper.Byte2BigInt(partnerPublicKey));
+        System.out.println("Modulus: " + BigIntHelper.Byte2BigInt(partnerModulus));
     }
 
-    public String encryptMessage(String message) { //TODO: session key doesnt seem to be right
+    public String encryptMessage(String message) {
         if (message.length() == 0) {
             return "";
         }
@@ -36,20 +39,19 @@ public class HybridProcedure {
         byte[] bcfEncryptedMessage = bcf.encryptMessage(message.getBytes());
 
         // put the unecrypted sessionkey into an array
-        byte[] sessionkey = new byte[BLOCKSIZE];
-        System.arraycopy(bcfEncryptedMessage, 0, sessionkey, 0, BLOCKSIZE);
-        System.out.println(new String(sessionkey));
+        byte[] sessionkey = new byte[BLOCKSIZE/2];
+        System.arraycopy(bcfEncryptedMessage, 0, sessionkey, 0, BLOCKSIZE/2);
+        System.out.println("Encryption Sessionkey: " + BigIntHelper.Byte2BigInt(sessionkey));
 
         // encrypt the sessionkey with the public key and modulo with RSA and put at the beginning of bcfEncryptedMessage, overwriting the plain text sessionkey
-        BigInteger encryptedSessionkey = RSA.encryptMessage(BigIntHelper.Byte2BigInt(sessionkey), BigIntHelper.Byte2BigInt(publicKey), BigIntHelper.Byte2BigInt(modulus));
+        BigInteger encryptedSessionkey = RSA.encryptMessage(BigIntHelper.Byte2BigInt(sessionkey), BigIntHelper.Byte2BigInt(partnerPublicKey), BigIntHelper.Byte2BigInt(partnerModulus));
         byte[] encryptedSessionkeyBytes = BigIntHelper.BigInt2Byte(encryptedSessionkey, BLOCKSIZE);
         System.arraycopy(encryptedSessionkeyBytes, 0, bcfEncryptedMessage, 0, BLOCKSIZE);
 
-        System.out.println(new String(encryptedSessionkeyBytes));
         // encode the byte array to base 64 and return it
         return Base64.getEncoder().encodeToString(bcfEncryptedMessage);
     }
-    //TODO: sessionkey works, but encryption fails anyways
+
     public String decryptMessage(String encryptedMessageBase64, BigInteger privateKey, BigInteger modulus) {
         if (encryptedMessageBase64.length() == 0) {
             return "";
@@ -63,7 +65,7 @@ public class HybridProcedure {
         BigInteger encryptedSessionkeBI = BigIntHelper.Byte2BigInt(encryptedSessionkey);
 
         BigInteger sessionkey = RSA.decryptMessage(encryptedSessionkeBI, privateKey, modulus);
-        System.out.println("decrypted session key " + sessionkey);
+        System.out.println("Decryption Sessionkey: " + sessionkey);
 
         // decrypt the message with the decrypted sessionkey
         BlockCipherFeistel bcf = new BlockCipherFeistel(BLOCKSIZE, ROUNDS, PADDING, BigIntHelper.BigInt2Byte(sessionkey, BLOCKSIZE/2));

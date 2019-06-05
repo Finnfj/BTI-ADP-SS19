@@ -34,13 +34,15 @@ public class RSA {
 
         // 4
         BigInteger d = extEuklid(e, phi).s;
-        /*if (d.compareTo(BigInteger.ZERO) < 0) { // if d is smaller than 0
-            d = d.add(phi);
-        }*/
 
         publicKey = e;
         privateKey = d;
         modulus = calculatedModulus;
+
+        System.out.println("Generated Data:");
+        System.out.println("Public Key: " + publicKey);
+        System.out.println("Private Key: " + privateKey);
+        System.out.println("Modulus: " + modulus);
     }
 
     public String getPublicKeyModulusBase64() {
