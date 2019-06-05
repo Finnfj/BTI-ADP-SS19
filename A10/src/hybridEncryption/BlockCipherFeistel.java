@@ -97,6 +97,7 @@ public class BlockCipherFeistel {
         for(int i = 0; i < left.length; i++) {
             FRK[i] ^= left[i];
         }
+
         System.arraycopy(right, 0, left, 0, left.length);
         System.arraycopy(FRK, 0, right, 0, right.length);
     }
@@ -106,7 +107,7 @@ public class BlockCipherFeistel {
         BigInteger KBI = BigIntHelper.Byte2BigInt(K);
 
         BigInteger modulo = new BigInteger("2");
-        modulo = modulo.pow(BLOCKSIZE*8); // *8 because BLOCKSIZE needs to be converted from bytes to bits
+        modulo = modulo.pow(BLOCKSIZE*8/2); // *8 because BLOCKSIZE needs to be converted from bytes to bits
         modulo = modulo.subtract(BigInteger.ONE);
 
         BigInteger newR = BigIntHelper.Byte2BigInt(R);

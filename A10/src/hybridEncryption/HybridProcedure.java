@@ -26,7 +26,7 @@ public class HybridProcedure {
         System.arraycopy(publicKeyModulusBytes, BLOCKSIZE/2, modulus, 0, modulus.length); // modulus is in the following 16 bytes
     }
 
-    public String encryptMessage(String message) { //TODO: sessionkey works, but encryption fails anyways
+    public String encryptMessage(String message) { //TODO: session key doesnt seem to be right
         if (message.length() == 0) {
             return "";
         }
@@ -49,8 +49,8 @@ public class HybridProcedure {
         // encode the byte array to base 64 and return it
         return Base64.getEncoder().encodeToString(bcfEncryptedMessage);
     }
-
-    public String decryptMessage(String encryptedMessageBase64, BigInteger privateKey, BigInteger modulus) { //TODO: session key doesnt seem to be right
+    //TODO: sessionkey works, but encryption fails anyways
+    public String decryptMessage(String encryptedMessageBase64, BigInteger privateKey, BigInteger modulus) {
         if (encryptedMessageBase64.length() == 0) {
             return "";
         }
@@ -66,7 +66,7 @@ public class HybridProcedure {
         System.out.println("decrypted session key " + sessionkey);
 
         // decrypt the message with the decrypted sessionkey
-        BlockCipherFeistel bcf = new BlockCipherFeistel(BLOCKSIZE, ROUNDS, PADDING, BigIntHelper.BigInt2Byte(sessionkey, BLOCKSIZE));
+        BlockCipherFeistel bcf = new BlockCipherFeistel(BLOCKSIZE, ROUNDS, PADDING, BigIntHelper.BigInt2Byte(sessionkey, BLOCKSIZE/2));
         byte[] decryptedMessage = bcf.decryptMessage(encryptedMessage);
 
         // remove the sessionkey and the padding from the decrypted message and turn it into a string

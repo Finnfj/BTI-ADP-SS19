@@ -16,8 +16,8 @@ public class TestFrame {
         //testRSAMessageEncryptionDecryption();
         //testRSAKeysNegative();
         //testFeistelround();
-        testFeistelEncryptionDecryption();
-        //testHybridMessageEncryptionDecryption();
+        //testFeistelEncryptionDecryption();
+        testHybridMessageEncryptionDecryption();
     }
 
     public static void testRSAMessageEncryptionDecryption() {
