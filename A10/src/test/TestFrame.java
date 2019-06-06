@@ -13,14 +13,14 @@ public class TestFrame {
     private static final byte PADDING = 0x20;
 
     public static void main(String... args) {
-        //testRSAMessageEncryptionDecryption();
-        //testRSAKeysNegative();
-        //testFeistelround();
-        //testFeistelEncryptionDecryption();
+        testRSAMessageEncryptionDecryption();
+        testRSAKeysNegative();
+        testFeistelround();
+        testFeistelEncryptionDecryption();
         testHybridMessageEncryptionDecryption();
     }
 
-    public static void testRSAMessageEncryptionDecryption() {
+    private static void testRSAMessageEncryptionDecryption() {
         RSA rsa = new RSA(BLOCKSIZE);
 
         BigInteger encryptedMessage = RSA.encryptMessage(BigIntHelper.Byte2BigInt("HalloA".getBytes()), rsa.getPublicKey(), rsa.getModulus());
@@ -29,7 +29,7 @@ public class TestFrame {
         System.out.println(new String(decrpytedMessage.toByteArray()));
     }
 
-    public static void testRSAKeysNegative() {
+    private static void testRSAKeysNegative() {
         boolean pubkeyNegative = false;
         boolean privKeyNegative = false;
         for(int i = 0; i < 100000; i++) {
@@ -52,7 +52,7 @@ public class TestFrame {
         }
     }
 
-    public static void testFeistelround() {
+    private static void testFeistelround() {
         byte[] sessionkey = {1, 1, 1, 1, 1, 1, 1, 1};
         BlockCipherFeistel bcf = new BlockCipherFeistel(BLOCKSIZE, ROUNDS, PADDING, sessionkey);
         byte[] left  = {'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a'};
@@ -69,7 +69,7 @@ public class TestFrame {
         System.out.println(new String(right));
     }
 
-    public static void testFeistelEncryptionDecryption() {
+    private static void testFeistelEncryptionDecryption() {
             BlockCipherFeistel bcf = new BlockCipherFeistel(BLOCKSIZE, ROUNDS, PADDING, null);
             byte[] encryptedMessage = bcf.encryptMessage("AAAAAAAAAAAAAAAA".getBytes());
             System.out.println(new String(encryptedMessage));
@@ -77,7 +77,7 @@ public class TestFrame {
             System.out.println(new String(decryptedMessage));
     }
 
-    public static void testHybridMessageEncryptionDecryption() {
+    private static void testHybridMessageEncryptionDecryption() {
         RSA rsa = new RSA(BLOCKSIZE);
         HybridProcedure hp = new HybridProcedure(rsa.getPublicKeyModulusBase64(), BLOCKSIZE, ROUNDS, PADDING);
         String encryptedMessage = hp.encryptMessage("HalloC");

@@ -71,7 +71,7 @@ public class RSA {
     }
 
     // code from Stephan Pareigis
-    public static Triple extEuklid(final BigInteger a, final BigInteger b) {
+    private static Triple extEuklid(final BigInteger a, final BigInteger b) {
         if (b.equals(BigInteger.ZERO)) {
             return new Triple(a, BigInteger.ONE, BigInteger.ZERO);
         } else {
@@ -82,9 +82,9 @@ public class RSA {
 
     // code from Stephan Pareigis
     private static class Triple {
-        public final BigInteger d;
-        public final BigInteger s;
-        public final BigInteger t;
+        final BigInteger d;
+        final BigInteger s;
+        final BigInteger t;
         private Triple(final BigInteger d, final BigInteger s, final BigInteger t) {
             this.d = d; this.s = s; this.t = t;
         }

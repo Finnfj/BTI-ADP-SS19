@@ -20,18 +20,22 @@ public class Main {
         while(!quitted) {
             System.out.println("Press 'd' if you want to decrypt a message, 'e' if you want to encrypt a message or 'q' if you want to quit: ");
             String selection = scanner.nextLine();
-            if (selection.toLowerCase().equals("d")) {
-                System.out.println("Enter the Message to decrypt:");
-                String partnerEncryptedMessageBase64= scanner.nextLine();
-                String decryptedMessage = hp.decryptMessage(partnerEncryptedMessageBase64, rsa.getPrivateKey(), rsa.getModulus());
-                System.out.println("Decrypted Message: " + decryptedMessage);
-            } else if (selection.toLowerCase().equals("e")) {
-                System.out.println("Enter message you want to encrypt: ");
-                String message = scanner.nextLine();
-                String encryptedMessage = hp.encryptMessage(message);
-                System.out.println("Encrypted message: " + encryptedMessage);
-            } else if (selection.toLowerCase().equals("q")) {
-                quitted = true;
+            switch (selection.toLowerCase()) {
+                case "d":
+                    System.out.println("Enter the Message to decrypt:");
+                    String partnerEncryptedMessageBase64 = scanner.nextLine();
+                    String decryptedMessage = hp.decryptMessage(partnerEncryptedMessageBase64, rsa.getPrivateKey(), rsa.getModulus());
+                    System.out.println("Decrypted Message: " + decryptedMessage);
+                    break;
+                case "e":
+                    System.out.println("Enter message you want to encrypt: ");
+                    String message = scanner.nextLine();
+                    String encryptedMessage = hp.encryptMessage(message);
+                    System.out.println("Encrypted message: " + encryptedMessage);
+                    break;
+                case "q":
+                    quitted = true;
+                    break;
             }
         }
     }
