@@ -39,9 +39,9 @@ public class RSA {
         privateKey = d;
         modulus = calculatedModulus;
 
-        System.out.println("Generated Data:");
-        System.out.println("Public Key: " + publicKey);
-        System.out.println("Private Key: " + privateKey);
+        System.out.println("Generated data:");
+        System.out.println("Public key: " + publicKey);
+        System.out.println("Private key: " + privateKey);
         System.out.println("Modulus: " + modulus);
     }
 

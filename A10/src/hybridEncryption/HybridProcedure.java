@@ -24,8 +24,8 @@ public class HybridProcedure {
         byte[] publicKeyModulusBytes = Base64.getDecoder().decode(publicKeyModulusBase64);
         System.arraycopy(publicKeyModulusBytes, 0, partnerPublicKey, 0, partnerPublicKey.length); // partnerPublicKey is in the first 8 bytes
         System.arraycopy(publicKeyModulusBytes, BLOCKSIZE/2, partnerModulus, 0, partnerModulus.length); // partnerModulus is in the following 16 bytes
-        System.out.println("Partner Data:");
-        System.out.println("Public Key: " + BigIntHelper.Byte2BigInt(partnerPublicKey));
+        System.out.println("Partner data:");
+        System.out.println("Public key: " + BigIntHelper.Byte2BigInt(partnerPublicKey));
         System.out.println("Modulus: " + BigIntHelper.Byte2BigInt(partnerModulus));
     }
 
@@ -41,7 +41,7 @@ public class HybridProcedure {
         // put the unecrypted sessionkey into an array
         byte[] sessionkey = new byte[BLOCKSIZE/2];
         System.arraycopy(bcfEncryptedMessage, 0, sessionkey, 0, BLOCKSIZE/2);
-        System.out.println("Encryption Sessionkey: " + BigIntHelper.Byte2BigInt(sessionkey));
+        System.out.println("Encryption sessionkey: " + BigIntHelper.Byte2BigInt(sessionkey));
 
         // encrypt the sessionkey with the public key and modulo with RSA and put at the beginning of bcfEncryptedMessage, overwriting the plain text sessionkey
         BigInteger encryptedSessionkey = RSA.encryptMessage(BigIntHelper.Byte2BigInt(sessionkey), BigIntHelper.Byte2BigInt(partnerPublicKey), BigIntHelper.Byte2BigInt(partnerModulus));
@@ -65,7 +65,7 @@ public class HybridProcedure {
         BigInteger encryptedSessionkeBI = BigIntHelper.Byte2BigInt(encryptedSessionkey);
 
         BigInteger sessionkey = RSA.decryptMessage(encryptedSessionkeBI, privateKey, modulus);
-        System.out.println("Decryption Sessionkey: " + sessionkey);
+        System.out.println("Decryption sessionkey: " + sessionkey);
 
         // decrypt the message with the decrypted sessionkey
         BlockCipherFeistel bcf = new BlockCipherFeistel(BLOCKSIZE, ROUNDS, PADDING, BigIntHelper.BigInt2Byte(sessionkey, BLOCKSIZE/2));
